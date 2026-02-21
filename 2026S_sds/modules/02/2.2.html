@@ -1,0 +1,1297 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Sequence &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/02/2.2';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01/01_intro.html">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="02_basicPy1.html">02 - Basic Python - 1</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/02/2.2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/modules/02/2.2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Sequence</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Sequence</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lists">1. Lists</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-lists">More on lists</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuples">2. Tuples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sets">3. Sets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dictionaries">4. Dictionaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-sequences">Working-with-Sequences</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-if-an-object-is-in-a-sequence-obj-in-seq">Checking if an object is in a sequence: <code class="docutils literal notranslate"><span class="pre">obj</span> <span class="pre">in</span> <span class="pre">seq</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenating-sequences-seq1-seq2">Concatenating sequences: <code class="docutils literal notranslate"><span class="pre">seq1</span> <span class="pre">+seq2</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#repeated-concatenation-of-sequences-n-seq1-or-seq1-n">Repeated concatenation of sequences: <code class="docutils literal notranslate"><span class="pre">n*seq1</span></code> or <code class="docutils literal notranslate"><span class="pre">seq1*n</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#asking-for-the-length-of-a-sequence">Asking for the length of a sequence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-index-of-the-first-occurence-of-the-x-in-a-sequence-seq-index-x">Getting the index of the first occurence of the x in a sequence: `seq.index(x)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counting-the-number-of-occurences-of-x-in-a-sequence-seq-count-x">Counting the number of occurences of <code class="docutils literal notranslate"><span class="pre">x</span></code> in a sequence: `seq.count(x)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">Indexing</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing">Slicing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="sequence">
+<h1>Sequence<a class="headerlink" href="#sequence" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Four built-in data types in Python used to store collections of data</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#Lists"><span class="xref myst">Lists</span></a></p></li>
+<li><p><a class="reference internal" href="#Tuples"><span class="xref myst">Tuples</span></a></p></li>
+<li><p><a class="reference internal" href="#Sets"><span class="xref myst">Sets</span></a></p></li>
+<li><p><a class="reference internal" href="#Dictionaries"><span class="xref myst">Dictionaries</span></a></p></li>
+</ol>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Working-with-Sequences"><span class="xref myst">Working with Sequences</span></a></p></li>
+</ul>
+<section id="lists">
+<h2>1. Lists<a class="headerlink" href="#lists" title="Link to this heading">#</a></h2>
+<p>Python knows a number of compound data types, used to group together other values. The most versatile is the list,
+which can be written as a list of comma-separated values (items) between square brackets.
+Lists might contain items of different types, but usually the items all have the same type.</p>
+<ul class="simple">
+<li><p>A sequence of objects</p></li>
+<li><p>is created using sqare-brackets <code class="docutils literal notranslate"><span class="pre">[]</span></code>, its items (no need to the same type) are seperated by commas.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[3.5, &#39;a&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">isinstance</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># [] - an empty list</span>
+<span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># list can be a set of numbers</span>
+<span class="n">dbh</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span><span class="mi">25</span><span class="p">]</span> <span class="c1"># in inch</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dbh</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dbh</span><span class="p">[:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dbh</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># list can be a set of strings</span>
+<span class="n">species</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;London Planetree&#39;</span><span class="p">,</span> <span class="s1">&#39;HoneyLocust&#39;</span><span class="p">,</span> <span class="s1">&#39;Callery Pear&#39;</span><span class="p">,</span> <span class="s1">&#39;Oaks&#39;</span><span class="p">,</span><span class="s1">&#39;Norway Maple&#39;</span> <span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">species</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+           
+<span class="c1"># List can be a mix of numbers and strings </span>
+<span class="n">tree</span> <span class="o">=</span>  <span class="p">[</span><span class="s1">&#39;London Planetree&#39;</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="s1">&#39;HoneyLocust&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;Callery Pear&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Oaks&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;Norway Maple&#39;</span><span class="p">,</span> <span class="mi">27</span><span class="p">]</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tree</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tree</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>25
+[2, 15, 20, 25]
+2
+Norway Maple
+[&#39;Norway Maple&#39;, 27]
+[&#39;London Planetree&#39;, 26, &#39;HoneyLocust&#39;, 20, &#39;Callery Pear&#39;, 5, &#39;Oaks&#39;, 30]
+[&#39;London Planetree&#39;, 26, &#39;HoneyLocust&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="more-on-lists">
+<h3>More on lists<a class="headerlink" href="#more-on-lists" title="Link to this heading">#</a></h3>
+<p>The list data type has some methods. Here are a few methods for listing objects:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># `list` forms a list of content of a sequence</span>
+<span class="nb">list</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;a&#39;, &#39;p&#39;, &#39;p&#39;, &#39;l&#39;, &#39;e&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;London Planetree&#39;</span><span class="p">,</span> <span class="s1">&#39;HoneyLocust&#39;</span><span class="p">,</span> <span class="s1">&#39;Callery Pear&#39;</span><span class="p">,</span> <span class="s1">&#39;Oak&#39;</span><span class="p">,</span><span class="s1">&#39;Norway Maple&#39;</span> <span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">species</span><span class="p">)</span>
+
+<span class="c1"># list.append(x)</span>
+<span class="c1"># Add an item to the end of the list. Equivalent to a[len(a):] = [x].</span>
+<span class="n">species</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Ginkgo&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;append Ginkgo at the end:&#39;</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;London Planetree&#39;, &#39;HoneyLocust&#39;, &#39;Callery Pear&#39;, &#39;Oak&#39;, &#39;Norway Maple&#39;]
+append Ginkgo at the end: [&#39;London Planetree&#39;, &#39;HoneyLocust&#39;, &#39;Callery Pear&#39;, &#39;Oak&#39;, &#39;Norway Maple&#39;, &#39;Ginkgo&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># list.insert(i, x)</span>
+<span class="c1"># Insert an item at a given position. The first argument is the index of the element</span>
+<span class="c1"># before which to insert, so a.insert(0, x) inserts at the front of the list, and </span>
+<span class="c1"># a.insert(len(a), x) is equivalent to a.append(x).</span>
+<span class="n">species</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;Ginkgo&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;after add Ginkgo:&#39;</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>after add Ginkgo: [&#39;Ginkgo&#39;, &#39;London Planetree&#39;, &#39;HoneyLocust&#39;, &#39;Callery Pear&#39;, &#39;Oak&#39;, &#39;Norway Maple&#39;, &#39;Ginkgo&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># list.remove(x)</span>
+<span class="c1"># Remove the first item from the list whose value is equal to x. It raises a ValueError if there is no such item.</span>
+<span class="n">species</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;Ginkgo&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;after remove Ginkgo:&#39;</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
+
+<span class="n">species</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Noway Spruce&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;append species&#39;</span><span class="p">,</span> <span class="n">species</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># list.index(x[, start[, end]])</span>
+<span class="c1"># Return zero-based index in the list of the first item whose value is equal to x. Raises a ValueError if there is no such item.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Index of Norway Maple&#39;</span><span class="p">,</span> <span class="n">species</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;Norway Maple&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>after remove Ginkgo: [&#39;London Planetree&#39;, &#39;HoneyLocust&#39;, &#39;Callery Pear&#39;, &#39;Oak&#39;, &#39;Norway Maple&#39;, &#39;Ginkgo&#39;]
+append species Noway Spruce
+Index of Norway Maple 4
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># list.count(x)</span>
+<span class="c1"># eturn the number of times x appears in the list.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Count of Oak trees:&#39;</span><span class="p">,</span><span class="n">species</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;Oak&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">species</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;Ginkgo&#39;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">species</span><span class="p">)</span>
+<span class="c1"># list.sort(*, key=None, reverse=False)</span>
+<span class="c1"># Sort the items of the list in place </span>
+<span class="n">species</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sorted species:&#39;</span><span class="p">,</span><span class="n">species</span> <span class="p">)</span>
+<span class="n">species</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sorted species reversed:&#39;</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Count of Oak trees: 1
+1
+[&#39;London Planetree&#39;, &#39;HoneyLocust&#39;, &#39;Callery Pear&#39;, &#39;Oak&#39;, &#39;Norway Maple&#39;, &#39;Ginkgo&#39;, &#39;Noway Spruce&#39;]
+sorted species: [&#39;Callery Pear&#39;, &#39;Ginkgo&#39;, &#39;HoneyLocust&#39;, &#39;London Planetree&#39;, &#39;Norway Maple&#39;, &#39;Noway Spruce&#39;, &#39;Oak&#39;]
+sorted species reversed: [&#39;Oak&#39;, &#39;Noway Spruce&#39;, &#39;Norway Maple&#39;, &#39;London Planetree&#39;, &#39;HoneyLocust&#39;, &#39;Ginkgo&#39;, &#39;Callery Pear&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># list.reverse()</span>
+<span class="c1"># Reverse the elements of the list in place.</span>
+<span class="n">species</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;species_reverse&#39;</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>species_reverse [&#39;Callery Pear&#39;, &#39;Ginkgo&#39;, &#39;HoneyLocust&#39;, &#39;London Planetree&#39;, &#39;Norway Maple&#39;, &#39;Noway Spruce&#39;, &#39;Oak&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># list.copy()</span>
+<span class="c1"># Return a shallow copy of the list. Equivalent to a[:].</span>
+<span class="n">sp</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;copied species:&#39;</span><span class="p">,</span> <span class="n">sp</span><span class="p">)</span>
+
+<span class="c1"># list.clear()</span>
+<span class="c1"># remove all items from the list. Equivalent to del a[:].</span>
+<span class="n">sp</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;copies species after clear:&#39;</span><span class="p">,</span> <span class="n">sp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>copied species: [&#39;Callery Pear&#39;, &#39;Ginkgo&#39;, &#39;HoneyLocust&#39;, &#39;London Planetree&#39;, &#39;Norway Maple&#39;, &#39;Noway Spruce&#39;, &#39;Oak&#39;]
+copies species after clear: []
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="tuples">
+<h2>2. Tuples<a class="headerlink" href="#tuples" title="Link to this heading">#</a></h2>
+<p>A tuple is a collection that is ordered and unchangeable. A tuple consists of a number of values separated by commas with round brackets. Tuples are <em><strong>ordered, unchangeable, allow duplicates</strong></em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12345</span><span class="p">,</span> <span class="mi">54321</span><span class="p">,</span> <span class="s1">&#39;hello!&#39;</span><span class="p">,</span><span class="mi">12345</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+<span class="c1"># Join two tuples</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">t1</span><span class="p">)</span>
+
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">t</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+
+<span class="c1"># Access Tuple Items</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(12345, 54321, &#39;hello!&#39;, 12345)
+(12345, 54321, &#39;hello!&#39;, 12345, 2, 4, 5)
+((12345, 54321, &#39;hello!&#39;, 12345), (1, 2, 3))
+(1, 2, 3)
+(12345, 54321, &#39;hello!&#39;, 12345)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># One item tuple, add the comma in the end</span>
+<span class="n">thistuple</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;apple&quot;</span><span class="p">,)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">thistuple</span><span class="p">))</span>
+
+<span class="c1">#NOT a tuple</span>
+<span class="n">thistuple</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;apple&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">thistuple</span><span class="p">))</span>
+
+<span class="c1"># Multiply tuples </span>
+<span class="n">fruits</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;cherry&quot;</span><span class="p">)</span>
+<span class="n">mytuple</span> <span class="o">=</span> <span class="n">fruits</span> <span class="o">*</span> <span class="mi">2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mytuple</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;tuple&#39;&gt;
+&lt;class &#39;str&#39;&gt;
+(&#39;apple&#39;, &#39;banana&#39;, &#39;cherry&#39;, &#39;apple&#39;, &#39;banana&#39;, &#39;cherry&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="sets">
+<h2>3. Sets<a class="headerlink" href="#sets" title="Link to this heading">#</a></h2>
+<p>Sets are used to store multiple items in a single variable. A set is a collection which is both unordered and unindexed. Sets are written with curly brackets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">thisset</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;Cherry&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">thisset</span><span class="p">)</span>
+
+<span class="c1">#Loop through the set</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">thisset</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Check if &#39;banana&#39; is in the set</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;banana&#39;</span> <span class="ow">in</span> <span class="n">thisset</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pear&#39;</span> <span class="ow">in</span> <span class="n">thisset</span><span class="p">)</span>
+
+<span class="c1"># Duplicates not allowed</span>
+<span class="n">thisset</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;cherry&#39;</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">thisset</span><span class="p">)</span>
+
+<span class="c1"># get the length </span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">thisset</span><span class="p">))</span>
+
+<span class="c1"># sets can be any types </span>
+<span class="n">set1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="mi">34</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">set1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Cherry&#39;, &#39;banana&#39;, &#39;apple&#39;}
+Cherry
+banana
+apple
+True
+False
+{&#39;cherry&#39;, &#39;banana&#39;, &#39;apple&#39;}
+3
+5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Loop through the set, and print the values:</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">thisset</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># add() and remove() items</span>
+
+<span class="n">thisset</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">thisset</span><span class="p">)</span>
+
+<span class="n">thisset</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">thisset</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cherry
+banana
+apple
+{&#39;cherry&#39;, &#39;orange&#39;, &#39;banana&#39;, &#39;apple&#39;}
+{&#39;cherry&#39;, &#39;orange&#39;, &#39;banana&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># join sets using union() or update()</span>
+<span class="n">set1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;cherry&#39;</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+<span class="n">set2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;kiwi&#39;</span><span class="p">,</span><span class="s1">&#39;apple&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set2</span><span class="p">)</span>
+<span class="n">set3</span> <span class="o">=</span> <span class="n">set1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">set2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set3</span><span class="p">)</span>
+<span class="n">set1</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">set2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;cherry&#39;, &#39;banana&#39;, &#39;apple&#39;}
+{&#39;kiwi&#39;, &#39;orange&#39;, &#39;apple&#39;}
+{&#39;cherry&#39;, &#39;banana&#39;, &#39;apple&#39;}
+{&#39;kiwi&#39;, &#39;orange&#39;, &#39;cherry&#39;, &#39;banana&#39;, &#39;apple&#39;}
+{&#39;kiwi&#39;, &#39;orange&#39;, &#39;cherry&#39;, &#39;banana&#39;, &#39;apple&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Keep ONLY the Duplicates using the intersection_update() method </span>
+<span class="n">set1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;cherry&#39;</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+<span class="n">set2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;kiwi&#39;</span><span class="p">,</span><span class="s1">&#39;apple&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set2</span><span class="p">)</span>
+
+<span class="n">set3</span> <span class="o">=</span> <span class="n">set1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">set2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set3</span><span class="p">)</span>
+
+<span class="n">set1</span><span class="o">.</span><span class="n">intersection_update</span><span class="p">(</span><span class="n">set2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;cherry&#39;, &#39;banana&#39;, &#39;apple&#39;}
+{&#39;kiwi&#39;, &#39;orange&#39;, &#39;apple&#39;}
+{&#39;apple&#39;}
+{&#39;apple&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Keep All, But NOT the Duplicates The symmetric_difference_update() method will keep only the elements</span>
+<span class="c1"># that are NOT present in both sets.</span>
+<span class="n">set1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;cherry&#39;</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+<span class="n">set2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;kiwi&#39;</span><span class="p">,</span><span class="s1">&#39;apple&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set2</span><span class="p">)</span>
+<span class="n">set1</span><span class="o">.</span><span class="n">symmetric_difference_update</span><span class="p">(</span><span class="n">set2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;cherry&#39;, &#39;banana&#39;, &#39;apple&#39;}
+{&#39;kiwi&#39;, &#39;orange&#39;, &#39;apple&#39;}
+{&#39;cherry&#39;, &#39;kiwi&#39;, &#39;orange&#39;, &#39;banana&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dictionaries">
+<h2>4. Dictionaries<a class="headerlink" href="#dictionaries" title="Link to this heading">#</a></h2>
+<p>Dictionaries are used to store data values in key:value pairs.
+A dictionary is a collection which is ordered*, changeable and does not allow duplicates.</p>
+<p>Dictionaries are collections of key-value pairs, where each key is unique. Dictionaries are extremely useful for storing data that is associated with specific identifiers, such as attribute data for geographic features.</p>
+<p>For example, you can use a dictionary to store attributes of a geospatial feature, such as a city.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">car</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;brand&#39;</span><span class="p">:</span> <span class="s1">&#39;Ford&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;Mustang&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="mi">1964</span>
+<span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;brand&#39;: &#39;Ford&#39;, &#39;model&#39;: &#39;Mustang&#39;, &#39;year&#39;: 1964}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># data type</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">car</span><span class="p">))</span>
+
+<span class="c1"># add items</span>
+<span class="n">car</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+
+<span class="c1"># Get the value of the &quot;model&quot; key:</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">car</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># or use get()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;dict&#39;&gt;
+{&#39;brand&#39;: &#39;Ford&#39;, &#39;model&#39;: &#39;Mustang&#39;, &#39;year&#39;: 1964, &#39;color&#39;: &#39;blue&#39;}
+Mustang
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The keys() method will return a list of all the keys in the dictionary.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Get a list of the values:</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;brand&#39;, &#39;model&#39;, &#39;year&#39;, &#39;color&#39;])
+dict_values([&#39;Ford&#39;, &#39;Mustang&#39;, 1964, &#39;blue&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># change values</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">car</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1">#before the change</span>
+<span class="n">car</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1">#after the change</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_values([&#39;Ford&#39;, &#39;Mustang&#39;, 1964, &#39;blue&#39;])
+dict_values([&#39;Ford&#39;, &#39;Mustang&#39;, 1964, &#39;red&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">city_attributes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tokyo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="mi">13929286</span><span class="p">,</span>
+    <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">35.6895</span><span class="p">,</span> <span class="mf">139.6917</span><span class="p">),</span>
+<span class="p">}</span>  <span class="c1"># Dictionary storing attributes of a city</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can access the values associated with specific keys:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">city_name</span> <span class="o">=</span> <span class="n">city_attributes</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+<span class="n">city_population</span> <span class="o">=</span> <span class="n">city_attributes</span><span class="p">[</span><span class="s2">&quot;population&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;City:&#39;</span><span class="p">,</span> <span class="n">city_name</span><span class="p">,</span> <span class="s1">&#39;Population:&#39;</span><span class="p">,</span> <span class="n">city_population</span><span class="p">)</span>
+<span class="c1"># you can also use formated string: put f in front of the string, then use {} to embed variables.</span>
+<span class="c1"># print(f&#39;City: {city_name} Population: {city_population}&#39;) </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>City: Tokyo Population: 13929286
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can also add or update key-value pairs in a dictionary:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">city_attributes</span><span class="p">[</span><span class="s2">&quot;area_km2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2191</span>  <span class="c1"># Adding the area of the city in square kilometers</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Updated city attributes:&quot;</span><span class="p">,</span> <span class="n">city_attributes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Updated city attributes: {&#39;name&#39;: &#39;Tokyo&#39;, &#39;population&#39;: 13929286, &#39;coordinates&#39;: (35.6895, 139.6917), &#39;area_km2&#39;: 2191}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<p>Create a dictionary to store attributes of a geographic feature (e.g., a river or mountain). Include keys for the name, length, and location of the feature. Then, add an additional attribute (e.g., the source of the river or the height of the mountain) and print the dictionary.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="working-with-sequences">
+<h1>Working-with-Sequences<a class="headerlink" href="#working-with-sequences" title="Link to this heading">#</a></h1>
+<section id="checking-if-an-object-is-in-a-sequence-obj-in-seq">
+<h2>Checking if an object is in a sequence: <code class="docutils literal notranslate"><span class="pre">obj</span> <span class="pre">in</span> <span class="pre">seq</span></code><a class="headerlink" href="#checking-if-an-object-is-in-a-sequence-obj-in-seq" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="mi">4</span> <span class="ow">in</span> <span class="n">seq</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="concatenating-sequences-seq1-seq2">
+<h2>Concatenating sequences: <code class="docutils literal notranslate"><span class="pre">seq1</span> <span class="pre">+seq2</span></code><a class="headerlink" href="#concatenating-sequences-seq1-seq2" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq1</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">seq2</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">seq</span> <span class="o">=</span> <span class="n">seq1</span><span class="o">+</span><span class="n">seq2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1, 2, 3, 3, 4, 5]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="repeated-concatenation-of-sequences-n-seq1-or-seq1-n">
+<h2>Repeated concatenation of sequences: <code class="docutils literal notranslate"><span class="pre">n*seq1</span></code> or <code class="docutils literal notranslate"><span class="pre">seq1*n</span></code><a class="headerlink" href="#repeated-concatenation-of-sequences-n-seq1-or-seq1-n" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="mi">2</span><span class="o">*</span><span class="n">seq</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[3, 5, 6, 7, 9, 5, 3, 5, 6, 7, 9, 5]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="asking-for-the-length-of-a-sequence">
+<h2>Asking for the length of a sequence<a class="headerlink" href="#asking-for-the-length-of-a-sequence" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="getting-the-index-of-the-first-occurence-of-the-x-in-a-sequence-seq-index-x">
+<h2>Getting the index of the first occurence of the x in a sequence: `seq.index(x)<a class="headerlink" href="#getting-the-index-of-the-first-occurence-of-the-x-in-a-sequence-seq-index-x" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">seq</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="counting-the-number-of-occurences-of-x-in-a-sequence-seq-count-x">
+<h2>Counting the number of occurences of <code class="docutils literal notranslate"><span class="pre">x</span></code> in a sequence: `seq.count(x)<a class="headerlink" href="#counting-the-number-of-occurences-of-x-in-a-sequence-seq-count-x" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+</pre></div>
+</div>
+</div>
+</div>
+<section id="indexing">
+<h3>Indexing<a class="headerlink" href="#indexing" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>0-based indexing</p></li>
+<li><p>permit negative integers</p></li>
+</ul>
+<p>+—+—+—+—+—+—+
+| P | y | t | h | o | n |
++—+—+—+—+—+—+
+0   1   2   3   4   5
+-6  -5  -4  -3  -2  -1</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq</span> <span class="o">=</span> <span class="s1">&#39;python&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p
+n
+n
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="slicing">
+<h2>Slicing<a class="headerlink" href="#slicing" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Retrieve a subsequence of items, based on the indexing scheme</p></li>
+<li><p>seq[start:end:step]: start -the index where the slice starts (inclusive), end: the index where the slice ends (exclusive), step: step size, can be negative.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[6, 9]
+[5, 7]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># start 0, end last, step 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="p">[:])</span>
+
+<span class="c1"># start 0, end last, step 2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[3, 5, 6, 7, 9, 5]
+[3, 6, 9]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># list can be a set of strings</span>
+<span class="n">species</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;London Planetree&#39;</span><span class="p">,</span> <span class="s1">&#39;HoneyLocust&#39;</span><span class="p">,</span> <span class="s1">&#39;Callery Pear&#39;</span><span class="p">,</span><span class="s1">&#39;Norway Maple&#39;</span><span class="p">]</span>
+<span class="c1"># add &#39;oak&#39; to the species list</span>
+
+<span class="c1"># List can be a mix of numbers and strings </span>
+<span class="n">tree</span> <span class="o">=</span>  <span class="p">[</span><span class="s1">&#39;London Planetree&#39;</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="s1">&#39;HoneyLocust&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;Callery Pear&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Oaks&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;Norway Maple&#39;</span><span class="p">,</span> <span class="mi">27</span><span class="p">]</span> 
+<span class="c1"># print out all the string/tree species names</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\02"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Sequence</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lists">1. Lists</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-lists">More on lists</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuples">2. Tuples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sets">3. Sets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dictionaries">4. Dictionaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-sequences">Working-with-Sequences</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-if-an-object-is-in-a-sequence-obj-in-seq">Checking if an object is in a sequence: <code class="docutils literal notranslate"><span class="pre">obj</span> <span class="pre">in</span> <span class="pre">seq</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenating-sequences-seq1-seq2">Concatenating sequences: <code class="docutils literal notranslate"><span class="pre">seq1</span> <span class="pre">+seq2</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#repeated-concatenation-of-sequences-n-seq1-or-seq1-n">Repeated concatenation of sequences: <code class="docutils literal notranslate"><span class="pre">n*seq1</span></code> or <code class="docutils literal notranslate"><span class="pre">seq1*n</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#asking-for-the-length-of-a-sequence">Asking for the length of a sequence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-index-of-the-first-occurence-of-the-x-in-a-sequence-seq-index-x">Getting the index of the first occurence of the x in a sequence: `seq.index(x)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counting-the-number-of-occurences-of-x-in-a-sequence-seq-count-x">Counting the number of occurences of <code class="docutils literal notranslate"><span class="pre">x</span></code> in a sequence: `seq.count(x)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">Indexing</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing">Slicing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

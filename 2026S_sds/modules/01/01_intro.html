@@ -1,0 +1,929 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>01 - Data Science &amp; Jupyter Notebook &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/01/01_intro';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="02 - Basic Python - 1" href="../02/02_basicPy1.html" />
+    <link rel="prev" title="GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026" href="../../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02/02_basicPy1.html">02 - Basic Python - 1</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/01/01_intro.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/modules/01/01_intro.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>01 - Data Science & Jupyter Notebook</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">01 - Data Science &amp; Jupyter Notebook</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-science-and-spatial-data-science">Data Science and Spatial Data Science</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-science">Data Science</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geospatial-data-science">GeoSpatial Data Science</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conda-and-jupyter-setup-instructions">Conda and Jupyter Setup Instructions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-terminology">Basic Terminology</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-notebook">Jupyter Notebook</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-lab">Jupyter Lab</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#anaconda-not-recommended">Anaconda (not recommended)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#miniconda-not-recommended">Miniconda (not recommended)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#miniforge-recommended">Miniforge (Recommended)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conda">Conda</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-your-environment">Setup your environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#install-conda">Install Conda</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-sds-environment">Setup SDS Environment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#to-install-jupyterlab-under-the-anaconda-prompt-windows-or-terminal-macos-linux-type">To install Jupyterlab, under the Anaconda Prompt (Windows) or Terminal (MacOS/Linux), type</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#navigate-the-jupyterlab-environment">Navigate the JupyterLab Environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-dos-command-line">Basic Dos command line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-jupyterlab">Launch JupyterLab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#close-jupyterlab-environment">Close JupyterLab Environment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-lab-environment">Jupyter Lab Environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#characteristics-of-jupyter-lab-environment">Characteristics of Jupyter Lab Environment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#two-main-components">Two Main Components</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-notebook-document">Jupyter Notebook Document</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-new-notebook-document">Creating a New Notebook Document</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-user-interface">Notebook User Interface</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#structure-of-a-notebook-document">Structure of a Notebook Document</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-python-pacakges">Install Python Pacakges</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-pip-standard-way">Using pip (standard way)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-conda-mamba-if-you-use-anaconda-miniconda">Using conda/mamba (if you use Anaconda/Miniconda)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="data-science-jupyter-notebook">
+<h1>01 - Data Science &amp; Jupyter Notebook<a class="headerlink" href="#data-science-jupyter-notebook" title="Link to this heading">#</a></h1>
+<p>Welcome to the journey to Spatial Data Science/GeoComputation 1. For the first week, we will cover the following three topics:</p>
+<ul class="simple">
+<li><p>Introduction to data science and spatial data science</p></li>
+<li><p>Required software setup</p></li>
+<li><p>Navigate a <a class="reference external" href="https://jupyter.org/">Jupyter Lab</a> environment</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="table-of-contents">
+<h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Data Science and Spatial Data Science</p></li>
+<li><p>Conda and Jupyter Setup Instructions</p></li>
+<li><p>Navigate the Jupyterlab Environment</p></li>
+<li><p>Install Packages</p></li>
+</ul>
+<section id="data-science-and-spatial-data-science">
+<h2>Data Science and Spatial Data Science<a class="headerlink" href="#data-science-and-spatial-data-science" title="Link to this heading">#</a></h2>
+<section id="data-science">
+<h3>Data Science<a class="headerlink" href="#data-science" title="Link to this heading">#</a></h3>
+<p>In our modern world, we confront abundant datasets,
+which are valuable for advancing our scientific goals. But we need the computational skills to make full use of vast amount datasets.</p>
+<p>Data Science is a child of statistics and computer science.</p>
+<p><img alt="Data Science" src="../../_images/DS.png" /></p>
+<p>A few popular jokes:</p>
+<p>“A data scientist is a statistician who lives in San Francisco.”</p>
+<p>“A data scientist is a statistician who is useful.”</p>
+<p><a class="reference external" href="https://www.coursera.org/articles/what-is-a-data-scientist">What Do Data Scientists Do?</a></p>
+<p>What are the most in-demand skills for data scientists in the <a class="reference external" href="https://365datascience.com/career-advice/career-guides/data-scientist-job-outlook-2025/#h_7765086379621741854115110">job market</a>?</p>
+<p>If you want to know what Python skills are for a data scientist, check out <a class="reference external" href="https://github.com/jakevdp/PythonDataScienceHandbook/tree/master/notebooks">Python Data Science Handbook</a></p>
+</section>
+<section id="geospatial-data-science">
+<h3>GeoSpatial Data Science<a class="headerlink" href="#geospatial-data-science" title="Link to this heading">#</a></h3>
+<p>In the environmental science field, more Earth observation data are being collected each day. A few examples:</p>
+<ul class="simple">
+<li><p>Many satellites are in space and constantly collecting data about our planet, Earth, each day. You can find more on <a class="reference external" href="https://science.nasa.gov/earth-science">NASA Earth science missions</a>.</p></li>
+<li><p>Many large network field data are being collected, two examples:
+<a class="reference external" href="https://www.neonscience.org/">The National Ecological Observatory Network, or NEON</a> is collecting ecological data from sites across the continental scale.</p></li>
+<li><p>Ground sampling data, for example, <a class="reference external" href="https://opendata.cityofnewyork.us/">NYC open data portal</a></p></li>
+</ul>
+<p><a class="reference external" href="https://www.velotio.com/engineering-blog/spatial-data-analytics-the-what-why-and-how">Spatial Data Analytics: The What, Why, and How?</a></p>
+<p>Spatial data science is an emerging field that combines data science techniques with geospatial analysis to understand and solve problems related to the location and spatial relationships of phenomena on Earth. It involves using tools and methods to analyze, visualize, and interpret spatial data, revealing patterns, trends, and insights that can inform decision-making in various sectors.</p>
+<p>Spatial data science merges several areas, including:</p>
+<ul class="simple">
+<li><p>Geospatial Analysis: The study and interpretation of geographic data through spatial algorithms.</p></li>
+<li><p>Machine Learning: The use of statistical models and machine learning algorithms to make predictions or discover patterns in geospatial data.</p></li>
+<li><p>Data Visualization: Creating maps, charts, and other visualizations that represent the spatial distribution of data.</p></li>
+<li><p>Spatial Statistics: Applying statistical techniques to understand spatial patterns and relationships.</p></li>
+</ul>
+<p>For this class, we will learn basic Python skills to obtain, analyze, and visualize those large environmental datasets.</p>
+<p>It will be beneficial and helpful if you have or are taking a remote sensing course. Otherwise,  you can learn some background on remote sensing by watching some <a class="reference external" href="https://www.earthdata.nasa.gov/data/projects/arset">online turorials</a>.</p>
+<p>What is the average salary for a <a class="reference external" href="https://www.ziprecruiter.com/Salaries/Geospatial-Data-Scientist-Salary">geospatial data scientist?</a>?</p>
+</section>
+</section>
+<section id="conda-and-jupyter-setup-instructions">
+<h2>Conda and Jupyter Setup Instructions<a class="headerlink" href="#conda-and-jupyter-setup-instructions" title="Link to this heading">#</a></h2>
+<section id="basic-terminology">
+<h3>Basic Terminology<a class="headerlink" href="#basic-terminology" title="Link to this heading">#</a></h3>
+<section id="python">
+<h4>Python<a class="headerlink" href="#python" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>A software is distributed as a series of <em>libraries</em> that are called within your code to perform certain tasks.</p></li>
+<li><p>There are many different collections, or <em>distributions</em> of Python software. Generally you install a specific distribution of Python and then add additional libraries as you need them.</p></li>
+<li><p>There are also several different <em>versions</em> of Python. Support for Python 2 ended in 2020, so you should use Python&gt;=3</p></li>
+</ul>
+</section>
+<section id="jupyter-notebook">
+<h4>Jupyter Notebook<a class="headerlink" href="#jupyter-notebook" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Jupiter Notebook is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text.</p></li>
+<li><p>Contain live code, equations, visualizations and explanatory text such as figures, links and equations</p></li>
+<li><p>Can be executed perform the data analysis in real time</p></li>
+<li><p>“Jupyter” is a loose acronym meaning Julia, Python, and R. also supports many other languages.</p></li>
+<li><p>The Jupyter Notebook App allows you to edit and run your notebooks via a web browser.</p></li>
+<li><p>The application can be executed on a PC without Internet access, or it can be installed on a remote server, where you can access it through the Internet.</p></li>
+</ul>
+</section>
+<section id="jupyter-lab">
+<h4>Jupyter Lab<a class="headerlink" href="#jupyter-lab" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>JupyterLab is the latest web-based interactive development environment for notebooks, code, and data. Its flexible
+interface allows users to configure and arrange workflows in data science, scientific computing, computational journalism, and machine learning.
+It provides flexible building blocks for interactive, exploratory computing.</p></li>
+<li><p>We will use Jupyter lab for this class.</p></li>
+</ul>
+</section>
+<section id="anaconda-not-recommended">
+<h4>Anaconda (not recommended)<a class="headerlink" href="#anaconda-not-recommended" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.anaconda.com/distribution/">Anaconda</a> is a data science platform that comes with a lot of packages/libraries.
+Anaconda is a distribution of the Python and R programming languages for scientific computing (data science, machine learning applications,
+large-scale data processing, predictive analytics, etc.), that aims to simplify package management and deployment.
+Anaconda offers the easiest way to perform Python/R data science and machine learning on a single machine.</p></li>
+<li><p>You can install Python and Jupyter notebook and conda by installing Anaconda. It particularly works better for beginners.</p></li>
+<li><p>The list of packages included can be found <a class="reference external" href="https://www.anaconda.com/"><em>here</em></a>.</p></li>
+</ul>
+</section>
+<section id="miniconda-not-recommended">
+<h4>Miniconda (not recommended)<a class="headerlink" href="#miniconda-not-recommended" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> is a free minimal installer for conda. It is a small, bootstrap version of Anaconda that includes only conda, Python, the packages they depend on, and a small number of other useful
+packages, including pip, zlib and a few others. If you don’t want Anaconda to take a lot of space,
+use minconda.</p></li>
+</ul>
+</section>
+<section id="miniforge-recommended">
+<h4>Miniforge (Recommended)<a class="headerlink" href="#miniforge-recommended" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/conda-forge/miniforge">Miniforge</a> is a minimal installer for Conda that uses the conda-forge channel by default instead of Anaconda’s defaults.
+This gives you fresher packages and broader coverage, especially for scientific and geospatial software.</p></li>
+<li><p>Like Miniconda, it only installs Conda + Python + a few basics.</p></li>
+<li><p>In this class, we recommend you install miniforge</p></li>
+</ul>
+</section>
+<section id="conda">
+<h4>Conda<a class="headerlink" href="#conda" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Package versions in Anaconda are managed by the package management system conda</p></li>
+<li><p><a class="reference external" href="http://conda.pydata.org/docs/"><strong>Conda</strong></a> is an <strong>open source <code class="docutils literal notranslate"><span class="pre">package</span></code> and <code class="docutils literal notranslate"><span class="pre">environment</span></code> management system</strong></p></li>
+<li><p>If you want to learn more in-depth on Conda, check this <a class="reference external" href="https://github.com/UW-GDA/gda_course_2021/blob/master/resources/conda.md">link</a>
+or this <a class="reference external" href="https://carpentries-incubator.github.io/introduction-to-conda-for-data-scientists/02-working-with-environments/index.html">link</a>.</p></li>
+</ul>
+</section>
+</section>
+<section id="setup-your-environment">
+<h3>Setup your environment<a class="headerlink" href="#setup-your-environment" title="Link to this heading">#</a></h3>
+<section id="install-conda">
+<h4>Install Conda<a class="headerlink" href="#install-conda" title="Link to this heading">#</a></h4>
+<p>Download and install the Python 3 version of conda.</p>
+<ul class="simple">
+<li><p>(Not Recommended) Install Anaconda, follow the instructions <a class="reference external" href="https://www.anaconda.com/download/">here</a> or
+watch this <a class="reference external" href="http://swcarpentry.github.io/python-novice-gapminder/setup.html">Youtube</a>.</p></li>
+<li><p>(Not Recommended) Install <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">minconda</a>.</p></li>
+<li><p>(Recommended) Install <a class="reference external" href="https://github.com/conda-forge/miniforge?tab=readme-ov-file">miniforge</a> - recommended for this class</p></li>
+</ul>
+</section>
+<section id="setup-sds-environment">
+<h4>Setup SDS Environment<a class="headerlink" href="#setup-sds-environment" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Start -&gt; Anaconda-&gt; Anaconda Prompt. Under Anaconda Prompt window:</p></li>
+<li><p>Create your own environment use - <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">sds</span> <span class="pre">python=3.13</span></code></p></li>
+<li><p>Activate your environment use conda - <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">sds</span></code></p></li>
+</ul>
+</section>
+<section id="to-install-jupyterlab-under-the-anaconda-prompt-windows-or-terminal-macos-linux-type">
+<h4>To install Jupyterlab, under the Anaconda Prompt (Windows) or Terminal (MacOS/Linux), type<a class="headerlink" href="#to-install-jupyterlab-under-the-anaconda-prompt-windows-or-terminal-macos-linux-type" title="Link to this heading">#</a></h4>
+<p>I suggest using mamba to install packages, it does the same thing as conda, but work much faster than conda.
+To install mamba:</p>
+<ul class="simple">
+<li><p>conda install -n base -c conda-forge mamba</p></li>
+</ul>
+<p>Now you can install Jupyter Lab using mamba:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mamba</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">jupyterlab</span></code></p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="navigate-the-jupyterlab-environment">
+<h2>Navigate the JupyterLab Environment<a class="headerlink" href="#navigate-the-jupyterlab-environment" title="Link to this heading">#</a></h2>
+<section id="basic-dos-command-line">
+<h3>Basic Dos command line<a class="headerlink" href="#basic-dos-command-line" title="Link to this heading">#</a></h3>
+<p>Check out this <a class="reference external" href="https://www.computerhope.com/issues/chusedos.htm">link</a></p>
+<p>Open a Windows command line window by following the steps below:
+Click <code class="docutils literal notranslate"><span class="pre">Start</span></code>, In the <code class="docutils literal notranslate"><span class="pre">Search</span></code> or <code class="docutils literal notranslate"><span class="pre">Run</span></code> line, type <code class="docutils literal notranslate"><span class="pre">cmd</span></code> (short for command), and press <code class="docutils literal notranslate"><span class="pre">Enter</span></code>.  The Windows command line should be shown. Typically, Windows starts you at your user directory.
+Key tips</p>
+<ul class="simple">
+<li><p>MS-DOS and the Windows command line are not case sensitive.</p></li>
+<li><p>The files and directories shown in Windows are also found in the command line.</p></li>
+<li><p>When working with a file or directory with a space, surround it in quotes. For example, the directory My Documents would be “My Documents” when typed.</p></li>
+<li><p>File names can have a long file name of 255 characters and a three-character file extension.</p></li>
+<li><p>When a file or directory is deleted in the command line, it is not moved into the Recycle Bin.</p></li>
+<li></li>
+</ul>
+<p>If you need help with any of the command type /? after the command, here is a list of a few commonly used commands:</p>
+<ul class="simple">
+<li><p>Listing the files –  type `dir or dir –p’ (page by page)</p></li>
+<li><p>Moving into a directory – type  <code class="docutils literal notranslate"><span class="pre">cd</span></code> command</p></li>
+<li><p>View the contents of a file – type  <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">filename</span></code></p></li>
+<li><p>Moving back a directory – type <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code> (going up), or <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">\users\wenge</span></code></p></li>
+<li><p>Creating a directory – type <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">dirname</span></code></p></li>
+<li><p>Switching drives–  type the letter of the drive:a colon, e.g. <code class="docutils literal notranslate"><span class="pre">d:</span></code> or <code class="docutils literal notranslate"><span class="pre">c:</span></code> and hit enter</p></li>
+<li><p>Creating a new file – <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">filename</span></code></p></li>
+<li><p>Moving and copying a file  – <code class="docutils literal notranslate"><span class="pre">move</span> <span class="pre">file1</span> <span class="pre">file2</span></code> or <code class="docutils literal notranslate"><span class="pre">copy</span> <span class="pre">file1</span> <span class="pre">file2</span></code></p></li>
+<li><p>Renaming a file – <code class="docutils literal notranslate"><span class="pre">rename</span> <span class="pre">f1</span> <span class="pre">f2</span></code></p></li>
+<li><p>Deleting a file – <code class="docutils literal notranslate"><span class="pre">del</span> <span class="pre">filename</span></code></p></li>
+<li><p>Removing a directory – <code class="docutils literal notranslate"><span class="pre">rmdir</span> <span class="pre">dirname</span></code></p></li>
+<li><p>Running a program – type the name of the executable file</p></li>
+<li><p>How to list available commands – <code class="docutils literal notranslate"><span class="pre">help</span></code></p></li>
+<li><p>Closing or exiting the command line window – type <code class="docutils literal notranslate"><span class="pre">exit</span></code></p></li>
+</ul>
+</section>
+<section id="launch-jupyterlab">
+<h3>Launch JupyterLab<a class="headerlink" href="#launch-jupyterlab" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>You  can start Jupyter Lab through Miniforge Prompt.window. For Window version:
+<code class="docutils literal notranslate"><span class="pre">Window</span> <span class="pre">Start</span> <span class="pre">Menu-&gt;Miniforge</span> <span class="pre">Prompt</span></code> to launch your minforge prompt, then type,
+<code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">your</span> <span class="pre">working</span> <span class="pre">directory</span></code>
+<code class="docutils literal notranslate"><span class="pre">Jupyter</span> <span class="pre">Lab</span></code>
+Hit enter, then you’ll see the application opening in the web browser on the following address: <a class="reference external" href="http://localhost:8888">http://localhost:8888</a>.
+Next time, when you login, repeat these steps again to start JupyterLab.</p></li>
+</ul>
+</section>
+<section id="close-jupyterlab-environment">
+<h3>Close JupyterLab Environment<a class="headerlink" href="#close-jupyterlab-environment" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>If You start JupyterLab in the Terminal, find the terminal where JupyterLab is running, press <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">C</span> <span class="pre">(on</span> <span class="pre">macOS:</span> <span class="pre">Control</span> <span class="pre">+</span> <span class="pre">C)</span></code> once or twice. It will ask: Shutdown this Jupyter server (y/[n])? Type <code class="docutils literal notranslate"><span class="pre">y</span></code> and press Enter.</p></li>
+</ul>
+</section>
+<section id="jupyter-lab-environment">
+<h3>Jupyter Lab Environment<a class="headerlink" href="#jupyter-lab-environment" title="Link to this heading">#</a></h3>
+<p><a class="reference external" href="https://jupyterlab.readthedocs.io/en/latest/">Jupyter Lab</a> is a web-based interactive development environment (IDE) for data science, coding, and documentation.JupyterLab enables you to work with documents and activities such as Jupyter notebooks, text editors, terminals, and custom components in a flexible, integrated, and extensible manner.</p>
+<section id="characteristics-of-jupyter-lab-environment">
+<h4>Characteristics of Jupyter Lab Environment<a class="headerlink" href="#characteristics-of-jupyter-lab-environment" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Web-based interface: Runs in your browser, but executes code locally.</p></li>
+<li><p>Multi-document Layout: You can open multiple notebooks, terminals, text files, and plots side by side.</p></li>
+<li><p>Support multiple format files - Jupyter Notebook, images, CSV, JSON, Markdown, PDF, HDF5, Vega, Vega-Lite, LaTeX, and many more.</p></li>
+<li><p>Kernel-based Execution: Code runs through kernels (e.g., Python). You can have multiple kernels running simultaneously. You can drag-and-drop to rearrange panels.</p></li>
+<li><p>Cross-Platform: Works on macOS, Windows, Linux — as long as you have Python installed.</p></li>
+<li><p>A brief <a class="reference external" href="https://youtu.be/A5YyoCKxEOU">introduction to Jupyter Lab</a></p></li>
+</ul>
+</section>
+<section id="two-main-components">
+<h4>Two Main Components<a class="headerlink" href="#two-main-components" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>A kernel is a program that runs and introspects the user’s code. The Jupyter Notebook App has a kernel for Python code, but kernels are also available for other programming languages.</p></li>
+<li><p>The dashboard of the application not only shows you the notebook documents that you have made and can reopen, but can also be used to manage the kernels: you can see which ones are running and shut them down if necessary</p></li>
+</ul>
+</section>
+</section>
+<section id="jupyter-notebook-document">
+<h3>Jupyter Notebook Document<a class="headerlink" href="#jupyter-notebook-document" title="Link to this heading">#</a></h3>
+<p><a class="reference internal" href="#ttps://jupyter-notebook.readthedocs.io/en/latest/notebook.html"><span class="xref myst">A Jupyter notebook</span></a> is a shareable document that combines computer code, plain language descriptions, data, rich visualizations like 3D models, charts, graphs and figures, and interactive controls. With like JupyterLab as an editor, it provides a fast interactive environment for prototyping and explaining code, exploring and visualizing data, and sharing ideas with others.</p>
+<section id="creating-a-new-notebook-document">
+<h4>Creating a New Notebook Document<a class="headerlink" href="#creating-a-new-notebook-document" title="Link to this heading">#</a></h4>
+<p>A new notebook may be created anytime, either from the dashboard, or using the File ‣ New menu option from within an active notebook. The new notebook is created within the same directory and will open in a new browser tab. It will also be reflected as a new entry in the notebook list on the dashboard.</p>
+</section>
+<section id="notebook-user-interface">
+<h4>Notebook User Interface<a class="headerlink" href="#notebook-user-interface" title="Link to this heading">#</a></h4>
+<p>Once you open a new notebook, you see the notebook name, a menu bar, a toolbar and an empty code cell.<img alt="Data Science" src="../../_images/notebook.png" /></p>
+</section>
+<section id="structure-of-a-notebook-document">
+<h4>Structure of a Notebook Document<a class="headerlink" href="#structure-of-a-notebook-document" title="Link to this heading">#</a></h4>
+<p>The notebook consists of a sequence of cells. A cell is a multiline text input field, and its contents can be executed by using Shift-Enter, or by clicking either the “Play” button in the toolbar, or Cell, Run in the menu bar.</p>
+<p>There are three types of cells: code cells, markdown cells, and raw cells. Every cell starts off being a code cell, but its type can be changed by using a drop-down on the toolbar (which will be “Code”, initially), or via keyboard shortcuts.</p>
+<ul class="simple">
+<li><p><strong>Code cells</strong> allow you to edit and write new code, with full syntax highlighting and tab completion. The programming language you use depends on the kernel, and the default kernel (IPython) runs Python code</p></li>
+<li><p><strong>Markdown cells</strong> allow you to document the computational process using descriptive rich texts. In IPython, this is accomplished by marking up text with the <a class="reference external" href="https://www.markdownguide.org/getting-started/">Markdown language</a>. When a Markdown cell is executed, the Markdown code is converted into the corresponding formatted rich text. Here is the <a class="reference external" href="https://www.markdownguide.org/basic-syntax/">Markdown syntax</a> and a simple <a class="reference external" href="https://www.markdownguide.org/cheat-sheet/">Cheat Sheet</a> to get you started.</p></li>
+<li><p><strong>Raw cells</strong>  provide a place in which you can write output directly.The notebook does not evaluate raw cellsk</p></li>
+</ul>
+</section>
+<section id="keyboard-shortcuts">
+<h4>Keyboard Shortcuts<a class="headerlink" href="#keyboard-shortcuts" title="Link to this heading">#</a></h4>
+<p>All actions in the notebook can be performed with the mouse, but keyboard shortcuts are also available and it can be convenient once you get familiar with them.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Shift-Enter</span></code>: run the current cell, show any output, and jump to the next cell below.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Ctrl-F</span></code>: find a text in the document</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Esc</span></code>: enter Command mode, you can use keyboard shortcuts:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code> → insert a cell above.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code> → insert a cell below.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code> → copy a cell.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code> → paste a cell.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> → cut a cell.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dd</span></code> → delete a cell.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">z</span></code> → undo.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shift</span> <span class="pre">+</span> <span class="pre">z</span></code> → redo.</p></li>
+<li><p>Change the format of a cell</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">m</span></code> → Markdown cell.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code> → Code cell.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">r</span></code> → Raw cell.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Enter</span></code>: enter Edit mode, you can edit text in cells)</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="install-python-pacakges">
+<h2>Install Python Pacakges<a class="headerlink" href="#install-python-pacakges" title="Link to this heading">#</a></h2>
+<p>There are two basic approaches to installing Python packages</p>
+<section id="using-pip-standard-way">
+<h3>Using pip (standard way)<a class="headerlink" href="#using-pip-standard-way" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">package_name</span></code></p></li>
+<li><p>Prefer pip for general packages (wider availability).</p></li>
+</ul>
+</section>
+<section id="using-conda-mamba-if-you-use-anaconda-miniconda">
+<h3>Using conda/mamba (if you use Anaconda/Miniconda)<a class="headerlink" href="#using-conda-mamba-if-you-use-anaconda-miniconda" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mamba</span> <span class="pre">install</span> <span class="pre">pacakage_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mamba</span> <span class="pre">install</span> <span class="pre">pandas</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mamba</span> <span class="pre">install</span> <span class="pre">numpy</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mamba</span> <span class="pre">install</span> <span class="pre">matplotlib</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mamba</span> <span class="pre">install</span> <span class="pre">hvplot</span></code></p></li>
+</ul>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.pythonlikeyoumeanit.com/module_1.html">Python Like You Mean It - module 1</a></p></li>
+<li><p><a class="reference external" href="https://www.pythonlikeyoumeanit.com/module_2.html">Be ready for next week</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\01"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../02/02_basicPy1.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">02 - Basic Python - 1</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">01 - Data Science &amp; Jupyter Notebook</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-science-and-spatial-data-science">Data Science and Spatial Data Science</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-science">Data Science</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geospatial-data-science">GeoSpatial Data Science</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conda-and-jupyter-setup-instructions">Conda and Jupyter Setup Instructions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-terminology">Basic Terminology</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-notebook">Jupyter Notebook</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-lab">Jupyter Lab</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#anaconda-not-recommended">Anaconda (not recommended)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#miniconda-not-recommended">Miniconda (not recommended)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#miniforge-recommended">Miniforge (Recommended)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conda">Conda</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-your-environment">Setup your environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#install-conda">Install Conda</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-sds-environment">Setup SDS Environment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#to-install-jupyterlab-under-the-anaconda-prompt-windows-or-terminal-macos-linux-type">To install Jupyterlab, under the Anaconda Prompt (Windows) or Terminal (MacOS/Linux), type</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#navigate-the-jupyterlab-environment">Navigate the JupyterLab Environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-dos-command-line">Basic Dos command line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-jupyterlab">Launch JupyterLab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#close-jupyterlab-environment">Close JupyterLab Environment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-lab-environment">Jupyter Lab Environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#characteristics-of-jupyter-lab-environment">Characteristics of Jupyter Lab Environment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#two-main-components">Two Main Components</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-notebook-document">Jupyter Notebook Document</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-new-notebook-document">Creating a New Notebook Document</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-user-interface">Notebook User Interface</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#structure-of-a-notebook-document">Structure of a Notebook Document</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-python-pacakges">Install Python Pacakges</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-pip-standard-way">Using pip (standard way)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-conda-mamba-if-you-use-anaconda-miniconda">Using conda/mamba (if you use Anaconda/Miniconda)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
