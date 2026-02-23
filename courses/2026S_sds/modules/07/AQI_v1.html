@@ -1,0 +1,2653 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>&lt;no title&gt; &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/07/AQI_v1';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01/01_intro.html">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02/02_basicPy1.html">02 - Basic Python - 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03_basicPy2.html">03 - Basic Python - 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04_Numpy_Pandas1.html">04 - Numpy and Pandas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Midterm_Exam.html">07 - Midterm Exam</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/07/AQI_v1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/modules/07/AQI_v1.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><no title></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pdb</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read site listing data  - https://aqs.epa.gov/aqsweb/airdata/download_files.html#AQI</span>
+<span class="n">sites</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://aqs.epa.gov/aqsweb/airdata/aqs_sites.zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">sites</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">sites</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+(20952, 28)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;State Code&#39;, &#39;County Code&#39;, &#39;Site Number&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;,
+       &#39;Datum&#39;, &#39;Elevation&#39;, &#39;Land Use&#39;, &#39;Location Setting&#39;,
+       &#39;Site Established Date&#39;, &#39;Site Closed Date&#39;, &#39;Met Site State Code&#39;,
+       &#39;Met Site County Code&#39;, &#39;Met Site Site Number&#39;, &#39;Met Site Type&#39;,
+       &#39;Met Site Distance&#39;, &#39;Met Site Direction&#39;, &#39;GMT Offset&#39;,
+       &#39;Owning Agency&#39;, &#39;Local Site Name&#39;, &#39;Address&#39;, &#39;Zip Code&#39;, &#39;State Name&#39;,
+       &#39;County Name&#39;, &#39;City Name&#39;, &#39;CBSA Name&#39;, &#39;Tribe Name&#39;,
+       &#39;Extraction Date&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use bitwise operators</span>
+<span class="c1"># &amp; for and </span>
+<span class="c1"># | for or </span>
+<span class="n">a</span><span class="o">=</span> <span class="n">sites</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sites</span><span class="p">[</span><span class="s1">&#39;State Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;New York&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;State Code&#39;</span><span class="p">,</span> <span class="s1">&#39;County Code&#39;</span><span class="p">,</span> <span class="s1">&#39;Site Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Location Setting&#39;</span><span class="p">,</span> <span class="s1">&#39;State Name&#39;</span><span class="p">,</span> <span class="s1">&#39;County Name&#39;</span><span class="p">,</span> <span class="s1">&#39;City Name&#39;</span><span class="p">]]</span>
+<span class="n">a</span><span class="o">=</span> <span class="n">sites</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">sites</span><span class="p">[</span><span class="s1">&#39;State Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;New York&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sites</span><span class="p">[</span><span class="s1">&#39;County Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;New York&#39;</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;State Code&#39;</span><span class="p">,</span> <span class="s1">&#39;County Code&#39;</span><span class="p">,</span> <span class="s1">&#39;Site Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Location Setting&#39;</span><span class="p">,</span> <span class="s1">&#39;State Name&#39;</span><span class="p">,</span> <span class="s1">&#39;County Name&#39;</span><span class="p">,</span> <span class="s1">&#39;City Name&#39;</span><span class="p">]]</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>State Code</th>
+      <th>County Code</th>
+      <th>Site Number</th>
+      <th>Location Setting</th>
+      <th>State Name</th>
+      <th>County Name</th>
+      <th>City Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>12387</th>
+      <td>36</td>
+      <td>61</td>
+      <td>1</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12388</th>
+      <td>36</td>
+      <td>61</td>
+      <td>2</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12389</th>
+      <td>36</td>
+      <td>61</td>
+      <td>5</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12390</th>
+      <td>36</td>
+      <td>61</td>
+      <td>10</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12391</th>
+      <td>36</td>
+      <td>61</td>
+      <td>13</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12392</th>
+      <td>36</td>
+      <td>61</td>
+      <td>14</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12393</th>
+      <td>36</td>
+      <td>61</td>
+      <td>23</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12394</th>
+      <td>36</td>
+      <td>61</td>
+      <td>24</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12395</th>
+      <td>36</td>
+      <td>61</td>
+      <td>37</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12396</th>
+      <td>36</td>
+      <td>61</td>
+      <td>50</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12397</th>
+      <td>36</td>
+      <td>61</td>
+      <td>51</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12398</th>
+      <td>36</td>
+      <td>61</td>
+      <td>53</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12399</th>
+      <td>36</td>
+      <td>61</td>
+      <td>56</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12400</th>
+      <td>36</td>
+      <td>61</td>
+      <td>57</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12401</th>
+      <td>36</td>
+      <td>61</td>
+      <td>58</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12402</th>
+      <td>36</td>
+      <td>61</td>
+      <td>59</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12403</th>
+      <td>36</td>
+      <td>61</td>
+      <td>60</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12404</th>
+      <td>36</td>
+      <td>61</td>
+      <td>61</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12405</th>
+      <td>36</td>
+      <td>61</td>
+      <td>62</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12406</th>
+      <td>36</td>
+      <td>61</td>
+      <td>63</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12407</th>
+      <td>36</td>
+      <td>61</td>
+      <td>65</td>
+      <td>SUBURBAN</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12408</th>
+      <td>36</td>
+      <td>61</td>
+      <td>69</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12409</th>
+      <td>36</td>
+      <td>61</td>
+      <td>75</td>
+      <td>SUBURBAN</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12410</th>
+      <td>36</td>
+      <td>61</td>
+      <td>77</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12411</th>
+      <td>36</td>
+      <td>61</td>
+      <td>79</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12412</th>
+      <td>36</td>
+      <td>61</td>
+      <td>81</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12413</th>
+      <td>36</td>
+      <td>61</td>
+      <td>82</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12414</th>
+      <td>36</td>
+      <td>61</td>
+      <td>92</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12415</th>
+      <td>36</td>
+      <td>61</td>
+      <td>93</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12416</th>
+      <td>36</td>
+      <td>61</td>
+      <td>95</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12417</th>
+      <td>36</td>
+      <td>61</td>
+      <td>100</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12418</th>
+      <td>36</td>
+      <td>61</td>
+      <td>115</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12419</th>
+      <td>36</td>
+      <td>61</td>
+      <td>117</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12420</th>
+      <td>36</td>
+      <td>61</td>
+      <td>119</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12421</th>
+      <td>36</td>
+      <td>61</td>
+      <td>123</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>Not in a city</td>
+    </tr>
+    <tr>
+      <th>12422</th>
+      <td>36</td>
+      <td>61</td>
+      <td>125</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12423</th>
+      <td>36</td>
+      <td>61</td>
+      <td>126</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12424</th>
+      <td>36</td>
+      <td>61</td>
+      <td>127</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12425</th>
+      <td>36</td>
+      <td>61</td>
+      <td>128</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12426</th>
+      <td>36</td>
+      <td>61</td>
+      <td>130</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12427</th>
+      <td>36</td>
+      <td>61</td>
+      <td>134</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12428</th>
+      <td>36</td>
+      <td>61</td>
+      <td>135</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>New York</td>
+      <td>New York</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use bitwise operators</span>
+<span class="c1"># &amp; for and </span>
+<span class="c1"># | for or </span>
+<span class="n">a</span><span class="o">=</span> <span class="n">sites</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sites</span><span class="p">[</span><span class="s1">&#39;State Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;New York&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;State Code&#39;</span><span class="p">,</span> <span class="s1">&#39;County Code&#39;</span><span class="p">,</span> <span class="s1">&#39;Site Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Location Setting&#39;</span><span class="p">,</span> <span class="s1">&#39;State Name&#39;</span><span class="p">,</span> <span class="s1">&#39;County Name&#39;</span><span class="p">,</span> <span class="s1">&#39;City Name&#39;</span><span class="p">]]</span>
+<span class="n">a</span><span class="o">=</span> <span class="n">sites</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">sites</span><span class="p">[</span><span class="s1">&#39;State Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;New York&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sites</span><span class="p">[</span><span class="s1">&#39;County Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Queens&#39;</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;State Code&#39;</span><span class="p">,</span> <span class="s1">&#39;County Code&#39;</span><span class="p">,</span> <span class="s1">&#39;Site Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Location Setting&#39;</span><span class="p">,</span> <span class="s1">&#39;State Name&#39;</span><span class="p">,</span> <span class="s1">&#39;County Name&#39;</span><span class="p">,</span> <span class="s1">&#39;City Name&#39;</span><span class="p">]]</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>State Code</th>
+      <th>County Code</th>
+      <th>Site Number</th>
+      <th>Location Setting</th>
+      <th>State Name</th>
+      <th>County Name</th>
+      <th>City Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>12556</th>
+      <td>36</td>
+      <td>81</td>
+      <td>4</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12557</th>
+      <td>36</td>
+      <td>81</td>
+      <td>8</td>
+      <td>SUBURBAN</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12558</th>
+      <td>36</td>
+      <td>81</td>
+      <td>15</td>
+      <td>SUBURBAN</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12559</th>
+      <td>36</td>
+      <td>81</td>
+      <td>16</td>
+      <td>SUBURBAN</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12560</th>
+      <td>36</td>
+      <td>81</td>
+      <td>20</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12561</th>
+      <td>36</td>
+      <td>81</td>
+      <td>26</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12562</th>
+      <td>36</td>
+      <td>81</td>
+      <td>29</td>
+      <td>SUBURBAN</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12563</th>
+      <td>36</td>
+      <td>81</td>
+      <td>30</td>
+      <td>SUBURBAN</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12564</th>
+      <td>36</td>
+      <td>81</td>
+      <td>40</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12565</th>
+      <td>36</td>
+      <td>81</td>
+      <td>41</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12566</th>
+      <td>36</td>
+      <td>81</td>
+      <td>42</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12567</th>
+      <td>36</td>
+      <td>81</td>
+      <td>43</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12568</th>
+      <td>36</td>
+      <td>81</td>
+      <td>44</td>
+      <td>SUBURBAN</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12569</th>
+      <td>36</td>
+      <td>81</td>
+      <td>47</td>
+      <td>SUBURBAN</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12570</th>
+      <td>36</td>
+      <td>81</td>
+      <td>54</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12571</th>
+      <td>36</td>
+      <td>81</td>
+      <td>70</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12572</th>
+      <td>36</td>
+      <td>81</td>
+      <td>84</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12573</th>
+      <td>36</td>
+      <td>81</td>
+      <td>94</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12574</th>
+      <td>36</td>
+      <td>81</td>
+      <td>96</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12575</th>
+      <td>36</td>
+      <td>81</td>
+      <td>97</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12576</th>
+      <td>36</td>
+      <td>81</td>
+      <td>98</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12577</th>
+      <td>36</td>
+      <td>81</td>
+      <td>116</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12578</th>
+      <td>36</td>
+      <td>81</td>
+      <td>120</td>
+      <td>SUBURBAN</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12579</th>
+      <td>36</td>
+      <td>81</td>
+      <td>124</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+    <tr>
+      <th>12580</th>
+      <td>36</td>
+      <td>81</td>
+      <td>125</td>
+      <td>URBAN AND CENTER CITY</td>
+      <td>New York</td>
+      <td>Queens</td>
+      <td>New York</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Site to download air quality data  </span>
+<span class="c1"># https://aqs.epa.gov/aqsweb/airdata/download_files.html#AQI</span>
+<span class="c1">#https://aqs.epa.gov/aqsweb/airdata/daily_88101_2021.zip - daily  PM2.5 </span>
+
+<span class="n">pm25_daily_2020</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://aqs.epa.gov/aqsweb/airdata/daily_88101_2020.zip&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date Local&#39;</span><span class="p">])</span> 
+<span class="n">O3_daily_2020</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://aqs.epa.gov/aqsweb/airdata/daily_44201_2020.zip&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date Local&#39;</span><span class="p">])</span>
+<span class="n">SO2_daily_2020</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://aqs.epa.gov/aqsweb/airdata/daily_42401_2020.zip&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date Local&#39;</span><span class="p">])</span>
+<span class="n">CO_daily_2020</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://aqs.epa.gov/aqsweb/airdata/daily_42101_2020.zip&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date Local&#39;</span><span class="p">])</span>
+<span class="n">NO2_daily_2020</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://aqs.epa.gov/aqsweb/airdata/daily_42602_2020.zip&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date Local&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Site to download air quality data  </span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># https://aqs.epa.gov/aqsweb/airdata/download_files.html#AQI</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1">#https://aqs.epa.gov/aqsweb/airdata/daily_88101_2021.zip - daily  PM2.5 </span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">pm25_daily_2020</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://aqs.epa.gov/aqsweb/airdata/daily_88101_2020.zip&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date Local&#39;</span><span class="p">])</span> 
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">O3_daily_2020</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://aqs.epa.gov/aqsweb/airdata/daily_44201_2020.zip&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date Local&#39;</span><span class="p">])</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">SO2_daily_2020</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://aqs.epa.gov/aqsweb/airdata/daily_42401_2020.zip&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date Local&#39;</span><span class="p">])</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\parsers\readers.py:1026,</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1013</span> <span class="n">kwds_defaults</span> <span class="o">=</span> <span class="n">_refine_defaults_read</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1014</span>     <span class="n">dialect</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1015</span>     <span class="n">delimiter</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">1022</span>     <span class="n">dtype_backend</span><span class="o">=</span><span class="n">dtype_backend</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1023</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1024</span> <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1026</span> <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\parsers\readers.py:620,</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">617</span> <span class="n">_validate_names</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">619</span> <span class="c1"># Create the parser.</span>
+<span class="ne">--&gt; </span><span class="mi">620</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">622</span> <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">623</span>     <span class="k">return</span> <span class="n">parser</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\parsers\readers.py:1620,</span> in <span class="ni">TextFileReader.__init__</span><span class="nt">(self, f, engine, **kwds)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1617</span>     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1619</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span> <span class="n">IOHandles</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="ne">-&gt; </span><span class="mi">1620</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\parsers\readers.py:1880,</span> in <span class="ni">TextFileReader._make_engine</span><span class="nt">(self, f, engine)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1878</span>     <span class="k">if</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1879</span>         <span class="n">mode</span> <span class="o">+=</span> <span class="s2">&quot;b&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1880</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="o">=</span> <span class="n">get_handle</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1881</span>     <span class="n">f</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1882</span>     <span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1883</span>     <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1884</span>     <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;compression&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1885</span>     <span class="n">memory_map</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_map&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1886</span>     <span class="n">is_text</span><span class="o">=</span><span class="n">is_text</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1887</span>     <span class="n">errors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding_errors&quot;</span><span class="p">,</span> <span class="s2">&quot;strict&quot;</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1888</span>     <span class="n">storage_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storage_options&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1889</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1890</span> <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1891</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">handle</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\common.py:805,</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">803</span>             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Zero files found in ZIP file </span><span class="si">{</span><span class="n">path_or_buf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">804</span>         <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">805</span>             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">806</span>                 <span class="s2">&quot;Multiple files found in ZIP file. &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">807</span>                 <span class="sa">f</span><span class="s2">&quot;Only one file per ZIP: </span><span class="si">{</span><span class="n">zip_names</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">808</span>             <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">810</span> <span class="c1"># TAR Encoding</span>
+<span class="g g-Whitespace">    </span><span class="mi">811</span> <span class="k">elif</span> <span class="n">compression</span> <span class="o">==</span> <span class="s2">&quot;tar&quot;</span><span class="p">:</span>
+
+<span class="ne">ValueError</span>: Multiple files found in ZIP file. Only one file per ZIP: [&#39;daily_88101_2020/&#39;, &#39;daily_88101_2020/daily_88101_2020.csv&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm25_daily_2020</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(555298, 29)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm25_daily_2020</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;State Code&#39;, &#39;County Code&#39;, &#39;Site Num&#39;, &#39;Parameter Code&#39;, &#39;POC&#39;,
+       &#39;Latitude&#39;, &#39;Longitude&#39;, &#39;Datum&#39;, &#39;Parameter Name&#39;, &#39;Sample Duration&#39;,
+       &#39;Pollutant Standard&#39;, &#39;Date Local&#39;, &#39;Units of Measure&#39;, &#39;Event Type&#39;,
+       &#39;Observation Count&#39;, &#39;Observation Percent&#39;, &#39;Arithmetic Mean&#39;,
+       &#39;1st Max Value&#39;, &#39;1st Max Hour&#39;, &#39;AQI&#39;, &#39;Method Code&#39;, &#39;Method Name&#39;,
+       &#39;Local Site Name&#39;, &#39;Address&#39;, &#39;State Name&#39;, &#39;County Name&#39;, &#39;City Name&#39;,
+       &#39;CBSA Name&#39;, &#39;Date of Last Change&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">O3_daily_2020</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(391845, 29)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SO2_daily_2020</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(324817, 29)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CO_daily_2020</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(178789, 29)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NO2_daily_2020</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(157726, 29)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm25_daily_2020</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>State Code</th>
+      <th>County Code</th>
+      <th>Site Num</th>
+      <th>Parameter Code</th>
+      <th>POC</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Datum</th>
+      <th>Parameter Name</th>
+      <th>Sample Duration</th>
+      <th>...</th>
+      <th>AQI</th>
+      <th>Method Code</th>
+      <th>Method Name</th>
+      <th>Local Site Name</th>
+      <th>Address</th>
+      <th>State Name</th>
+      <th>County Name</th>
+      <th>City Name</th>
+      <th>CBSA Name</th>
+      <th>Date of Last Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>48.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>13.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>14.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>39.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>29.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>15.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>10.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>38.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>17.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>20.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>30.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>16.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>21.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>24.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>31.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>29.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>17.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>15.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>20.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>30.497478</td>
+      <td>-87.880258</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24 HOUR</td>
+      <td>...</td>
+      <td>16.0</td>
+      <td>145.0</td>
+      <td>R &amp; P Model 2025 PM-2.5 Sequential Air Sampler...</td>
+      <td>FAIRHOPE, Alabama</td>
+      <td>FAIRHOPE HIGH SCHOOL, 1 PIRATE DRIVE, FAIRHOPE...</td>
+      <td>Alabama</td>
+      <td>Baldwin</td>
+      <td>Fairhope</td>
+      <td>Daphne-Fairhope-Foley, AL</td>
+      <td>2021-10-30</td>
+    </tr>
+  </tbody>
+</table>
+<p>20 rows × 29 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm25_daily_2020</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>State Code</th>
+      <th>County Code</th>
+      <th>Site Num</th>
+      <th>Parameter Code</th>
+      <th>POC</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Datum</th>
+      <th>Parameter Name</th>
+      <th>Sample Duration</th>
+      <th>...</th>
+      <th>AQI</th>
+      <th>Method Code</th>
+      <th>Method Name</th>
+      <th>Local Site Name</th>
+      <th>Address</th>
+      <th>State Name</th>
+      <th>County Name</th>
+      <th>City Name</th>
+      <th>CBSA Name</th>
+      <th>Date of Last Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>232723</th>
+      <td>25</td>
+      <td>9</td>
+      <td>5005</td>
+      <td>88101</td>
+      <td>3</td>
+      <td>42.770837</td>
+      <td>-71.102290</td>
+      <td>WGS84</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>1 HOUR</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>170.0</td>
+      <td>Met One BAM-1020 Mass Monitor w/VSCC - Beta At...</td>
+      <td>CONSENTINO SCHOOL.</td>
+      <td>685 WASHINGTON STREET</td>
+      <td>Massachusetts</td>
+      <td>Essex</td>
+      <td>Haverhill</td>
+      <td>Boston-Cambridge-Newton, MA-NH</td>
+      <td>2021-10-31</td>
+    </tr>
+    <tr>
+      <th>71468</th>
+      <td>6</td>
+      <td>79</td>
+      <td>2006</td>
+      <td>88101</td>
+      <td>3</td>
+      <td>35.256510</td>
+      <td>-120.669300</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24-HR BLK AVG</td>
+      <td>...</td>
+      <td>35.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>San Luis Obispo</td>
+      <td>3220 SOUTH HIGUERA STREET, SAN LUIS OBISPO</td>
+      <td>California</td>
+      <td>San Luis Obispo</td>
+      <td>San Luis Obispo</td>
+      <td>San Luis Obispo-Paso Robles-Arroyo Grande, CA</td>
+      <td>2021-10-31</td>
+    </tr>
+    <tr>
+      <th>270092</th>
+      <td>28</td>
+      <td>35</td>
+      <td>4</td>
+      <td>88101</td>
+      <td>3</td>
+      <td>31.323890</td>
+      <td>-89.292200</td>
+      <td>WGS84</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>1 HOUR</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>236.0</td>
+      <td>Teledyne T640 at 5.0 LPM - Broadband spectroscopy</td>
+      <td>Hattiesburg</td>
+      <td>205 Bay Street</td>
+      <td>Mississippi</td>
+      <td>Forrest</td>
+      <td>Hattiesburg</td>
+      <td>Hattiesburg, MS</td>
+      <td>2021-10-31</td>
+    </tr>
+    <tr>
+      <th>459020</th>
+      <td>47</td>
+      <td>157</td>
+      <td>100</td>
+      <td>88101</td>
+      <td>3</td>
+      <td>35.161260</td>
+      <td>-89.870650</td>
+      <td>WGS84</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>1 HOUR</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>236.0</td>
+      <td>Teledyne T640 at 5.0 LPM - Broadband spectroscopy</td>
+      <td>Near Road Site at Southwest Tennessee Communit...</td>
+      <td>5767 Macon Cove (Near Road Site)</td>
+      <td>Tennessee</td>
+      <td>Shelby</td>
+      <td>Memphis</td>
+      <td>Memphis, TN-MS-AR</td>
+      <td>2022-04-07</td>
+    </tr>
+    <tr>
+      <th>412690</th>
+      <td>42</td>
+      <td>45</td>
+      <td>109</td>
+      <td>88101</td>
+      <td>7</td>
+      <td>39.818715</td>
+      <td>-75.413973</td>
+      <td>WGS84</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24-HR BLK AVG</td>
+      <td>...</td>
+      <td>28.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>Marcus Hook</td>
+      <td>MARCUS HOOK ELEMENTARY SCHOOL</td>
+      <td>Pennsylvania</td>
+      <td>Delaware</td>
+      <td>Marcus Hook</td>
+      <td>Philadelphia-Camden-Wilmington, PA-NJ-DE-MD</td>
+      <td>2021-10-31</td>
+    </tr>
+    <tr>
+      <th>219625</th>
+      <td>23</td>
+      <td>9</td>
+      <td>103</td>
+      <td>88101</td>
+      <td>3</td>
+      <td>44.377050</td>
+      <td>-68.260900</td>
+      <td>WGS84</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24-HR BLK AVG</td>
+      <td>...</td>
+      <td>14.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>MCFARLAND HILL Air Pollutant Research Site</td>
+      <td>567 Eagle Lake Road</td>
+      <td>Maine</td>
+      <td>Hancock</td>
+      <td>Not in a city</td>
+      <td>NaN</td>
+      <td>2022-02-15</td>
+    </tr>
+    <tr>
+      <th>383238</th>
+      <td>39</td>
+      <td>153</td>
+      <td>17</td>
+      <td>88101</td>
+      <td>3</td>
+      <td>41.063526</td>
+      <td>-81.468956</td>
+      <td>NAD83</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>1 HOUR</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>170.0</td>
+      <td>Met One BAM-1020 Mass Monitor w/VSCC - Beta At...</td>
+      <td>East HS</td>
+      <td>80 BRITTAIN</td>
+      <td>Ohio</td>
+      <td>Summit</td>
+      <td>Akron</td>
+      <td>Akron, OH</td>
+      <td>2021-10-31</td>
+    </tr>
+    <tr>
+      <th>343264</th>
+      <td>37</td>
+      <td>35</td>
+      <td>4</td>
+      <td>88101</td>
+      <td>3</td>
+      <td>35.728889</td>
+      <td>-81.365556</td>
+      <td>WGS84</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>1 HOUR</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>209.0</td>
+      <td>Met One BAM-1022 Mass Monitor w/ VSCC or TE-PM...</td>
+      <td>Hickory Water Tower</td>
+      <td>1650 1ST STREET</td>
+      <td>North Carolina</td>
+      <td>Catawba</td>
+      <td>Hickory</td>
+      <td>Hickory-Lenoir-Morganton, NC</td>
+      <td>2021-10-31</td>
+    </tr>
+    <tr>
+      <th>247385</th>
+      <td>26</td>
+      <td>161</td>
+      <td>8</td>
+      <td>88101</td>
+      <td>3</td>
+      <td>42.240565</td>
+      <td>-83.599602</td>
+      <td>WGS84</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>1 HOUR</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>183.0</td>
+      <td>Thermo Scientific 5014i or FH62C14-DHS w/VSCC ...</td>
+      <td>TOWNER ST, SOUTH; 2 LANE RESIDENIAL - HOSPITAL</td>
+      <td>555 TOWNER ST (YPSILANTI)</td>
+      <td>Michigan</td>
+      <td>Washtenaw</td>
+      <td>Ypsilanti</td>
+      <td>Ann Arbor, MI</td>
+      <td>2021-10-31</td>
+    </tr>
+    <tr>
+      <th>552526</th>
+      <td>56</td>
+      <td>35</td>
+      <td>101</td>
+      <td>88101</td>
+      <td>1</td>
+      <td>42.869824</td>
+      <td>-109.870760</td>
+      <td>WGS84</td>
+      <td>PM2.5 - Local Conditions</td>
+      <td>24-HR BLK AVG</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>Pinedale Gaseous</td>
+      <td>Pinedale Gaseous Monitor on west side of City ...</td>
+      <td>Wyoming</td>
+      <td>Sublette</td>
+      <td>Not in a city</td>
+      <td>NaN</td>
+      <td>2022-07-19</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 29 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm25_daily_2020</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 555298 entries, 0 to 555297
+Data columns (total 29 columns):
+ #   Column               Non-Null Count   Dtype         
+---  ------               --------------   -----         
+ 0   State Code           555298 non-null  int64         
+ 1   County Code          555298 non-null  int64         
+ 2   Site Num             555298 non-null  int64         
+ 3   Parameter Code       555298 non-null  int64         
+ 4   POC                  555298 non-null  int64         
+ 5   Latitude             555298 non-null  float64       
+ 6   Longitude            555298 non-null  float64       
+ 7   Datum                555298 non-null  object        
+ 8   Parameter Name       555298 non-null  object        
+ 9   Sample Duration      555298 non-null  object        
+ 10  Pollutant Standard   311778 non-null  object        
+ 11  Date Local           555298 non-null  datetime64[ns]
+ 12  Units of Measure     555298 non-null  object        
+ 13  Event Type           18311 non-null   object        
+ 14  Observation Count    555298 non-null  int64         
+ 15  Observation Percent  555298 non-null  float64       
+ 16  Arithmetic Mean      555298 non-null  float64       
+ 17  1st Max Value        555298 non-null  float64       
+ 18  1st Max Hour         555298 non-null  int64         
+ 19  AQI                  311778 non-null  float64       
+ 20  Method Code          315946 non-null  float64       
+ 21  Method Name          555298 non-null  object        
+ 22  Local Site Name      539536 non-null  object        
+ 23  Address              555033 non-null  object        
+ 24  State Name           555298 non-null  object        
+ 25  County Name          555298 non-null  object        
+ 26  City Name            555298 non-null  object        
+ 27  CBSA Name            511263 non-null  object        
+ 28  Date of Last Change  555298 non-null  object        
+dtypes: datetime64[ns](1), float64(7), int64(7), object(14)
+memory usage: 122.9+ MB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm25_daily_2020</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">pm25_daily_2020</span><span class="o">.</span><span class="n">index</span>
+<span class="n">pm25_daily_2020</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1, 3, 10, ..., &#39;Fairhope&#39;, &#39;Daphne-Fairhope-Foley, AL&#39;,
+        &#39;2021-10-30&#39;],
+       [1, 3, 10, ..., &#39;Fairhope&#39;, &#39;Daphne-Fairhope-Foley, AL&#39;,
+        &#39;2021-10-30&#39;],
+       [1, 3, 10, ..., &#39;Fairhope&#39;, &#39;Daphne-Fairhope-Foley, AL&#39;,
+        &#39;2021-10-30&#39;],
+       ...,
+       [80, 2, 14, ..., &#39;Mexicali&#39;, nan, &#39;2021-11-01&#39;],
+       [80, 2, 14, ..., &#39;Mexicali&#39;, nan, &#39;2021-11-01&#39;],
+       [80, 2, 14, ..., &#39;Mexicali&#39;, nan, &#39;2021-11-01&#39;]], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm25_NY</span> <span class="o">=</span> <span class="n">pm25_daily_2020</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">pm25_daily_2020</span><span class="p">[</span><span class="s1">&#39;County Name&#39;</span><span class="p">]</span><span class="o">==</span> <span class="s1">&#39;New York&#39;</span><span class="p">)</span> <span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Site Num&#39;</span><span class="p">,</span> <span class="s1">&#39;Date Local&#39;</span><span class="p">,</span> <span class="s1">&#39;AQI&#39;</span><span class="p">]]</span>
+<span class="n">pm25_NY</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Site Num</th>
+      <th>Date Local</th>
+      <th>AQI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>339261</th>
+      <td>79</td>
+      <td>2020-01-01</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>339262</th>
+      <td>79</td>
+      <td>2020-01-04</td>
+      <td>50.0</td>
+    </tr>
+    <tr>
+      <th>339263</th>
+      <td>79</td>
+      <td>2020-01-07</td>
+      <td>34.0</td>
+    </tr>
+    <tr>
+      <th>339264</th>
+      <td>79</td>
+      <td>2020-01-10</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>339265</th>
+      <td>79</td>
+      <td>2020-01-13</td>
+      <td>33.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>339387</th>
+      <td>134</td>
+      <td>2020-02-24</td>
+      <td>60.0</td>
+    </tr>
+    <tr>
+      <th>339388</th>
+      <td>134</td>
+      <td>2020-02-27</td>
+      <td>33.0</td>
+    </tr>
+    <tr>
+      <th>339389</th>
+      <td>134</td>
+      <td>2020-03-01</td>
+      <td>27.0</td>
+    </tr>
+    <tr>
+      <th>339390</th>
+      <td>134</td>
+      <td>2020-03-04</td>
+      <td>17.0</td>
+    </tr>
+    <tr>
+      <th>339391</th>
+      <td>134</td>
+      <td>2020-03-07</td>
+      <td>15.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>131 rows × 3 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the time series of AQI </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pm25_NY</span><span class="p">[</span><span class="s1">&#39;Date Local&#39;</span><span class="p">],</span> <span class="n">pm25_NY</span><span class="p">[</span><span class="s1">&#39;AQI&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">horizontalalignment</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([18262., 18322., 18383., 18444., 18506., 18567., 18628.]),
+ [Text(18262.0, 0, &#39;2020-01&#39;),
+  Text(18322.0, 0, &#39;2020-03&#39;),
+  Text(18383.0, 0, &#39;2020-05&#39;),
+  Text(18444.0, 0, &#39;2020-07&#39;),
+  Text(18506.0, 0, &#39;2020-09&#39;),
+  Text(18567.0, 0, &#39;2020-11&#39;),
+  Text(18628.0, 0, &#39;2021-01&#39;)])
+</pre></div>
+</div>
+<img alt="../../_images/6b5f79a15d05610db80bfdf2f262e8fb7eb00582bba73e3c3e4c1c79fce60f2c.png" src="../../_images/6b5f79a15d05610db80bfdf2f262e8fb7eb00582bba73e3c3e4c1c79fce60f2c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># extract site numbers, date and AQI </span>
+<span class="c1">#pm25_NY = pm25_daily_2020.loc[(pm25_daily_2020[&#39;County Name&#39;]== &#39;New York&#39;) &amp; (pm25_daily_2020[&#39;Site Num&#39;]== 79) , [&#39;Site Num&#39;, &#39;Date Local&#39;, &#39;AQI&#39;]]</span>
+<span class="n">pm25_NY</span> <span class="o">=</span> <span class="n">pm25_daily_2020</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="p">(</span><span class="n">pm25_daily_2020</span><span class="p">[</span><span class="s1">&#39;County Name&#39;</span><span class="p">]</span><span class="o">==</span> <span class="s1">&#39;Queens&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">pm25_daily_2020</span><span class="p">[</span><span class="s1">&#39;Site Num&#39;</span><span class="p">]</span><span class="o">==</span> <span class="mi">124</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;Site Num&#39;</span><span class="p">,</span> <span class="s1">&#39;Date Local&#39;</span><span class="p">,</span> <span class="s1">&#39;AQI&#39;</span><span class="p">]]</span>
+<span class="n">pm25_NY</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Site Num</th>
+      <th>Date Local</th>
+      <th>AQI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>340325</th>
+      <td>124</td>
+      <td>2020-01-04</td>
+      <td>46.0</td>
+    </tr>
+    <tr>
+      <th>340326</th>
+      <td>124</td>
+      <td>2020-01-07</td>
+      <td>31.0</td>
+    </tr>
+    <tr>
+      <th>340327</th>
+      <td>124</td>
+      <td>2020-01-10</td>
+      <td>27.0</td>
+    </tr>
+    <tr>
+      <th>340328</th>
+      <td>124</td>
+      <td>2020-01-16</td>
+      <td>31.0</td>
+    </tr>
+    <tr>
+      <th>340329</th>
+      <td>124</td>
+      <td>2020-01-19</td>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>340420</th>
+      <td>124</td>
+      <td>2020-01-03</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>340421</th>
+      <td>124</td>
+      <td>2020-01-04</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>340422</th>
+      <td>124</td>
+      <td>2020-01-05</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>340423</th>
+      <td>124</td>
+      <td>2020-01-06</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>340424</th>
+      <td>124</td>
+      <td>2020-01-07</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>100 rows × 3 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm25_NY</span><span class="p">[</span><span class="mi">150</span><span class="p">:</span><span class="mi">151</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Site Num</th>
+      <th>Date Local</th>
+      <th>AQI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>339280</th>
+      <td>124</td>
+      <td>2020-02-27</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the time series of AQI </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pm25_NY</span><span class="p">[</span><span class="s1">&#39;Date Local&#39;</span><span class="p">],</span> <span class="n">pm25_NY</span><span class="p">[</span><span class="s1">&#39;AQI&#39;</span><span class="p">])</span>
+<span class="c1">#plt.plot(pm25_NY[&#39;Date Local&#39;], pm25_NY[&#39;AQI&#39;],label=&#39;No mask&#39;)</span>
+<span class="c1">#plt.plot(pm25_NY[&#39;Date Local&#39;], pm25_NY[&#39;AQI&#39;],label=&#39;Masked values&#39;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">horizontalalignment</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([18262., 18322., 18383., 18444., 18506., 18567., 18628.]),
+ [Text(18262.0, 0, &#39;2020-01&#39;),
+  Text(18322.0, 0, &#39;2020-03&#39;),
+  Text(18383.0, 0, &#39;2020-05&#39;),
+  Text(18444.0, 0, &#39;2020-07&#39;),
+  Text(18506.0, 0, &#39;2020-09&#39;),
+  Text(18567.0, 0, &#39;2020-11&#39;),
+  Text(18628.0, 0, &#39;2021-01&#39;)])
+</pre></div>
+</div>
+<img alt="../../_images/a2da5d4540cea86b5a3d62f9c2145282dcbfbc1d5e0987aa232696c25299e316.png" src="../../_images/a2da5d4540cea86b5a3d62f9c2145282dcbfbc1d5e0987aa232696c25299e316.png" />
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\07"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

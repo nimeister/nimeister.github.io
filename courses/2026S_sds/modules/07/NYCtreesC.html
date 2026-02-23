@@ -1,0 +1,1353 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Carbon Storage, Tree growth and Caron Sequestration Rate for NYC Street Trees &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/07/NYCtreesC';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01/01_intro.html">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02/02_basicPy1.html">02 - Basic Python - 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03_basicPy2.html">03 - Basic Python - 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04_Numpy_Pandas1.html">04 - Numpy and Pandas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Midterm_Exam.html">07 - Midterm Exam</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/07/NYCtreesC.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/modules/07/NYCtreesC.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Carbon Storage, Tree growth and Caron Sequestration Rate for NYC Street Trees</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Carbon Storage, Tree growth and Caron Sequestration Rate for NYC Street Trees</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-libraries">Import libraries   <a id="1"></a></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-data-and-preliminary-check">Read data and preliminary check  <a id="2"></a></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clean-the-data">Clean the data   <a id="3"></a></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-the-carbon-storage-and-carbon-sequestration">Calculate the carbon storage and carbon sequestration <a id="4"></a></a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="carbon-storage-tree-growth-and-caron-sequestration-rate-for-nyc-street-trees">
+<h1>Carbon Storage, Tree growth and Caron Sequestration Rate for NYC Street Trees<a class="headerlink" href="#carbon-storage-tree-growth-and-caron-sequestration-rate-for-nyc-street-trees" title="Link to this heading">#</a></h1>
+<p>With NYC street tree species and dbh measurements, carbon storage for each tree can be calculated based on allometric equations. Half of he  above-ground biomass (AGB) is carbon stored by trees. AGB = wood density * woody volume. Wood volume can be estimated as a function of dbh (or dbh and tree height) using allometric equations. Urban tree allometric equations (woody volume and wood density) can be found <a class="reference external" href="https://www.fs.usda.gov/rds/archive/Catalog/RDS-2016-0005">here</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="table-of-contents">
+<h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#1"><span class="xref myst">Import libraries</span></a><br></p></li>
+<li><p><a class="reference internal" href="#2"><span class="xref myst">Read data and preliminary check</span></a><br></p></li>
+<li><p><a class="reference internal" href="#3"><span class="xref myst">Clean the data</span></a><br></p></li>
+<li><p><a class="reference internal" href="#4"><span class="xref myst">Calculate the carbon storage and carbon sequestration </span></a><br></p></li>
+</ol>
+</div>
+<hr><section id="import-libraries">
+<h2>Import libraries   <a id=1></a><a class="headerlink" href="#import-libraries" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pdb</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1">#For interactive matplotlib sessions</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline 
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;2.3.2&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="read-data-and-preliminary-check">
+<h2>Read data and preliminary check  <a id=2></a><a class="headerlink" href="#read-data-and-preliminary-check" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># You can read 2015 tree census data using pd.read_csv </span>
+<span class="n">tree2015</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://www.geography.hunter.cuny.edu/~wenge/EDS2023F/data/NYCtree/2015_Street_Tree_Census.csv&#39;</span><span class="p">)</span>
+<span class="n">tree2005</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://www.geography.hunter.cuny.edu/~wenge/EDS2023F/data/NYCtree/2005_Street_Tree_Census.csv&#39;</span><span class="p">)</span>                       
+<span class="n">tree1995</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://www.geography.hunter.cuny.edu/~wenge/EDS2023F/data/NYCtree/1995_Street_Tree_Census.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># You can read 2015 tree census data using pd.read_csv </span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">tree2015</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://www.geography.hunter.cuny.edu/~wenge/EDS2023F/data/NYCtree/2015_Street_Tree_Census.csv&#39;</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">tree2005</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://www.geography.hunter.cuny.edu/~wenge/EDS2023F/data/NYCtree/2005_Street_Tree_Census.csv&#39;</span><span class="p">)</span>                       
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">tree1995</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://www.geography.hunter.cuny.edu/~wenge/EDS2023F/data/NYCtree/1995_Street_Tree_Census.csv&#39;</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\parsers\readers.py:1026,</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1013</span> <span class="n">kwds_defaults</span> <span class="o">=</span> <span class="n">_refine_defaults_read</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1014</span>     <span class="n">dialect</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1015</span>     <span class="n">delimiter</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">1022</span>     <span class="n">dtype_backend</span><span class="o">=</span><span class="n">dtype_backend</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1023</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1024</span> <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1026</span> <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\parsers\readers.py:620,</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">617</span> <span class="n">_validate_names</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">619</span> <span class="c1"># Create the parser.</span>
+<span class="ne">--&gt; </span><span class="mi">620</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">622</span> <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">623</span>     <span class="k">return</span> <span class="n">parser</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\parsers\readers.py:1620,</span> in <span class="ni">TextFileReader.__init__</span><span class="nt">(self, f, engine, **kwds)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1617</span>     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1619</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span> <span class="n">IOHandles</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="ne">-&gt; </span><span class="mi">1620</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\parsers\readers.py:1880,</span> in <span class="ni">TextFileReader._make_engine</span><span class="nt">(self, f, engine)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1878</span>     <span class="k">if</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1879</span>         <span class="n">mode</span> <span class="o">+=</span> <span class="s2">&quot;b&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1880</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="o">=</span> <span class="n">get_handle</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1881</span>     <span class="n">f</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1882</span>     <span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1883</span>     <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1884</span>     <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;compression&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1885</span>     <span class="n">memory_map</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_map&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1886</span>     <span class="n">is_text</span><span class="o">=</span><span class="n">is_text</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1887</span>     <span class="n">errors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding_errors&quot;</span><span class="p">,</span> <span class="s2">&quot;strict&quot;</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1888</span>     <span class="n">storage_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storage_options&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1889</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1890</span> <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1891</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">handle</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\common.py:728,</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">725</span>     <span class="n">codecs</span><span class="o">.</span><span class="n">lookup_error</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">727</span> <span class="c1"># open URLs</span>
+<span class="ne">--&gt; </span><span class="mi">728</span> <span class="n">ioargs</span> <span class="o">=</span> <span class="n">_get_filepath_or_buffer</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">729</span>     <span class="n">path_or_buf</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">730</span>     <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">731</span>     <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">732</span>     <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">733</span>     <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">734</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">736</span> <span class="n">handle</span> <span class="o">=</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">filepath_or_buffer</span>
+<span class="g g-Whitespace">    </span><span class="mi">737</span> <span class="n">handles</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseBuffer</span><span class="p">]</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\common.py:389,</span> in <span class="ni">_get_filepath_or_buffer</span><span class="nt">(filepath_or_buffer, encoding, compression, mode, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">386</span>         <span class="k">if</span> <span class="n">content_encoding</span> <span class="o">==</span> <span class="s2">&quot;gzip&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">387</span>             <span class="c1"># Override compression based on Content-Encoding header</span>
+<span class="g g-Whitespace">    </span><span class="mi">388</span>             <span class="n">compression</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;gzip&quot;</span><span class="p">}</span>
+<span class="ne">--&gt; </span><span class="mi">389</span>         <span class="n">reader</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="g g-Whitespace">    </span><span class="mi">390</span>     <span class="k">return</span> <span class="n">IOArgs</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">391</span>         <span class="n">filepath_or_buffer</span><span class="o">=</span><span class="n">reader</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">392</span>         <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>    <span class="mi">395</span>         <span class="n">mode</span><span class="o">=</span><span class="n">fsspec_mode</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">396</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">398</span> <span class="k">if</span> <span class="n">is_fsspec_url</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">):</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\http\client.py:495,</span> in <span class="ni">HTTPResponse.read</span><span class="nt">(self, amt)</span>
+<span class="g g-Whitespace">    </span><span class="mi">493</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">494</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">495</span>         <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_safe_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">496</span>     <span class="k">except</span> <span class="n">IncompleteRead</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">497</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_close_conn</span><span class="p">()</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\http\client.py:642,</span> in <span class="ni">HTTPResponse._safe_read</span><span class="nt">(self, amt)</span>
+<span class="g g-Whitespace">    </span><span class="mi">635</span> <span class="k">def</span><span class="w"> </span><span class="nf">_safe_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amt</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">636</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Read the number of bytes requested.</span>
+<span class="g g-Whitespace">    </span><span class="mi">637</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">638</span><span class="sd">     This function should be used when &lt;amt&gt; bytes &quot;should&quot; be present for</span>
+<span class="g g-Whitespace">    </span><span class="mi">639</span><span class="sd">     reading. If the bytes are truly not available (due to EOF), then the</span>
+<span class="g g-Whitespace">    </span><span class="mi">640</span><span class="sd">     IncompleteRead exception can be used to detect the problem.</span>
+<span class="g g-Whitespace">    </span><span class="mi">641</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">642</span>     <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">amt</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">643</span>     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">amt</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">644</span>         <span class="k">raise</span> <span class="n">IncompleteRead</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">amt</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\socket.py:719,</span> in <span class="ni">SocketIO.readinto</span><span class="nt">(self, b)</span>
+<span class="g g-Whitespace">    </span><span class="mi">717</span>     <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s2">&quot;cannot read from timed out object&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">718</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">719</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sock</span><span class="o">.</span><span class="n">recv_into</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">720</span> <span class="k">except</span> <span class="n">timeout</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">721</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_timeout_occurred</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tree_id</th>
+      <th>block_id</th>
+      <th>created_at</th>
+      <th>tree_dbh</th>
+      <th>stump_diam</th>
+      <th>curb_loc</th>
+      <th>status</th>
+      <th>health</th>
+      <th>spc_latin</th>
+      <th>spc_common</th>
+      <th>...</th>
+      <th>boro_ct</th>
+      <th>state</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>x_sp</th>
+      <th>y_sp</th>
+      <th>council district</th>
+      <th>census tract</th>
+      <th>bin</th>
+      <th>bbl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>180683</td>
+      <td>348711</td>
+      <td>08/27/2015</td>
+      <td>3</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Fair</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>4073900</td>
+      <td>New York</td>
+      <td>40.723092</td>
+      <td>-73.844215</td>
+      <td>1027431.148</td>
+      <td>202756.7687</td>
+      <td>29.0</td>
+      <td>739.0</td>
+      <td>4052307.0</td>
+      <td>4.022210e+09</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>200540</td>
+      <td>315986</td>
+      <td>09/03/2015</td>
+      <td>21</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Fair</td>
+      <td>Quercus palustris</td>
+      <td>pin oak</td>
+      <td>...</td>
+      <td>4097300</td>
+      <td>New York</td>
+      <td>40.794111</td>
+      <td>-73.818679</td>
+      <td>1034455.701</td>
+      <td>228644.8374</td>
+      <td>19.0</td>
+      <td>973.0</td>
+      <td>4101931.0</td>
+      <td>4.044750e+09</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>204026</td>
+      <td>218365</td>
+      <td>09/05/2015</td>
+      <td>3</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Gleditsia triacanthos var. inermis</td>
+      <td>honeylocust</td>
+      <td>...</td>
+      <td>3044900</td>
+      <td>New York</td>
+      <td>40.717581</td>
+      <td>-73.936608</td>
+      <td>1001822.831</td>
+      <td>200716.8913</td>
+      <td>34.0</td>
+      <td>449.0</td>
+      <td>3338310.0</td>
+      <td>3.028870e+09</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>204337</td>
+      <td>217969</td>
+      <td>09/05/2015</td>
+      <td>10</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Gleditsia triacanthos var. inermis</td>
+      <td>honeylocust</td>
+      <td>...</td>
+      <td>3044900</td>
+      <td>New York</td>
+      <td>40.713537</td>
+      <td>-73.934456</td>
+      <td>1002420.358</td>
+      <td>199244.2531</td>
+      <td>34.0</td>
+      <td>449.0</td>
+      <td>3338342.0</td>
+      <td>3.029250e+09</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>189565</td>
+      <td>223043</td>
+      <td>08/30/2015</td>
+      <td>21</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Tilia americana</td>
+      <td>American linden</td>
+      <td>...</td>
+      <td>3016500</td>
+      <td>New York</td>
+      <td>40.666778</td>
+      <td>-73.975979</td>
+      <td>990913.775</td>
+      <td>182202.4260</td>
+      <td>39.0</td>
+      <td>165.0</td>
+      <td>3025654.0</td>
+      <td>3.010850e+09</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 45 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree1995</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RecordId</th>
+      <th>Address</th>
+      <th>House_Number</th>
+      <th>Street</th>
+      <th>Postcode_Original</th>
+      <th>Community Board_Original</th>
+      <th>Site</th>
+      <th>Species</th>
+      <th>Diameter</th>
+      <th>Condition</th>
+      <th>...</th>
+      <th>CensusTract_2010</th>
+      <th>CensusBlock_2010</th>
+      <th>NTA_2010</th>
+      <th>SegmentID</th>
+      <th>Spc_Common</th>
+      <th>Spc_Latin</th>
+      <th>Location</th>
+      <th>Council District</th>
+      <th>BIN</th>
+      <th>BBL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>245 E 17 ST</td>
+      <td>245.0</td>
+      <td>E 17 ST</td>
+      <td>10003</td>
+      <td>106</td>
+      <td>Front</td>
+      <td>PLAC</td>
+      <td>8</td>
+      <td>Unknown</td>
+      <td>...</td>
+      <td>48.0</td>
+      <td>2000.0</td>
+      <td>MN21</td>
+      <td>33134</td>
+      <td>LONDON PLANETREE</td>
+      <td>PLATANUS ACERIFOLIA</td>
+      <td>(40.734551, -73.984235)</td>
+      <td>2.0</td>
+      <td>1019566.0</td>
+      <td>1.008980e+09</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>80 N MOORE ST</td>
+      <td>80.0</td>
+      <td>N MOORE ST</td>
+      <td>10013</td>
+      <td>101</td>
+      <td>Side</td>
+      <td>ACPL</td>
+      <td>7</td>
+      <td>Good</td>
+      <td>...</td>
+      <td>39.0</td>
+      <td>2001.0</td>
+      <td>MN24</td>
+      <td>31567</td>
+      <td>MAPLE, NORWAY</td>
+      <td>ACER PLATANOIDES</td>
+      <td>(40.720159, -74.010532)</td>
+      <td>1.0</td>
+      <td>1083157.0</td>
+      <td>1.001420e+09</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>80 N MOORE ST</td>
+      <td>80.0</td>
+      <td>N MOORE ST</td>
+      <td>10013</td>
+      <td>101</td>
+      <td>Side</td>
+      <td>ACPL</td>
+      <td>6</td>
+      <td>Good</td>
+      <td>...</td>
+      <td>39.0</td>
+      <td>2001.0</td>
+      <td>MN24</td>
+      <td>31567</td>
+      <td>MAPLE, NORWAY</td>
+      <td>ACER PLATANOIDES</td>
+      <td>(40.720159, -74.010532)</td>
+      <td>1.0</td>
+      <td>1083157.0</td>
+      <td>1.001420e+09</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>80 N MOORE ST</td>
+      <td>80.0</td>
+      <td>N MOORE ST</td>
+      <td>10013</td>
+      <td>101</td>
+      <td>Side</td>
+      <td>ACPL</td>
+      <td>7</td>
+      <td>Excellent</td>
+      <td>...</td>
+      <td>39.0</td>
+      <td>2001.0</td>
+      <td>MN24</td>
+      <td>31567</td>
+      <td>MAPLE, NORWAY</td>
+      <td>ACER PLATANOIDES</td>
+      <td>(40.720159, -74.010532)</td>
+      <td>1.0</td>
+      <td>1083157.0</td>
+      <td>1.001420e+09</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>80 N MOORE ST</td>
+      <td>80.0</td>
+      <td>N MOORE ST</td>
+      <td>10013</td>
+      <td>101</td>
+      <td>Side</td>
+      <td>ACPL</td>
+      <td>6</td>
+      <td>Good</td>
+      <td>...</td>
+      <td>39.0</td>
+      <td>2001.0</td>
+      <td>MN24</td>
+      <td>31567</td>
+      <td>MAPLE, NORWAY</td>
+      <td>ACER PLATANOIDES</td>
+      <td>(40.720159, -74.010532)</td>
+      <td>1.0</td>
+      <td>1083157.0</td>
+      <td>1.001420e+09</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 30 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>cen_year</th>
+      <th>tree_dbh</th>
+      <th>address</th>
+      <th>tree_loc</th>
+      <th>pit_type</th>
+      <th>soil_lvl</th>
+      <th>status</th>
+      <th>spc_latin</th>
+      <th>spc_common</th>
+      <th>...</th>
+      <th>state</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>x_sp</th>
+      <th>y_sp</th>
+      <th>objectid_1</th>
+      <th>census tract</th>
+      <th>bin</th>
+      <th>bbl</th>
+      <th>Location 1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>592373</td>
+      <td>2005</td>
+      <td>6</td>
+      <td>1139 57 STREET</td>
+      <td>Front</td>
+      <td>Sidewalk Pit</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>PYRUS CALLERYANA</td>
+      <td>PEAR, CALLERY</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.632653</td>
+      <td>-74.000245</td>
+      <td>984182</td>
+      <td>169769</td>
+      <td>0</td>
+      <td>216.0</td>
+      <td>3140038.0</td>
+      <td>3.056890e+09</td>
+      <td>(40.63265321, -74.00024499)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592374</td>
+      <td>2005</td>
+      <td>6</td>
+      <td>2220 BERGEN AVENUE</td>
+      <td>Across</td>
+      <td>Sidewalk Pit</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>PLATANUS ACERIFOLIA</td>
+      <td>LONDON PLANETREE</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.620084</td>
+      <td>-73.901453</td>
+      <td>1011608</td>
+      <td>165205</td>
+      <td>1</td>
+      <td>706.0</td>
+      <td>3238037.0</td>
+      <td>3.084440e+09</td>
+      <td>(40.62008375, -73.9014528)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>592375</td>
+      <td>2005</td>
+      <td>13</td>
+      <td>2360 BERGEN AVENUE</td>
+      <td>Front</td>
+      <td>Continuous Pit</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>ACER PLATANOIDES          CRIMSON KING</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.617996</td>
+      <td>-73.899111</td>
+      <td>1012259</td>
+      <td>164445</td>
+      <td>2</td>
+      <td>706.0</td>
+      <td>3238299.0</td>
+      <td>3.084530e+09</td>
+      <td>(40.61799567, -73.89911096)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592376</td>
+      <td>2005</td>
+      <td>13</td>
+      <td>2254 BERGEN AVENUE</td>
+      <td>Across</td>
+      <td>Sidewalk Pit</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>PLATANUS ACERIFOLIA</td>
+      <td>LONDON PLANETREE</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.619694</td>
+      <td>-73.901003</td>
+      <td>1011733</td>
+      <td>165063</td>
+      <td>3</td>
+      <td>706.0</td>
+      <td>3238045.0</td>
+      <td>3.084440e+09</td>
+      <td>(40.6196936, -73.90100311)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>592377</td>
+      <td>2005</td>
+      <td>15</td>
+      <td>2332 BERGEN AVENUE</td>
+      <td>Across</td>
+      <td>Sidewalk Pit</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>PLATANUS ACERIFOLIA</td>
+      <td>LONDON PLANETREE</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.618323</td>
+      <td>-73.899467</td>
+      <td>1012160</td>
+      <td>164564</td>
+      <td>4</td>
+      <td>706.0</td>
+      <td>3238294.0</td>
+      <td>3.084530e+09</td>
+      <td>(40.61832261, -73.89946707)</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 54 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;tree_id&#39;, &#39;block_id&#39;, &#39;created_at&#39;, &#39;tree_dbh&#39;, &#39;stump_diam&#39;,
+       &#39;curb_loc&#39;, &#39;status&#39;, &#39;health&#39;, &#39;spc_latin&#39;, &#39;spc_common&#39;, &#39;steward&#39;,
+       &#39;guards&#39;, &#39;sidewalk&#39;, &#39;user_type&#39;, &#39;problems&#39;, &#39;root_stone&#39;,
+       &#39;root_grate&#39;, &#39;root_other&#39;, &#39;trunk_wire&#39;, &#39;trnk_light&#39;, &#39;trnk_other&#39;,
+       &#39;brch_light&#39;, &#39;brch_shoe&#39;, &#39;brch_other&#39;, &#39;address&#39;, &#39;postcode&#39;,
+       &#39;zip_city&#39;, &#39;community board&#39;, &#39;borocode&#39;, &#39;borough&#39;, &#39;cncldist&#39;,
+       &#39;st_assem&#39;, &#39;st_senate&#39;, &#39;nta&#39;, &#39;nta_name&#39;, &#39;boro_ct&#39;, &#39;state&#39;,
+       &#39;latitude&#39;, &#39;longitude&#39;, &#39;x_sp&#39;, &#39;y_sp&#39;, &#39;council district&#39;,
+       &#39;census tract&#39;, &#39;bin&#39;, &#39;bbl&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(683788, 45)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the most dominant species and tree counts</span>
+<span class="n">treecount2015</span> <span class="o">=</span> <span class="n">tree2015</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;spc_latin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">treecount2015_sorted</span> <span class="o">=</span> <span class="n">treecount2015</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">treecount2015_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>spc_latin
+Platanus x acerifolia                 87014
+Gleditsia triacanthos var. inermis    64264
+Pyrus calleryana                      58931
+Quercus palustris                     53185
+Acer platanoides                      34189
+Tilia cordata                         29742
+Prunus                                29279
+Zelkova serrata                       29258
+Ginkgo biloba                         21024
+Styphnolobium japonicum               19338
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the most dominant species and tree counts</span>
+<span class="n">treecount2015</span> <span class="o">=</span> <span class="n">tree2015</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;spc_common&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">treecount2015_sorted</span> <span class="o">=</span> <span class="n">treecount2015</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">treecount2015_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>spc_common
+London planetree     87014
+honeylocust          64264
+Callery pear         58931
+pin oak              53185
+Norway maple         34189
+littleleaf linden    29742
+cherry               29279
+Japanese zelkova     29258
+ginkgo               21024
+Sophora              19338
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select big trees </span>
+<span class="n">bigtree2015</span> <span class="o">=</span> <span class="n">tree2015</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tree2015</span><span class="p">[</span><span class="s1">&#39;tree_dbh&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">bigtree2015</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(307728, 45)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the most dominant species and tree counts</span>
+<span class="n">bigtreecount2015</span> <span class="o">=</span> <span class="n">bigtree2015</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;spc_common&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">bigtreecount2015_sorted</span> <span class="o">=</span> <span class="n">bigtreecount2015</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">bigtreecount2015_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>spc_common
+London planetree     77363
+pin oak              36817
+honeylocust          31416
+Norway maple         25435
+Callery pear         18527
+littleleaf linden    12577
+green ash            11833
+silver maple         10452
+Japanese zelkova      7764
+red maple             7603
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the most dominant species and tree counts</span>
+<span class="n">bigtreecount2015</span> <span class="o">=</span> <span class="n">bigtree2015</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;spc_latin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">bigtreecount2015_sorted</span> <span class="o">=</span> <span class="n">bigtreecount2015</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">bigtreecount2015_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>spc_latin
+Platanus x acerifolia                 77363
+Quercus palustris                     36817
+Gleditsia triacanthos var. inermis    31416
+Acer platanoides                      25435
+Pyrus calleryana                      18527
+Tilia cordata                         12577
+Fraxinus pennsylvanica                11833
+Acer saccharinum                      10452
+Zelkova serrata                        7764
+Acer rubrum                            7603
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Allometric equations
+London planetree:</p>
+</section>
+<section id="clean-the-data">
+<h2>Clean the data   <a id=3></a><a class="headerlink" href="#clean-the-data" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>make sure three year data have same variable names (particularly the same species names and borough  names etc.)</p></li>
+</ul>
+</section>
+<section id="calculate-the-carbon-storage-and-carbon-sequestration">
+<h2>Calculate the carbon storage and carbon sequestration <a id=4></a><a class="headerlink" href="#calculate-the-carbon-storage-and-carbon-sequestration" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Implement the allometric equations for top dominant tree species</p></li>
+<li><p>Calculte the carbon storage for top dominant species using dbh and tree species information</p></li>
+<li><p>Compare difference between 1995, 2005 and 2015</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\07"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Carbon Storage, Tree growth and Caron Sequestration Rate for NYC Street Trees</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-libraries">Import libraries   <a id="1"></a></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-data-and-preliminary-check">Read data and preliminary check  <a id="2"></a></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clean-the-data">Clean the data   <a id="3"></a></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-the-carbon-storage-and-carbon-sequestration">Calculate the carbon storage and carbon sequestration <a id="4"></a></a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
