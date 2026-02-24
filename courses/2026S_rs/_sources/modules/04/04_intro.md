@@ -25,10 +25,11 @@ For the first week, we will cover the following three topics:
 
 
 ## Lab 4 
-
-* Create a Landsat 8 time series of NDVI, NDVI and surface temperature with cloud mask 
-* Create a Lastsat 5, 7, 8, 9 time series of NDVI or NDWI with cloud mask (if you have time)
-* Create a time series animation of your choice following the MODIS NDVI time series [annimation code](https://developers.google.com/earth-engine/tutorials/community/modis-ndvi-time-series-animation)
+* Use the two cloud mask algorithms provided in class for a region and a period you define, and compare their differences
+* Create time series of Landsat 8 or 9 NDVI and surface temperature with cloud mask for the period of 2013-current for the area of your choice and analyze any temporal change. 
+* Create a Lastsat 5, 8, 9 time series of NDVI or NDWI with cloud mask for the period of 2008-current for Beijing olympic park or the area of your choice and anlysze any temperal change
+* Create a time series of MODIS NDVI and LST of your choice of area and period. 
+* (optimal) Create a time series animation of your choice following the MODIS NDVI time series [annimation code](https://developers.google.com/earth-engine/tutorials/community/modis-ndvi-time-series-animation)
 * Complete the project proposals, which include research questions, current status of your research topics, proposed research methods, and references with a minimum length of 2 pages (single spaced)
 
  

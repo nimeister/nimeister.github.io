@@ -20,7 +20,7 @@ For the first week, we will cover the following three topics:
 * Undo: Ctrl + Z
 * Redo: Ctrl + Shift + Z
 
-## Lab3 
+## Lab 3  
 * Write your own GEE code to read a Sentinel-2 scene for a location you select from the map as demonstrated in class, filter out by your selected dates and cloud cover less than 5%.
 * Mask out the cloud using the example from this [link](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED)
 * Display a false color composite image of the median of all the image collections 
