@@ -17,21 +17,20 @@ Throughout the course, students will conduct a research project of environmental
 
 
 ## Weekly Schedule
-The course is organized into several week-long modules. Each module contains background reading assignments and Jupyter notebooks with introduction, demo, and lab exercises. 
+The course is organized into several week-long modules. Each module contains background reading assignments and Jupyter notebooks with an introduction, demo, and lab exercises. 
 
 1. [Overview](modules/01/01_intro.md)
 2. [GEE Concepts](modules/02/02_intro.md)
 3. [GEE Methods](modules/03/03_intro.md)
 4. [Time Series Analysis](modules/04/04_intro.md)
 5. [Time Series Trend Analysis](modules/05/05_intro.md)
-6. [Land Cover Classficiation-1](modules/06/06_intro.md)
-7. [Land Cover Classification-2](modules/07/07_intro.md)
-8. [Land Cover Change Detection-1](modules/08/08_intro.md)
-9. [Land Cover Change Detection-2 ](modules/09/09_intro.md)
-10. [Earth Engine Apps](modules/10/10_intro.md)
-11. [Lidar - 1](modules/11/11_intro.md)
-12. [Lidar - 2](modules/12/12_intro.md)
-13. [Lidar - 3](modules/13/13_intro.md)
+6. [Mid-term](modules/06/06_midterm.md)
+7. [Land Cover Classficiation-1](modules/07/07_intro.md)
+8. [Land Cover Classification-2](modules/08/08_intro.md)
+9. [Land Cover Change Detection-1](modules/09/09_intro.md)
+11. [Earth Engine Apps](modules/10/10_intro.md)
+12. [Lidar - 1](modules/11/11_intro.md)
+13. [Lidar - 2](modules/12/12_intro.md)
 
 ## Course details
 ### Syllabus on BB
