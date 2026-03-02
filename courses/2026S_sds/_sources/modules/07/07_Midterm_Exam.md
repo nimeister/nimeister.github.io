@@ -73,19 +73,17 @@ More information on the data format can be found in the following links:
 ### Data Portal
 
 1. Water Quality Data, NYS DEC    :
-- https://dec.ny.gov/environmental-protection/water/water-quality/monitoring/water-quality-da    ta
+- https://dec.ny.gov/environmental-protection/water/water-quality/monitoring/water-quality-da  
 - Data archive: https://experience.arcgis.com/experience/301748017d7d40649bc5082fc1c53blooms
 
 2. Harbor Water Quality, NYCDEP
 - https://data.cityofnewyork.us/Environment/Harbor-Water-Quality/5uug-f49n/about_data
 
-3. National Water Qualit data 
+3. National Water Quality data 
 - https://www.waterqualitydata.us/
 - https://www.epa.gov/waterdata/water-quality-data
-- 
+  
 ### Example Research questions 
-- What are the spatial and temporal patterns of harmful algae, CDOM, and nutrient levels in NYC waterbodies? v
-
-ider6. s=STORET
+- What are the spatial and temporal patterns of harmful algae, CDOM, and nutrient levels in NYC waterbodies? 
 
 ## Use your own data and formulate your own research questions 

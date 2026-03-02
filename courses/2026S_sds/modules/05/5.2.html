@@ -1,0 +1,1956 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Section 2: Data Wrangling &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/05/5.2';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01/01_intro.html">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02/02_basicPy1.html">02 - Basic Python - 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03_basicPy2.html">03 - Basic Python - 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04_Numpy_Pandas1.html">04 - Numpy and Pandas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_Numpy_Pandas2.html">05 - Numpy and Pandas 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07/07_Midterm_Exam.html">07 - Midterm Exam</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/05/5.2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/modules/05/5.2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Section 2: Data Wrangling</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-cleaning">Data cleaning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-columns">Dropping columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tips">Tips:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming-columns">Renaming columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-1"><span class="xref myst">Exercise 2.1</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#groupbying-and-sorting-by-values">Groupbying and Sorting by values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-2"><span class="xref myst">Exercise 2.2</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-out-top-10-dominant-tree-species-for-2015-2005-and-1995-nyc-tree-datasets">Find out top 10 dominant tree species for 2015, 2005 and 1995 NYC tree datasets</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-3"><span class="xref myst">Exercise 2.3</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-most-dominant-species-and-tree-counts-for-tree-dbh-40-inches-for-2015-2005-and-1995-nyc-tree-datasets">Find the most dominant species and tree counts for tree dbh &gt; 40 inches for 2015, 2005 and 1995 NYC tree datasets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-the-index">Working with the index</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-and-sorting-the-index">Setting and sorting the index</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resetting-the-index">Resetting the index</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-4"><span class="xref myst">Exercise 2.4</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-out-the-total-number-tree-counts-for-each-borough-for-2015-nyc-tree-data">Find out the total number tree counts for each borough for 2015 NYC tree data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reshaping-data">Reshaping data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series">Time series</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="section-2-data-wrangling">
+<h1>Section 2: Data Wrangling<a class="headerlink" href="#section-2-data-wrangling" title="Link to this heading">#</a></h1>
+<p>To prepare our data for analysis, we need to perform data wrangling. In this section, we will learn how to clean and reformat data (e.g., renaming columns and fixing data type mismatches), restructure/reshape it, and enrich it (e.g., discretizing columns, calculating aggregations, and combining data sources).</p>
+<section id="data-cleaning">
+<h2>Data cleaning<a class="headerlink" href="#data-cleaning" title="Link to this heading">#</a></h2>
+<p>In this section, we will take a look at creating, renaming, and dropping columns; type conversion; and sorting – all of which make our analysis easier. We will be working with the 2019 Yellow Taxi Trip Data provided by NYC Open Data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/2005_Street_Tree_Census.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Wenge\AppData\Local\Temp\ipykernel_44500\4084950916.py:1: DtypeWarning: Columns (37) have mixed types. Specify dtype option on import or set low_memory=False.
+  tree2005 = pd.read_csv(&#39;data/2005_Street_Tree_Census.csv&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">37</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>boroname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>592367</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592368</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592369</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592370</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592371</th>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 1 columns</p>
+</div></div></div>
+</div>
+<section id="dropping-columns">
+<h3>Dropping columns<a class="headerlink" href="#dropping-columns" title="Link to this heading">#</a></h3>
+<p>Let’s start by dropping some columns which we won’t be using.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;OBJECTID&#39;, &#39;cen_year&#39;, &#39;tree_dbh&#39;, &#39;address&#39;, &#39;tree_loc&#39;, &#39;pit_type&#39;,
+       &#39;soil_lvl&#39;, &#39;status&#39;, &#39;spc_latin&#39;, &#39;spc_common&#39;, &#39;vert_other&#39;,
+       &#39;vert_pgrd&#39;, &#39;vert_tgrd&#39;, &#39;vert_wall&#39;, &#39;horz_blck&#39;, &#39;horz_grate&#39;,
+       &#39;horz_plant&#39;, &#39;horz_other&#39;, &#39;sidw_crack&#39;, &#39;sidw_raise&#39;, &#39;wire_htap&#39;,
+       &#39;wire_prime&#39;, &#39;wire_2nd&#39;, &#39;wire_other&#39;, &#39;inf_canopy&#39;, &#39;inf_guard&#39;,
+       &#39;inf_wires&#39;, &#39;inf_paving&#39;, &#39;inf_outlet&#39;, &#39;inf_shoes&#39;, &#39;inf_lights&#39;,
+       &#39;inf_other&#39;, &#39;trunk_dmg&#39;, &#39;zipcode&#39;, &#39;zip_city&#39;, &#39;cb_num&#39;, &#39;borocode&#39;,
+       &#39;boroname&#39;, &#39;cncldist&#39;, &#39;st_assem&#39;, &#39;st_senate&#39;, &#39;nta&#39;, &#39;nta_name&#39;,
+       &#39;boro_ct&#39;, &#39;state&#39;, &#39;latitude&#39;, &#39;longitude&#39;, &#39;x_sp&#39;, &#39;y_sp&#39;,
+       &#39;objectid_1&#39;, &#39;census tract&#39;, &#39;bin&#39;, &#39;bbl&#39;, &#39;Location 1&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns2drop</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cen_year&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">,</span> <span class="s1">&#39;tree_loc&#39;</span><span class="p">,</span> <span class="s1">&#39;pit_type&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;soil_lvl&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;spc_latin&#39;</span><span class="p">,</span>  <span class="s1">&#39;vert_other&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;vert_pgrd&#39;</span><span class="p">,</span> <span class="s1">&#39;vert_tgrd&#39;</span><span class="p">,</span> <span class="s1">&#39;vert_wall&#39;</span><span class="p">,</span> <span class="s1">&#39;horz_blck&#39;</span><span class="p">,</span> <span class="s1">&#39;horz_grate&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;horz_plant&#39;</span><span class="p">,</span> <span class="s1">&#39;horz_other&#39;</span><span class="p">,</span> <span class="s1">&#39;sidw_crack&#39;</span><span class="p">,</span> <span class="s1">&#39;sidw_raise&#39;</span><span class="p">,</span> <span class="s1">&#39;wire_htap&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;wire_prime&#39;</span><span class="p">,</span> <span class="s1">&#39;wire_2nd&#39;</span><span class="p">,</span> <span class="s1">&#39;wire_other&#39;</span><span class="p">,</span> <span class="s1">&#39;inf_canopy&#39;</span><span class="p">,</span> <span class="s1">&#39;inf_guard&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;inf_wires&#39;</span><span class="p">,</span> <span class="s1">&#39;inf_paving&#39;</span><span class="p">,</span> <span class="s1">&#39;inf_outlet&#39;</span><span class="p">,</span> <span class="s1">&#39;inf_shoes&#39;</span><span class="p">,</span> <span class="s1">&#39;inf_lights&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;inf_other&#39;</span><span class="p">,</span> <span class="s1">&#39;trunk_dmg&#39;</span><span class="p">,</span> <span class="s1">&#39;zipcode&#39;</span><span class="p">,</span> <span class="s1">&#39;zip_city&#39;</span><span class="p">,</span> <span class="s1">&#39;cb_num&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;cncldist&#39;</span><span class="p">,</span> <span class="s1">&#39;st_assem&#39;</span><span class="p">,</span> <span class="s1">&#39;st_senate&#39;</span><span class="p">,</span> <span class="s1">&#39;nta&#39;</span><span class="p">,</span> <span class="s1">&#39;nta_name&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;boro_ct&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;x_sp&#39;</span><span class="p">,</span> <span class="s1">&#39;y_sp&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;objectid_1&#39;</span><span class="p">,</span> <span class="s1">&#39;census tract&#39;</span><span class="p">,</span> <span class="s1">&#39;bin&#39;</span><span class="p">,</span> <span class="s1">&#39;bbl&#39;</span><span class="p">,</span> <span class="s1">&#39;Location 1&#39;</span><span class="p">]</span>
+<span class="n">tree2005</span> <span class="o">=</span> <span class="n">tree2005</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns2drop</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;OBJECTID&#39;, &#39;tree_dbh&#39;, &#39;spc_common&#39;, &#39;borocode&#39;, &#39;boroname&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borocode</th>
+      <th>boroname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>592373</td>
+      <td>6</td>
+      <td>PEAR, CALLERY</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592374</td>
+      <td>6</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>592375</td>
+      <td>13</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592376</td>
+      <td>13</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>592377</td>
+      <td>15</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>592367</th>
+      <td>1184740</td>
+      <td>9</td>
+      <td>LONDON PLANETREE</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592368</th>
+      <td>1184741</td>
+      <td>7</td>
+      <td>MAPLE, SILVER</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592369</th>
+      <td>1184742</td>
+      <td>5</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592370</th>
+      <td>1184743</td>
+      <td>9</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592371</th>
+      <td>1184744</td>
+      <td>2</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="tips">
+<h3>Tips:<a class="headerlink" href="#tips" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Another way to do this is to select the columns we want to keep: <code class="docutils literal notranslate"><span class="pre">tree2015.loc[:,~columns2drop]</span></code></p></li>
+<li><p>If you know the column names that you want, you can just read the data for specific columns</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span>  <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/2005_Street_Tree_Census.csv&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;OBJECTID&#39;</span><span class="p">,</span> <span class="s1">&#39;tree_dbh&#39;</span><span class="p">,</span> <span class="s1">&#39;spc_common&#39;</span><span class="p">,</span> <span class="s1">&#39;borocode&#39;</span><span class="p">,</span> <span class="s1">&#39;boroname&#39;</span><span class="p">])</span>
+<span class="n">tree2005</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Wenge\AppData\Local\Temp\ipykernel_44500\3626372425.py:1: DtypeWarning: Columns (37) have mixed types. Specify dtype option on import or set low_memory=False.
+  tree2005  = pd.read_csv(&#39;data/2005_Street_Tree_Census.csv&#39;, usecols=[&#39;OBJECTID&#39;, &#39;tree_dbh&#39;, &#39;spc_common&#39;, &#39;borocode&#39;, &#39;boroname&#39;])
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borocode</th>
+      <th>boroname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>592373</td>
+      <td>6</td>
+      <td>PEAR, CALLERY</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592374</td>
+      <td>6</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>592375</td>
+      <td>13</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592376</td>
+      <td>13</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>592377</td>
+      <td>15</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>592367</th>
+      <td>1184740</td>
+      <td>9</td>
+      <td>LONDON PLANETREE</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592368</th>
+      <td>1184741</td>
+      <td>7</td>
+      <td>MAPLE, SILVER</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592369</th>
+      <td>1184742</td>
+      <td>5</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592370</th>
+      <td>1184743</td>
+      <td>9</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592371</th>
+      <td>1184744</td>
+      <td>2</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="renaming-columns">
+<h3>Renaming columns<a class="headerlink" href="#renaming-columns" title="Link to this heading">#</a></h3>
+<p>Next, let’s rename boroname to borough to be consistent with the 2015 data. You could work the other way around, rename 2015 ‘borough<code class="docutils literal notranslate"> <span class="pre">into</span> <span class="pre">'boroname</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span> <span class="o">=</span> <span class="n">tree2005</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;boroname&#39;</span><span class="p">:</span><span class="s1">&#39;borough&#39;</span><span class="p">})</span>
+<span class="n">tree2005</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;OBJECTID&#39;, &#39;tree_dbh&#39;, &#39;spc_common&#39;, &#39;borocode&#39;, &#39;borough&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borocode</th>
+      <th>borough</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>592373</td>
+      <td>6</td>
+      <td>PEAR, CALLERY</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592374</td>
+      <td>6</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>592375</td>
+      <td>13</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592376</td>
+      <td>13</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>592377</td>
+      <td>15</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>592367</th>
+      <td>1184740</td>
+      <td>9</td>
+      <td>LONDON PLANETREE</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592368</th>
+      <td>1184741</td>
+      <td>7</td>
+      <td>MAPLE, SILVER</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592369</th>
+      <td>1184742</td>
+      <td>5</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592370</th>
+      <td>1184743</td>
+      <td>9</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592371</th>
+      <td>1184744</td>
+      <td>2</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 5 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tree2005</span><span class="o">.</span><span class="n">borocode</span> <span class="o">==</span> <span class="mi">5</span><span class="p">,</span><span class="s1">&#39;borough&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Staten Island&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borocode</th>
+      <th>borough</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>592373</td>
+      <td>6</td>
+      <td>PEAR, CALLERY</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592374</td>
+      <td>6</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>592375</td>
+      <td>13</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592376</td>
+      <td>13</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>592377</td>
+      <td>15</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>592367</th>
+      <td>1184740</td>
+      <td>9</td>
+      <td>LONDON PLANETREE</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>592368</th>
+      <td>1184741</td>
+      <td>7</td>
+      <td>MAPLE, SILVER</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>592369</th>
+      <td>1184742</td>
+      <td>5</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>592370</th>
+      <td>1184743</td>
+      <td>9</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>592371</th>
+      <td>1184744</td>
+      <td>2</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="exercise-2-1">
+<h3><a class="reference internal" href="#./wk5.ipynb#Exercise-2.1"><span class="xref myst">Exercise 2.1</span></a><a class="headerlink" href="#exercise-2-1" title="Link to this heading">#</a></h3>
+<p>Download and read 1995 NYC tree data from  <a class="reference external" href="https://data.cityofnewyork.us/Environment/1995-Street-Tree-Census/kyad-zm4j/about_data">here</a></p>
+<p>Download 2005 NYC tree data from <a class="reference external" href="https://data.cityofnewyork.us/Environment/2005-Street-Tree-Census/29bw-z7pj/about_data">here</a></p>
+<p>Download and read 2015 NYC tree data from <a class="reference external" href="https://data.cityofnewyork.us/Environment/2015-Street-Tree-Census-Tree-Data/uvpi-gqnh/about_data">here</a>.</p>
+<p>Drop all the columns except for [‘tree_id’,’tree_dbh’, ‘spc_common’, ‘borocode’, ‘borough’] columns. Sort the result by tree_id in descending order. Each dataset may have slightly different names for these columns, you need to check then first.</p>
+</section>
+<section id="groupbying-and-sorting-by-values">
+<h3>Groupbying and Sorting by values<a class="headerlink" href="#groupbying-and-sorting-by-values" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">groupby</span></code> is a very useful pandas function to do many things.
+We can use the <code class="docutils literal notranslate"><span class="pre">sort_values()</span></code> method to sort based on any number of columns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the most dominant species and tree counts</span>
+<span class="n">treecount2005</span> <span class="o">=</span> <span class="n">tree2005</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;spc_common&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">treecount2005_sorted</span> <span class="o">=</span> <span class="n">treecount2005</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">treecount2005_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">20</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>spc_common
+LONDON PLANETREE        89529
+MAPLE, NORWAY           74721
+PEAR, CALLERY           63593
+HONEYLOCUST             52191
+OAK, PIN                43895
+LINDEN, LITTLE LEAF     27664
+ASH, GREEN              20624
+MAPLE, RED              20254
+MAPLE, SILVER           18666
+UNKNOWN                 18362
+GINKGO                  16256
+ZELKOVA, JAPANESE       14625
+OAK, NORTHERN RED       11076
+CHERRY, OTHER            9728
+SWEETGUM                 8385
+MAPLE, NORWAY-CR KNG     8134
+LINDEN, AMERICAN         7229
+JAPANESE PAGODA TREE     7067
+LINDEN, SILVER           6013
+ELM, AMERICAN            5462
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select big trees </span>
+<span class="n">bigtree2005</span> <span class="o">=</span> <span class="n">tree2005</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tree2005</span><span class="p">[</span><span class="s1">&#39;tree_dbh&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span>
+<span class="n">bigtree2005</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4832, 5)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the most dominant species and tree counts in big trees</span>
+<span class="n">bigtreecount2005</span> <span class="o">=</span> <span class="n">bigtree2005</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;spc_common&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">bigtreecount2005_sorted</span> <span class="o">=</span> <span class="n">bigtreecount2005</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">bigtreecount2005_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>spc_common
+LONDON PLANETREE       1657
+MAPLE, SILVER           632
+OAK, PIN                510
+MAPLE, NORWAY           441
+OAK, NORTHERN RED       239
+MAPLE, RED              140
+UNKNOWN                 122
+LINDEN, LITTLE LEAF     106
+PEAR, CALLERY            97
+HONEYLOCUST              90
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-2-2">
+<h3><a class="reference internal" href="#./wk5.ipynb#Exercise-2.2"><span class="xref myst">Exercise 2.2</span></a><a class="headerlink" href="#exercise-2-2" title="Link to this heading">#</a></h3>
+<section id="find-out-top-10-dominant-tree-species-for-2015-2005-and-1995-nyc-tree-datasets">
+<h4>Find out top 10 dominant tree species for 2015, 2005 and 1995 NYC tree datasets<a class="headerlink" href="#find-out-top-10-dominant-tree-species-for-2015-2005-and-1995-nyc-tree-datasets" title="Link to this heading">#</a></h4>
+</section>
+</section>
+<section id="exercise-2-3">
+<h3><a class="reference internal" href="#./wk5.ipynb#Exercise-2.3"><span class="xref myst">Exercise 2.3</span></a><a class="headerlink" href="#exercise-2-3" title="Link to this heading">#</a></h3>
+<section id="find-the-most-dominant-species-and-tree-counts-for-tree-dbh-40-inches-for-2015-2005-and-1995-nyc-tree-datasets">
+<h4>Find the most dominant species and tree counts for tree dbh &gt; 40 inches for 2015, 2005 and 1995 NYC tree datasets<a class="headerlink" href="#find-the-most-dominant-species-and-tree-counts-for-tree-dbh-40-inches-for-2015-2005-and-1995-nyc-tree-datasets" title="Link to this heading">#</a></h4>
+</section>
+</section>
+</section>
+<section id="working-with-the-index">
+<h2>Working with the index<a class="headerlink" href="#working-with-the-index" title="Link to this heading">#</a></h2>
+<p>So far, we haven’t really worked with the index because it’s just been a row number; however, we can change the values we have in the index to access additional features of the pandas library.</p>
+<section id="setting-and-sorting-the-index">
+<h3>Setting and sorting the index<a class="headerlink" href="#setting-and-sorting-the-index" title="Link to this heading">#</a></h3>
+<p>Currently, we have a RangeIndex, but we can switch to an index when calling <code class="docutils literal notranslate"><span class="pre">set_index()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borocode</th>
+      <th>borough</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>592373</td>
+      <td>6</td>
+      <td>PEAR, CALLERY</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592374</td>
+      <td>6</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>592375</td>
+      <td>13</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592376</td>
+      <td>13</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>592377</td>
+      <td>15</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>592367</th>
+      <td>1184740</td>
+      <td>9</td>
+      <td>LONDON PLANETREE</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>592368</th>
+      <td>1184741</td>
+      <td>7</td>
+      <td>MAPLE, SILVER</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>592369</th>
+      <td>1184742</td>
+      <td>5</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>592370</th>
+      <td>1184743</td>
+      <td>9</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>592371</th>
+      <td>1184744</td>
+      <td>2</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 5 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span> <span class="o">=</span> <span class="n">tree2005</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;borocode&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borough</th>
+    </tr>
+    <tr>
+      <th>borocode</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>592373</td>
+      <td>6</td>
+      <td>PEAR, CALLERY</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592374</td>
+      <td>6</td>
+      <td>LONDON PLANETREE</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592375</td>
+      <td>13</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592376</td>
+      <td>13</td>
+      <td>LONDON PLANETREE</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592377</td>
+      <td>15</td>
+      <td>LONDON PLANETREE</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184740</td>
+      <td>9</td>
+      <td>LONDON PLANETREE</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184741</td>
+      <td>7</td>
+      <td>MAPLE, SILVER</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184742</td>
+      <td>5</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184743</td>
+      <td>9</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184744</td>
+      <td>2</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>Staten Island</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 4 columns</p>
+</div></div></div>
+</div>
+<p>Since we have a sample of the full dataset, let’s sort the index to order borocode:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span> <span class="o">=</span> <span class="n">tree2005</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="n">tree2005</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borough</th>
+    </tr>
+    <tr>
+      <th>borocode</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>592393</td>
+      <td>6</td>
+      <td>PEAR, CALLERY</td>
+      <td>Manhattan</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592423</td>
+      <td>8</td>
+      <td>LINDEN, LITTLE LEAF</td>
+      <td>Manhattan</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592422</td>
+      <td>10</td>
+      <td>GINKGO</td>
+      <td>Manhattan</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592421</td>
+      <td>8</td>
+      <td>PEAR, CALLERY</td>
+      <td>Manhattan</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592420</td>
+      <td>11</td>
+      <td>GINKGO</td>
+      <td>Manhattan</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184714</td>
+      <td>13</td>
+      <td>LONDON PLANETREE</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184713</td>
+      <td>7</td>
+      <td>ASH, GREEN</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184726</td>
+      <td>12</td>
+      <td>LINDEN, LITTLE LEAF</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184744</td>
+      <td>2</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184725</td>
+      <td>5</td>
+      <td>PEAR, CALLERY</td>
+      <td>Staten Island</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 4 columns</p>
+</div></div></div>
+</div>
+<p>When not specifying a range, we use <code class="docutils literal notranslate"><span class="pre">loc[]</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borough</th>
+    </tr>
+    <tr>
+      <th>borocode</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5</th>
+      <td>1184723</td>
+      <td>10</td>
+      <td>CHERRY, OTHER</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184729</td>
+      <td>12</td>
+      <td>CHERRY, OTHER</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184708</td>
+      <td>8</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184707</td>
+      <td>4</td>
+      <td>MAPLE, NORWAY</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184706</td>
+      <td>5</td>
+      <td>PEAR, CALLERY</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184714</td>
+      <td>13</td>
+      <td>LONDON PLANETREE</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184713</td>
+      <td>7</td>
+      <td>ASH, GREEN</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184726</td>
+      <td>12</td>
+      <td>LINDEN, LITTLE LEAF</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184744</td>
+      <td>2</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1184725</td>
+      <td>5</td>
+      <td>PEAR, CALLERY</td>
+      <td>Staten Island</td>
+    </tr>
+  </tbody>
+</table>
+<p>99701 rows × 4 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="resetting-the-index">
+<h3>Resetting the index<a class="headerlink" href="#resetting-the-index" title="Link to this heading">#</a></h3>
+<p>Sometimes we want to reset our index to row numbers and restore the columns with the <code class="docutils literal notranslate"><span class="pre">reset_index()</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span> <span class="o">=</span> <span class="n">tree2005</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">tree2005</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>borocode</th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borough</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>592393</td>
+      <td>6</td>
+      <td>PEAR, CALLERY</td>
+      <td>Manhattan</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>592423</td>
+      <td>8</td>
+      <td>LINDEN, LITTLE LEAF</td>
+      <td>Manhattan</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>592422</td>
+      <td>10</td>
+      <td>GINKGO</td>
+      <td>Manhattan</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>592421</td>
+      <td>8</td>
+      <td>PEAR, CALLERY</td>
+      <td>Manhattan</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>592420</td>
+      <td>11</td>
+      <td>GINKGO</td>
+      <td>Manhattan</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="exercise-2-4">
+<h3><a class="reference internal" href="#./wok5.ipynb#Exercise-2.4"><span class="xref myst">Exercise 2.4</span></a><a class="headerlink" href="#exercise-2-4" title="Link to this heading">#</a></h3>
+<section id="find-out-the-total-number-tree-counts-for-each-borough-for-2015-nyc-tree-data">
+<h4>Find out the total number tree counts for each borough for 2015 NYC tree data<a class="headerlink" href="#find-out-the-total-number-tree-counts-for-each-borough-for-2015-nyc-tree-data" title="Link to this heading">#</a></h4>
+</section>
+</section>
+</section>
+<section id="reshaping-data">
+<h2>Reshaping data<a class="headerlink" href="#reshaping-data" title="Link to this heading">#</a></h2>
+<p>Sometimes the data format is not what we want, we need to reshape the data format using melt or pivoting. We will discuss this when we analyze real data in later sections.</p>
+</section>
+<section id="time-series">
+<h2>Time series<a class="headerlink" href="#time-series" title="Link to this heading">#</a></h2>
+<p>We will cover this in the future section when we deal with real data in the future modules.</p>
+<p><a class="reference external" href="https://github.com/pandas-dev/pandas/blob/main/doc/cheatsheet/Pandas_Cheat_Sheet.pdf">Pandas cheat sheet</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-cleaning">Data cleaning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-columns">Dropping columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tips">Tips:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming-columns">Renaming columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-1"><span class="xref myst">Exercise 2.1</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#groupbying-and-sorting-by-values">Groupbying and Sorting by values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-2"><span class="xref myst">Exercise 2.2</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-out-top-10-dominant-tree-species-for-2015-2005-and-1995-nyc-tree-datasets">Find out top 10 dominant tree species for 2015, 2005 and 1995 NYC tree datasets</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-3"><span class="xref myst">Exercise 2.3</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-most-dominant-species-and-tree-counts-for-tree-dbh-40-inches-for-2015-2005-and-1995-nyc-tree-datasets">Find the most dominant species and tree counts for tree dbh &gt; 40 inches for 2015, 2005 and 1995 NYC tree datasets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-the-index">Working with the index</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-and-sorting-the-index">Setting and sorting the index</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resetting-the-index">Resetting the index</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-4"><span class="xref myst">Exercise 2.4</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-out-the-total-number-tree-counts-for-each-borough-for-2015-nyc-tree-data">Find out the total number tree counts for each borough for 2015 NYC tree data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reshaping-data">Reshaping data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series">Time series</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

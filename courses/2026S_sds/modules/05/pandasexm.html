@@ -1,0 +1,4807 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Section 2: Data Wrangling &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/05/pandasexm';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01/01_intro.html">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02/02_basicPy1.html">02 - Basic Python - 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03_basicPy2.html">03 - Basic Python - 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04_Numpy_Pandas1.html">04 - Numpy and Pandas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_Numpy_Pandas2.html">05 - Numpy and Pandas 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07/07_Midterm_Exam.html">07 - Midterm Exam</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/05/pandasexm.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/modules/05/pandasexm.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Section 2: Data Wrangling</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-cleaning">Data cleaning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-columns">Dropping columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tips">Tips:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming-columns">Renaming columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-1"><span class="xref myst">Exercise 2.1</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#groupbying-and-sorting-by-values">Groupbying and Sorting by values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-2"><span class="xref myst">Exercise 2.2</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-out-top-10-dominant-tree-species-for-2015-2005-and-1995-nyc-tree-datasets">Find out top 10 dominant tree species for 2015, 2005 and 1995 NYC tree datasets</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-3"><span class="xref myst">Exercise 2.3</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-most-dominant-species-and-tree-counts-for-tree-dbh-40-inches-for-2015-2005-and-1995-nyc-tree-datasets">Find the most dominant species and tree counts for tree dbh &gt; 40 inches for 2015, 2005 and 1995 NYC tree datasets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-the-index">Working with the index</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-and-sorting-the-index">Setting and sorting the index</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resetting-the-index">Resetting the index</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><span class="xref myst">Exercise 2.2</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-meteorite-data-from-the-meteorite-landings-csv-file-update-the-year-column-to-only-contain-the-year-convert-it-to-a-numeric-data-type-and-create-a-new-column-indicating-whether-the-meteorite-was-observed-falling-before-1970-set-the-index-to-the-id-column-and-extract-all-the-rows-with-ids-between-10-036-and-10-040-inclusive-with-loc">Using the meteorite data from the <code class="docutils literal notranslate"><span class="pre">Meteorite_Landings.csv</span></code> file, update the <code class="docutils literal notranslate"><span class="pre">year</span></code> column to only contain the year, convert it to a numeric data type, and create a new column indicating whether the meteorite was observed falling before 1970. Set the index to the <code class="docutils literal notranslate"><span class="pre">id</span></code> column and extract all the rows with IDs between 10,036 and 10,040 (inclusive) with <code class="docutils literal notranslate"><span class="pre">loc[]</span></code>.</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#hint-1-use-year-str-slice-to-grab-a-substring"><strong>Hint 1</strong>: Use <code class="docutils literal notranslate"><span class="pre">year.str.slice()</span></code> to grab a substring.</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#hint-2-make-sure-to-sort-the-index-before-using-loc-to-select-the-range"><strong>Hint 2</strong>: Make sure to sort the index before using <code class="docutils literal notranslate"><span class="pre">loc[]</span></code> to select the range.</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#bonus-there-s-a-data-entry-error-in-the-year-column-can-you-find-it-don-t-spend-too-much-time-on-this"><strong>Bonus</strong>: There’s a data entry error in the <code class="docutils literal notranslate"><span class="pre">year</span></code> column. Can you find it? (Don’t spend too much time on this.)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reshaping-data">Reshaping data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#melting">Melting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pivoting">Pivoting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transposing">Transposing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merging">Merging</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregations-and-grouping">Aggregations and grouping</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pivot-tables">Pivot tables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><span class="xref myst">Exercise 2.3</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-meteorite-data-from-the-meteorite-landings-csv-file-create-a-pivot-table-that-shows-both-the-number-of-meteorites-and-the-95th-percentile-of-meteorite-mass-for-those-that-were-found-versus-observed-falling-per-year-from-2005-through-2009-inclusive-hint-be-sure-to-convert-the-year-column-to-a-number-as-we-did-in-the-previous-exercise">Using the meteorite data from the <code class="docutils literal notranslate"><span class="pre">Meteorite_Landings.csv</span></code> file, create a pivot table that shows both the number of meteorites and the 95th percentile of meteorite mass for those that were found versus observed falling per year from 2005 through 2009 (inclusive). Hint: Be sure to convert the <code class="docutils literal notranslate"><span class="pre">year</span></code> column to a number as we did in the previous exercise.</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#crosstabs">Crosstabs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-by-operations">Group by operations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-4"><span class="xref myst">Exercise 2.4</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-meteorite-data-from-the-meteorite-landings-csv-file-compare-summary-statistics-of-the-mass-column-for-the-meteorites-that-were-found-versus-observed-falling">Using the meteorite data from the <code class="docutils literal notranslate"><span class="pre">Meteorite_Landings.csv</span></code> file, compare summary statistics of the mass column for the meteorites that were found versus observed falling.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series">Time series</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-based-on-date-and-time">Selecting based on date and time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-change-over-time">Calculating change over time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resampling">Resampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#window-calculations">Window calculations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-5"><span class="xref myst">Exercise 2.5</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-taxi-trip-data-in-the-2019-yellow-taxi-trip-data-csv-file-resample-the-data-to-an-hourly-frequency-based-on-the-dropoff-time-calculate-the-total-trip-distance-fare-amount-tolls-amount-and-tip-amount-then-find-the-5-hours-with-the-most-tips">Using the taxi trip data in the <code class="docutils literal notranslate"><span class="pre">2019_Yellow_Taxi_Trip_Data.csv</span></code> file, resample the data to an hourly frequency based on the dropoff time. Calculate the total <code class="docutils literal notranslate"><span class="pre">trip_distance</span></code>, <code class="docutils literal notranslate"><span class="pre">fare_amount</span></code>, <code class="docutils literal notranslate"><span class="pre">tolls_amount</span></code>, and <code class="docutils literal notranslate"><span class="pre">tip_amount</span></code>, then find the 5 hours with the most tips.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#up-next-data-visualization">Up Next: <span class="xref myst">Data Visualization</span></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="section-2-data-wrangling">
+<h1>Section 2: Data Wrangling<a class="headerlink" href="#section-2-data-wrangling" title="Link to this heading">#</a></h1>
+<p>To prepare our data for analysis, we need to perform data wrangling. In this section, we will learn how to clean and reformat data (e.g., renaming columns and fixing data type mismatches), restructure/reshape it, and enrich it (e.g., discretizing columns, calculating aggregations, and combining data sources).</p>
+<section id="data-cleaning">
+<h2>Data cleaning<a class="headerlink" href="#data-cleaning" title="Link to this heading">#</a></h2>
+<p>In this section, we will take a look at creating, renaming, and dropping columns; type conversion; and sorting – all of which make our analysis easier. We will be working with the 2019 Yellow Taxi Trip Data provided by NYC Open Data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pd.read_csv<span class="o">?</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/2005_Street_Tree_Census.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Wenge\AppData\Local\Temp\ipykernel_54524\4084950916.py:1: DtypeWarning: Columns (37) have mixed types. Specify dtype option on import or set low_memory=False.
+  tree2005 = pd.read_csv(&#39;data/2005_Street_Tree_Census.csv&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>cen_year</th>
+      <th>tree_dbh</th>
+      <th>address</th>
+      <th>tree_loc</th>
+      <th>pit_type</th>
+      <th>soil_lvl</th>
+      <th>status</th>
+      <th>spc_latin</th>
+      <th>spc_common</th>
+      <th>...</th>
+      <th>state</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>x_sp</th>
+      <th>y_sp</th>
+      <th>objectid_1</th>
+      <th>census tract</th>
+      <th>bin</th>
+      <th>bbl</th>
+      <th>Location 1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>592373</td>
+      <td>2005</td>
+      <td>6</td>
+      <td>1139 57 STREET</td>
+      <td>Front</td>
+      <td>Sidewalk Pit</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>PYRUS CALLERYANA</td>
+      <td>PEAR, CALLERY</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.632653</td>
+      <td>-74.000245</td>
+      <td>984182</td>
+      <td>169769</td>
+      <td>0</td>
+      <td>216.0</td>
+      <td>3140038.0</td>
+      <td>3.056890e+09</td>
+      <td>(40.63265321, -74.00024499)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592374</td>
+      <td>2005</td>
+      <td>6</td>
+      <td>2220 BERGEN AVENUE</td>
+      <td>Across</td>
+      <td>Sidewalk Pit</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>PLATANUS ACERIFOLIA</td>
+      <td>LONDON PLANETREE</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.620084</td>
+      <td>-73.901453</td>
+      <td>1011608</td>
+      <td>165205</td>
+      <td>1</td>
+      <td>706.0</td>
+      <td>3238037.0</td>
+      <td>3.084440e+09</td>
+      <td>(40.62008375, -73.9014528)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>592375</td>
+      <td>2005</td>
+      <td>13</td>
+      <td>2360 BERGEN AVENUE</td>
+      <td>Front</td>
+      <td>Continuous Pit</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>ACER PLATANOIDES          CRIMSON KING</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.617996</td>
+      <td>-73.899111</td>
+      <td>1012259</td>
+      <td>164445</td>
+      <td>2</td>
+      <td>706.0</td>
+      <td>3238299.0</td>
+      <td>3.084530e+09</td>
+      <td>(40.61799567, -73.89911096)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592376</td>
+      <td>2005</td>
+      <td>13</td>
+      <td>2254 BERGEN AVENUE</td>
+      <td>Across</td>
+      <td>Sidewalk Pit</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>PLATANUS ACERIFOLIA</td>
+      <td>LONDON PLANETREE</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.619694</td>
+      <td>-73.901003</td>
+      <td>1011733</td>
+      <td>165063</td>
+      <td>3</td>
+      <td>706.0</td>
+      <td>3238045.0</td>
+      <td>3.084440e+09</td>
+      <td>(40.6196936, -73.90100311)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>592377</td>
+      <td>2005</td>
+      <td>15</td>
+      <td>2332 BERGEN AVENUE</td>
+      <td>Across</td>
+      <td>Sidewalk Pit</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>PLATANUS ACERIFOLIA</td>
+      <td>LONDON PLANETREE</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.618323</td>
+      <td>-73.899467</td>
+      <td>1012160</td>
+      <td>164564</td>
+      <td>4</td>
+      <td>706.0</td>
+      <td>3238294.0</td>
+      <td>3.084530e+09</td>
+      <td>(40.61832261, -73.89946707)</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>592367</th>
+      <td>1184740</td>
+      <td>2005</td>
+      <td>9</td>
+      <td>62 LEWISTON STREET</td>
+      <td>Front</td>
+      <td>Lawn</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>PLATANUS ACERIFOLIA</td>
+      <td>LONDON PLANETREE</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.586260</td>
+      <td>-74.148797</td>
+      <td>942921</td>
+      <td>152902</td>
+      <td>592367</td>
+      <td>27704.0</td>
+      <td>5037776.0</td>
+      <td>5.023710e+09</td>
+      <td>(40.58626041, -74.14879727)</td>
+    </tr>
+    <tr>
+      <th>592368</th>
+      <td>1184741</td>
+      <td>2005</td>
+      <td>7</td>
+      <td>68 LEWISTON STREET</td>
+      <td>Front</td>
+      <td>Lawn</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>ACER SACCHARINUM</td>
+      <td>MAPLE, SILVER</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.586090</td>
+      <td>-74.149013</td>
+      <td>942861</td>
+      <td>152840</td>
+      <td>592368</td>
+      <td>27704.0</td>
+      <td>5037778.0</td>
+      <td>5.023710e+09</td>
+      <td>(40.58608995, -74.14901291)</td>
+    </tr>
+    <tr>
+      <th>592369</th>
+      <td>1184742</td>
+      <td>2005</td>
+      <td>5</td>
+      <td>69 TRAVIS AVENUE</td>
+      <td>Side</td>
+      <td>Lawn</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>ACER PLATANOIDES          CRIMSON KING</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.585802</td>
+      <td>-74.149156</td>
+      <td>942821</td>
+      <td>152735</td>
+      <td>592369</td>
+      <td>27704.0</td>
+      <td>5037737.0</td>
+      <td>5.023710e+09</td>
+      <td>(40.58580156, -74.14915628)</td>
+    </tr>
+    <tr>
+      <th>592370</th>
+      <td>1184743</td>
+      <td>2005</td>
+      <td>9</td>
+      <td>69 TRAVIS AVENUE</td>
+      <td>Side</td>
+      <td>Lawn</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>ACER PLATANOIDES          CRIMSON KING</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.585802</td>
+      <td>-74.149156</td>
+      <td>942821</td>
+      <td>152735</td>
+      <td>592370</td>
+      <td>27704.0</td>
+      <td>5037737.0</td>
+      <td>5.023710e+09</td>
+      <td>(40.58580156, -74.14915628)</td>
+    </tr>
+    <tr>
+      <th>592371</th>
+      <td>1184744</td>
+      <td>2005</td>
+      <td>2</td>
+      <td>69 TRAVIS AVENUE</td>
+      <td>Side</td>
+      <td>Lawn</td>
+      <td>Level</td>
+      <td>Good</td>
+      <td>ACER PLATANOIDES          CRIMSON KING</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>...</td>
+      <td>New York</td>
+      <td>40.585802</td>
+      <td>-74.149156</td>
+      <td>942821</td>
+      <td>152735</td>
+      <td>592371</td>
+      <td>27704.0</td>
+      <td>5037737.0</td>
+      <td>5.023710e+09</td>
+      <td>(40.58580156, -74.14915628)</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 54 columns</p>
+</div></div></div>
+</div>
+<section id="dropping-columns">
+<h3>Dropping columns<a class="headerlink" href="#dropping-columns" title="Link to this heading">#</a></h3>
+<p>Let’s start by dropping some columns which we won’t be using.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;OBJECTID&#39;, &#39;cen_year&#39;, &#39;tree_dbh&#39;, &#39;address&#39;, &#39;tree_loc&#39;, &#39;pit_type&#39;,
+       &#39;soil_lvl&#39;, &#39;status&#39;, &#39;spc_latin&#39;, &#39;spc_common&#39;, &#39;vert_other&#39;,
+       &#39;vert_pgrd&#39;, &#39;vert_tgrd&#39;, &#39;vert_wall&#39;, &#39;horz_blck&#39;, &#39;horz_grate&#39;,
+       &#39;horz_plant&#39;, &#39;horz_other&#39;, &#39;sidw_crack&#39;, &#39;sidw_raise&#39;, &#39;wire_htap&#39;,
+       &#39;wire_prime&#39;, &#39;wire_2nd&#39;, &#39;wire_other&#39;, &#39;inf_canopy&#39;, &#39;inf_guard&#39;,
+       &#39;inf_wires&#39;, &#39;inf_paving&#39;, &#39;inf_outlet&#39;, &#39;inf_shoes&#39;, &#39;inf_lights&#39;,
+       &#39;inf_other&#39;, &#39;trunk_dmg&#39;, &#39;zipcode&#39;, &#39;zip_city&#39;, &#39;cb_num&#39;, &#39;borocode&#39;,
+       &#39;boroname&#39;, &#39;cncldist&#39;, &#39;st_assem&#39;, &#39;st_senate&#39;, &#39;nta&#39;, &#39;nta_name&#39;,
+       &#39;boro_ct&#39;, &#39;state&#39;, &#39;latitude&#39;, &#39;longitude&#39;, &#39;x_sp&#39;, &#39;y_sp&#39;,
+       &#39;objectid_1&#39;, &#39;census tract&#39;, &#39;bin&#39;, &#39;bbl&#39;, &#39;Location 1&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns2drop</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cen_year&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">,</span> <span class="s1">&#39;tree_loc&#39;</span><span class="p">,</span> <span class="s1">&#39;pit_type&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;soil_lvl&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;spc_latin&#39;</span><span class="p">,</span>  <span class="s1">&#39;vert_other&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;vert_pgrd&#39;</span><span class="p">,</span> <span class="s1">&#39;vert_tgrd&#39;</span><span class="p">,</span> <span class="s1">&#39;vert_wall&#39;</span><span class="p">,</span> <span class="s1">&#39;horz_blck&#39;</span><span class="p">,</span> <span class="s1">&#39;horz_grate&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;horz_plant&#39;</span><span class="p">,</span> <span class="s1">&#39;horz_other&#39;</span><span class="p">,</span> <span class="s1">&#39;sidw_crack&#39;</span><span class="p">,</span> <span class="s1">&#39;sidw_raise&#39;</span><span class="p">,</span> <span class="s1">&#39;wire_htap&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;wire_prime&#39;</span><span class="p">,</span> <span class="s1">&#39;wire_2nd&#39;</span><span class="p">,</span> <span class="s1">&#39;wire_other&#39;</span><span class="p">,</span> <span class="s1">&#39;inf_canopy&#39;</span><span class="p">,</span> <span class="s1">&#39;inf_guard&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;inf_wires&#39;</span><span class="p">,</span> <span class="s1">&#39;inf_paving&#39;</span><span class="p">,</span> <span class="s1">&#39;inf_outlet&#39;</span><span class="p">,</span> <span class="s1">&#39;inf_shoes&#39;</span><span class="p">,</span> <span class="s1">&#39;inf_lights&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;inf_other&#39;</span><span class="p">,</span> <span class="s1">&#39;trunk_dmg&#39;</span><span class="p">,</span> <span class="s1">&#39;zipcode&#39;</span><span class="p">,</span> <span class="s1">&#39;zip_city&#39;</span><span class="p">,</span> <span class="s1">&#39;cb_num&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;cncldist&#39;</span><span class="p">,</span> <span class="s1">&#39;st_assem&#39;</span><span class="p">,</span> <span class="s1">&#39;st_senate&#39;</span><span class="p">,</span> <span class="s1">&#39;nta&#39;</span><span class="p">,</span> <span class="s1">&#39;nta_name&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;boro_ct&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;x_sp&#39;</span><span class="p">,</span> <span class="s1">&#39;y_sp&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;objectid_1&#39;</span><span class="p">,</span> <span class="s1">&#39;census tract&#39;</span><span class="p">,</span> <span class="s1">&#39;bin&#39;</span><span class="p">,</span> <span class="s1">&#39;bbl&#39;</span><span class="p">,</span> <span class="s1">&#39;Location 1&#39;</span><span class="p">]</span>
+<span class="n">tree2005</span> <span class="o">=</span> <span class="n">tree2005</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns2drop</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;OBJECTID&#39;, &#39;tree_dbh&#39;, &#39;spc_common&#39;, &#39;borocode&#39;, &#39;boroname&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borocode</th>
+      <th>boroname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>592373</td>
+      <td>6</td>
+      <td>PEAR, CALLERY</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592374</td>
+      <td>6</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>592375</td>
+      <td>13</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592376</td>
+      <td>13</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>592377</td>
+      <td>15</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>592367</th>
+      <td>1184740</td>
+      <td>9</td>
+      <td>LONDON PLANETREE</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592368</th>
+      <td>1184741</td>
+      <td>7</td>
+      <td>MAPLE, SILVER</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592369</th>
+      <td>1184742</td>
+      <td>5</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592370</th>
+      <td>1184743</td>
+      <td>9</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592371</th>
+      <td>1184744</td>
+      <td>2</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="tips">
+<h3>Tips:<a class="headerlink" href="#tips" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Another way to do this is to select the columns we want to keep: <code class="docutils literal notranslate"><span class="pre">tree2015.loc[:,~columns2drop]</span></code></p></li>
+<li><p>If you know the column names that you want, you can just read the data for specific columns</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span>  <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/2005_Street_Tree_Census.csv&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;OBJECTID&#39;</span><span class="p">,</span> <span class="s1">&#39;tree_dbh&#39;</span><span class="p">,</span> <span class="s1">&#39;spc_common&#39;</span><span class="p">,</span> <span class="s1">&#39;borocode&#39;</span><span class="p">,</span> <span class="s1">&#39;boroname&#39;</span><span class="p">])</span>
+<span class="n">tree2005</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Wenge\AppData\Local\Temp\ipykernel_54524\3626372425.py:1: DtypeWarning: Columns (37) have mixed types. Specify dtype option on import or set low_memory=False.
+  tree2005  = pd.read_csv(&#39;data/2005_Street_Tree_Census.csv&#39;, usecols=[&#39;OBJECTID&#39;, &#39;tree_dbh&#39;, &#39;spc_common&#39;, &#39;borocode&#39;, &#39;boroname&#39;])
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borocode</th>
+      <th>boroname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>592373</td>
+      <td>6</td>
+      <td>PEAR, CALLERY</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592374</td>
+      <td>6</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>592375</td>
+      <td>13</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592376</td>
+      <td>13</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>592377</td>
+      <td>15</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>592367</th>
+      <td>1184740</td>
+      <td>9</td>
+      <td>LONDON PLANETREE</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592368</th>
+      <td>1184741</td>
+      <td>7</td>
+      <td>MAPLE, SILVER</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592369</th>
+      <td>1184742</td>
+      <td>5</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592370</th>
+      <td>1184743</td>
+      <td>9</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592371</th>
+      <td>1184744</td>
+      <td>2</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="renaming-columns">
+<h3>Renaming columns<a class="headerlink" href="#renaming-columns" title="Link to this heading">#</a></h3>
+<p>Next, let’s rename boroname to borough to be consistent with the 2015 data. You could work the other way around, rename 2015 ‘borough<code class="docutils literal notranslate"> <span class="pre">into</span> <span class="pre">'boroname</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span> <span class="o">=</span> <span class="n">tree2005</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;boroname&#39;</span><span class="p">:</span><span class="s1">&#39;borough&#39;</span><span class="p">})</span>
+<span class="n">tree2005</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;OBJECTID&#39;, &#39;tree_dbh&#39;, &#39;spc_common&#39;, &#39;borocode&#39;, &#39;borough&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borocode</th>
+      <th>borough</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>592373</td>
+      <td>6</td>
+      <td>PEAR, CALLERY</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592374</td>
+      <td>6</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>592375</td>
+      <td>13</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592376</td>
+      <td>13</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>592377</td>
+      <td>15</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>592367</th>
+      <td>1184740</td>
+      <td>9</td>
+      <td>LONDON PLANETREE</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592368</th>
+      <td>1184741</td>
+      <td>7</td>
+      <td>MAPLE, SILVER</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592369</th>
+      <td>1184742</td>
+      <td>5</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592370</th>
+      <td>1184743</td>
+      <td>9</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>592371</th>
+      <td>1184744</td>
+      <td>2</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 5 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tree2005</span><span class="o">.</span><span class="n">borocode</span> <span class="o">==</span> <span class="mi">5</span><span class="p">,</span><span class="s1">&#39;borough&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Staten Island&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2005</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>tree_dbh</th>
+      <th>spc_common</th>
+      <th>borocode</th>
+      <th>borough</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>592373</td>
+      <td>6</td>
+      <td>PEAR, CALLERY</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>592374</td>
+      <td>6</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>592375</td>
+      <td>13</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>592376</td>
+      <td>13</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>592377</td>
+      <td>15</td>
+      <td>LONDON PLANETREE</td>
+      <td>3</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>592367</th>
+      <td>1184740</td>
+      <td>9</td>
+      <td>LONDON PLANETREE</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>592368</th>
+      <td>1184741</td>
+      <td>7</td>
+      <td>MAPLE, SILVER</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>592369</th>
+      <td>1184742</td>
+      <td>5</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>592370</th>
+      <td>1184743</td>
+      <td>9</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+    <tr>
+      <th>592371</th>
+      <td>1184744</td>
+      <td>2</td>
+      <td>MAPLE, NORWAY-CR KNG</td>
+      <td>5</td>
+      <td>Staten Island</td>
+    </tr>
+  </tbody>
+</table>
+<p>592372 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="exercise-2-1">
+<h3><a class="reference internal" href="#./wk5.ipynb#Exercise-2.1"><span class="xref myst">Exercise 2.1</span></a><a class="headerlink" href="#exercise-2-1" title="Link to this heading">#</a></h3>
+<p>Download and read 1995 NYC tree data from  <a class="reference external" href="https://data.cityofnewyork.us/Environment/1995-Street-Tree-Census/kyad-zm4j/about_data">here</a></p>
+<p>Download 2005 NYC tree data from <a class="reference external" href="https://data.cityofnewyork.us/Environment/2005-Street-Tree-Census/29bw-z7pj/about_data">here</a></p>
+<p>Download and read 2015 NYC tree data from <a class="reference external" href="https://data.cityofnewyork.us/Environment/2015-Street-Tree-Census-Tree-Data/uvpi-gqnh/about_data">here</a>.</p>
+<p>Drop all the columns except for [‘tree_id’,’tree_dbh’, ‘spc_common’, ‘borocode’, ‘borough’] columns. Sort the result by tree_id in descending order. Each dataset may have slightly different names for these columns, you need to check then first.</p>
+</section>
+<section id="groupbying-and-sorting-by-values">
+<h3>Groupbying and Sorting by values<a class="headerlink" href="#groupbying-and-sorting-by-values" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">groupby</span></code> is a very useful pandas function to do many things.
+We can use the <code class="docutils literal notranslate"><span class="pre">sort_values()</span></code> method to sort based on any number of columns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the most dominant species and tree counts</span>
+<span class="n">treecount2015</span> <span class="o">=</span> <span class="n">tree2015</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;spc_common&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">treecount2015_sorted</span> <span class="o">=</span> <span class="n">treecount2015</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">treecount2015_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">20</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">14</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Find the most dominant species and tree counts</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">treecount2015</span> <span class="o">=</span> <span class="n">tree2015</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;spc_common&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">treecount2015_sorted</span> <span class="o">=</span> <span class="n">treecount2015</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">treecount2015_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">20</span><span class="p">]</span>
+
+<span class="ne">NameError</span>: name &#39;tree2015&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select big trees </span>
+<span class="n">bigtree2015</span> <span class="o">=</span> <span class="n">tree2015</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tree2015</span><span class="p">[</span><span class="s1">&#39;tree_dbh&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span>
+<span class="n">bigtree2015</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2495, 45)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the most dominant species and tree counts in big trees</span>
+<span class="n">bigtreecount2015</span> <span class="o">=</span> <span class="n">bigtree2015</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;spc_common&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">bigtreecount2015_sorted</span> <span class="o">=</span> <span class="n">bigtreecount2015</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">bigtreecount2015_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>spc_common
+London planetree     993
+pin oak              456
+silver maple         375
+northern red oak     116
+American elm          81
+littleleaf linden     31
+willow oak            29
+mulberry              25
+sweetgum              22
+Norway maple          20
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-2-2">
+<h3><a class="reference internal" href="#./wk5.ipynb#Exercise-2.2"><span class="xref myst">Exercise 2.2</span></a><a class="headerlink" href="#exercise-2-2" title="Link to this heading">#</a></h3>
+<section id="find-out-top-10-dominant-tree-species-for-2015-2005-and-1995-nyc-tree-datasets">
+<h4>Find out top 10 dominant tree species for 2015, 2005 and 1995 NYC tree datasets<a class="headerlink" href="#find-out-top-10-dominant-tree-species-for-2015-2005-and-1995-nyc-tree-datasets" title="Link to this heading">#</a></h4>
+</section>
+</section>
+<section id="exercise-2-3">
+<h3><a class="reference internal" href="#./wk5.ipynb#Exercise-2.3"><span class="xref myst">Exercise 2.3</span></a><a class="headerlink" href="#exercise-2-3" title="Link to this heading">#</a></h3>
+<section id="find-the-most-dominant-species-and-tree-counts-for-tree-dbh-40-inches-for-2015-2005-and-1995-nyc-tree-datasets">
+<h4>Find the most dominant species and tree counts for tree dbh &gt; 40 inches for 2015, 2005 and 1995 NYC tree datasets<a class="headerlink" href="#find-the-most-dominant-species-and-tree-counts-for-tree-dbh-40-inches-for-2015-2005-and-1995-nyc-tree-datasets" title="Link to this heading">#</a></h4>
+</section>
+</section>
+</section>
+<section id="working-with-the-index">
+<h2>Working with the index<a class="headerlink" href="#working-with-the-index" title="Link to this heading">#</a></h2>
+<p>So far, we haven’t really worked with the index because it’s just been a row number; however, we can change the values we have in the index to access additional features of the pandas library.</p>
+<section id="setting-and-sorting-the-index">
+<h3>Setting and sorting the index<a class="headerlink" href="#setting-and-sorting-the-index" title="Link to this heading">#</a></h3>
+<p>Currently, we have a RangeIndex, but we can switch to a DatetimeIndex by specifying a datetime column when calling <code class="docutils literal notranslate"><span class="pre">set_index()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">taxis</span> <span class="o">=</span> <span class="n">taxis</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;pickup&#39;</span><span class="p">)</span>
+<span class="n">taxis</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dropoff</th>
+      <th>passenger_count</th>
+      <th>trip_distance</th>
+      <th>payment_type</th>
+      <th>fare_amount</th>
+      <th>extra</th>
+      <th>mta_tax</th>
+      <th>tip_amount</th>
+      <th>tolls_amount</th>
+      <th>improvement_surcharge</th>
+      <th>total_amount</th>
+      <th>congestion_surcharge</th>
+      <th>elapsed_time</th>
+      <th>cost_before_tip</th>
+      <th>tip_pct</th>
+      <th>fees</th>
+      <th>avg_speed</th>
+    </tr>
+    <tr>
+      <th>pickup</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019-10-23 16:39:42</th>
+      <td>2019-10-23 17:14:10</td>
+      <td>1</td>
+      <td>7.93</td>
+      <td>1</td>
+      <td>29.5</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>7.98</td>
+      <td>6.12</td>
+      <td>0.3</td>
+      <td>47.9</td>
+      <td>2.5</td>
+      <td>0 days 00:34:28</td>
+      <td>39.92</td>
+      <td>0.199900</td>
+      <td>10.42</td>
+      <td>13.804642</td>
+    </tr>
+    <tr>
+      <th>2019-10-23 16:32:08</th>
+      <td>2019-10-23 16:45:26</td>
+      <td>1</td>
+      <td>2.00</td>
+      <td>1</td>
+      <td>10.5</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.3</td>
+      <td>12.3</td>
+      <td>0.0</td>
+      <td>0 days 00:13:18</td>
+      <td>12.30</td>
+      <td>0.000000</td>
+      <td>1.80</td>
+      <td>9.022556</td>
+    </tr>
+    <tr>
+      <th>2019-10-23 16:08:44</th>
+      <td>2019-10-23 16:21:11</td>
+      <td>1</td>
+      <td>1.36</td>
+      <td>1</td>
+      <td>9.5</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>2.00</td>
+      <td>0.00</td>
+      <td>0.3</td>
+      <td>15.8</td>
+      <td>2.5</td>
+      <td>0 days 00:12:27</td>
+      <td>13.80</td>
+      <td>0.144928</td>
+      <td>4.30</td>
+      <td>6.554217</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Since we have a sample of the full dataset, let’s sort the index to order by pickup time:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">taxis</span> <span class="o">=</span> <span class="n">taxis</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Tip: <code class="docutils literal notranslate"><span class="pre">taxis.sort_index(axis=1)</span></code> will sort the columns by name. The <code class="docutils literal notranslate"><span class="pre">axis</span></code> parameter is present throughout the pandas library: <code class="docutils literal notranslate"><span class="pre">axis=0</span></code> targets rows and <code class="docutils literal notranslate"><span class="pre">axis=1</span></code> targets columns.</em></p>
+<p>We can now select ranges from our data based on the datetime the same way we did with row numbers:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">taxis</span><span class="p">[</span><span class="s1">&#39;2019-10-23 07:45&#39;</span><span class="p">:</span><span class="s1">&#39;2019-10-23 08&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dropoff</th>
+      <th>passenger_count</th>
+      <th>trip_distance</th>
+      <th>payment_type</th>
+      <th>fare_amount</th>
+      <th>extra</th>
+      <th>mta_tax</th>
+      <th>tip_amount</th>
+      <th>tolls_amount</th>
+      <th>improvement_surcharge</th>
+      <th>total_amount</th>
+      <th>congestion_surcharge</th>
+      <th>elapsed_time</th>
+      <th>cost_before_tip</th>
+      <th>tip_pct</th>
+      <th>fees</th>
+      <th>avg_speed</th>
+    </tr>
+    <tr>
+      <th>pickup</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019-10-23 07:48:58</th>
+      <td>2019-10-23 07:52:09</td>
+      <td>1</td>
+      <td>0.67</td>
+      <td>2</td>
+      <td>4.5</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>8.8</td>
+      <td>2.5</td>
+      <td>0 days 00:03:11</td>
+      <td>8.8</td>
+      <td>0.000000</td>
+      <td>4.3</td>
+      <td>12.628272</td>
+    </tr>
+    <tr>
+      <th>2019-10-23 08:02:09</th>
+      <td>2019-10-24 07:42:32</td>
+      <td>1</td>
+      <td>8.38</td>
+      <td>1</td>
+      <td>32.0</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>5.5</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>41.8</td>
+      <td>2.5</td>
+      <td>0 days 23:40:23</td>
+      <td>36.3</td>
+      <td>0.151515</td>
+      <td>4.3</td>
+      <td>0.353989</td>
+    </tr>
+    <tr>
+      <th>2019-10-23 08:18:47</th>
+      <td>2019-10-23 08:36:05</td>
+      <td>1</td>
+      <td>2.39</td>
+      <td>2</td>
+      <td>12.5</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>16.8</td>
+      <td>2.5</td>
+      <td>0 days 00:17:18</td>
+      <td>16.8</td>
+      <td>0.000000</td>
+      <td>4.3</td>
+      <td>8.289017</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>When not specifying a range, we use <code class="docutils literal notranslate"><span class="pre">loc[]</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">taxis</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2019-10-23 08&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dropoff</th>
+      <th>passenger_count</th>
+      <th>trip_distance</th>
+      <th>payment_type</th>
+      <th>fare_amount</th>
+      <th>extra</th>
+      <th>mta_tax</th>
+      <th>tip_amount</th>
+      <th>tolls_amount</th>
+      <th>improvement_surcharge</th>
+      <th>total_amount</th>
+      <th>congestion_surcharge</th>
+      <th>elapsed_time</th>
+      <th>cost_before_tip</th>
+      <th>tip_pct</th>
+      <th>fees</th>
+      <th>avg_speed</th>
+    </tr>
+    <tr>
+      <th>pickup</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019-10-23 08:02:09</th>
+      <td>2019-10-24 07:42:32</td>
+      <td>1</td>
+      <td>8.38</td>
+      <td>1</td>
+      <td>32.0</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>5.5</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>41.8</td>
+      <td>2.5</td>
+      <td>0 days 23:40:23</td>
+      <td>36.3</td>
+      <td>0.151515</td>
+      <td>4.3</td>
+      <td>0.353989</td>
+    </tr>
+    <tr>
+      <th>2019-10-23 08:18:47</th>
+      <td>2019-10-23 08:36:05</td>
+      <td>1</td>
+      <td>2.39</td>
+      <td>2</td>
+      <td>12.5</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>16.8</td>
+      <td>2.5</td>
+      <td>0 days 00:17:18</td>
+      <td>16.8</td>
+      <td>0.000000</td>
+      <td>4.3</td>
+      <td>8.289017</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="resetting-the-index">
+<h3>Resetting the index<a class="headerlink" href="#resetting-the-index" title="Link to this heading">#</a></h3>
+<p>We will be working with time series later this section, but sometimes we want to reset our index to row numbers and restore the columns. We can make <code class="docutils literal notranslate"><span class="pre">pickup</span></code> a column again with the <code class="docutils literal notranslate"><span class="pre">reset_index()</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">taxis</span> <span class="o">=</span> <span class="n">taxis</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">taxis</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pickup</th>
+      <th>dropoff</th>
+      <th>passenger_count</th>
+      <th>trip_distance</th>
+      <th>payment_type</th>
+      <th>fare_amount</th>
+      <th>extra</th>
+      <th>mta_tax</th>
+      <th>tip_amount</th>
+      <th>tolls_amount</th>
+      <th>improvement_surcharge</th>
+      <th>total_amount</th>
+      <th>congestion_surcharge</th>
+      <th>elapsed_time</th>
+      <th>cost_before_tip</th>
+      <th>tip_pct</th>
+      <th>fees</th>
+      <th>avg_speed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019-10-23 07:05:34</td>
+      <td>2019-10-23 08:03:16</td>
+      <td>3</td>
+      <td>14.68</td>
+      <td>1</td>
+      <td>50.0</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>4.0</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>55.8</td>
+      <td>0.0</td>
+      <td>0 days 00:57:42</td>
+      <td>51.8</td>
+      <td>0.077220</td>
+      <td>1.8</td>
+      <td>15.265165</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019-10-23 07:48:58</td>
+      <td>2019-10-23 07:52:09</td>
+      <td>1</td>
+      <td>0.67</td>
+      <td>2</td>
+      <td>4.5</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>8.8</td>
+      <td>2.5</td>
+      <td>0 days 00:03:11</td>
+      <td>8.8</td>
+      <td>0.000000</td>
+      <td>4.3</td>
+      <td>12.628272</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2019-10-23 08:02:09</td>
+      <td>2019-10-24 07:42:32</td>
+      <td>1</td>
+      <td>8.38</td>
+      <td>1</td>
+      <td>32.0</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>5.5</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>41.8</td>
+      <td>2.5</td>
+      <td>0 days 23:40:23</td>
+      <td>36.3</td>
+      <td>0.151515</td>
+      <td>4.3</td>
+      <td>0.353989</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2019-10-23 08:18:47</td>
+      <td>2019-10-23 08:36:05</td>
+      <td>1</td>
+      <td>2.39</td>
+      <td>2</td>
+      <td>12.5</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>16.8</td>
+      <td>2.5</td>
+      <td>0 days 00:17:18</td>
+      <td>16.8</td>
+      <td>0.000000</td>
+      <td>4.3</td>
+      <td>8.289017</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2019-10-23 09:27:16</td>
+      <td>2019-10-23 09:33:13</td>
+      <td>2</td>
+      <td>1.11</td>
+      <td>2</td>
+      <td>6.0</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>7.8</td>
+      <td>0.0</td>
+      <td>0 days 00:05:57</td>
+      <td>7.8</td>
+      <td>0.000000</td>
+      <td>1.8</td>
+      <td>11.193277</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="id1">
+<h3><a class="reference internal" href="#./workbook.ipynb#Exercise-2.2"><span class="xref myst">Exercise 2.2</span></a><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<section id="using-the-meteorite-data-from-the-meteorite-landings-csv-file-update-the-year-column-to-only-contain-the-year-convert-it-to-a-numeric-data-type-and-create-a-new-column-indicating-whether-the-meteorite-was-observed-falling-before-1970-set-the-index-to-the-id-column-and-extract-all-the-rows-with-ids-between-10-036-and-10-040-inclusive-with-loc">
+<h4>Using the meteorite data from the <code class="docutils literal notranslate"><span class="pre">Meteorite_Landings.csv</span></code> file, update the <code class="docutils literal notranslate"><span class="pre">year</span></code> column to only contain the year, convert it to a numeric data type, and create a new column indicating whether the meteorite was observed falling before 1970. Set the index to the <code class="docutils literal notranslate"><span class="pre">id</span></code> column and extract all the rows with IDs between 10,036 and 10,040 (inclusive) with <code class="docutils literal notranslate"><span class="pre">loc[]</span></code>.<a class="headerlink" href="#using-the-meteorite-data-from-the-meteorite-landings-csv-file-update-the-year-column-to-only-contain-the-year-convert-it-to-a-numeric-data-type-and-create-a-new-column-indicating-whether-the-meteorite-was-observed-falling-before-1970-set-the-index-to-the-id-column-and-extract-all-the-rows-with-ids-between-10-036-and-10-040-inclusive-with-loc" title="Link to this heading">#</a></h4>
+<section id="hint-1-use-year-str-slice-to-grab-a-substring">
+<h5><strong>Hint 1</strong>: Use <code class="docutils literal notranslate"><span class="pre">year.str.slice()</span></code> to grab a substring.<a class="headerlink" href="#hint-1-use-year-str-slice-to-grab-a-substring" title="Link to this heading">#</a></h5>
+</section>
+<section id="hint-2-make-sure-to-sort-the-index-before-using-loc-to-select-the-range">
+<h5><strong>Hint 2</strong>: Make sure to sort the index before using <code class="docutils literal notranslate"><span class="pre">loc[]</span></code> to select the range.<a class="headerlink" href="#hint-2-make-sure-to-sort-the-index-before-using-loc-to-select-the-range" title="Link to this heading">#</a></h5>
+</section>
+<section id="bonus-there-s-a-data-entry-error-in-the-year-column-can-you-find-it-don-t-spend-too-much-time-on-this">
+<h5><strong>Bonus</strong>: There’s a data entry error in the <code class="docutils literal notranslate"><span class="pre">year</span></code> column. Can you find it? (Don’t spend too much time on this.)<a class="headerlink" href="#bonus-there-s-a-data-entry-error-in-the-year-column-can-you-find-it-don-t-spend-too-much-time-on-this" title="Link to this heading">#</a></h5>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Complete this exercise in the workbook.ipynb file</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Click on `Exercise 2.2` above to open the workbook.ipynb file</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># WARNING: if you complete the exercise here, your cell numbers</span>
+<span class="c1"># for the rest of the training might not match the slides</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="reshaping-data">
+<h2>Reshaping data<a class="headerlink" href="#reshaping-data" title="Link to this heading">#</a></h2>
+<p>The taxi dataset we have be working with is in a format conducive to an analysis. This isn’t always the case. Let’s now take a look at the TSA traveler throughput data, which compares 2021 throughput to the same day in 2020 and 2019:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/tsa_passenger_throughput.csv&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">])</span>
+<span class="n">tsa</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>2021 Traveler Throughput</th>
+      <th>2020 Traveler Throughput</th>
+      <th>2019 Traveler Throughput</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2021-05-14</td>
+      <td>1716561.0</td>
+      <td>250467</td>
+      <td>2664549</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2021-05-13</td>
+      <td>1743515.0</td>
+      <td>234928</td>
+      <td>2611324</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2021-05-12</td>
+      <td>1424664.0</td>
+      <td>176667</td>
+      <td>2343675</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2021-05-11</td>
+      <td>1315493.0</td>
+      <td>163205</td>
+      <td>2191387</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2021-05-10</td>
+      <td>1657722.0</td>
+      <td>215645</td>
+      <td>2512315</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><em>Source: <a class="reference external" href="https://www.tsa.gov/coronavirus/passenger-throughput">TSA.gov</a> (collected on May 16, 2021)</em></p>
+<p>First, we will lowercase the column names and take the first word (e.g., <code class="docutils literal notranslate"><span class="pre">2021</span></code> for <code class="docutils literal notranslate"><span class="pre">2021</span> <span class="pre">Traveler</span> <span class="pre">Throughput</span></code>) to make this easier to work with:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa</span> <span class="o">=</span> <span class="n">tsa</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">tsa</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>2021</th>
+      <th>2020</th>
+      <th>2019</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2021-05-14</td>
+      <td>1716561.0</td>
+      <td>250467</td>
+      <td>2664549</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2021-05-13</td>
+      <td>1743515.0</td>
+      <td>234928</td>
+      <td>2611324</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2021-05-12</td>
+      <td>1424664.0</td>
+      <td>176667</td>
+      <td>2343675</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2021-05-11</td>
+      <td>1315493.0</td>
+      <td>163205</td>
+      <td>2191387</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2021-05-10</td>
+      <td>1657722.0</td>
+      <td>215645</td>
+      <td>2512315</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now, we can work on reshaping it into two columns: the date and the traveler throughput from 2019 through 2021.</p>
+<p>Starting with the long-format data below, we want to <strong>melt</strong> it into wide-format data so that we can look at the evolution of the throughput over time:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">highlight_long_format</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;2021&#39;</span><span class="p">:</span> <span class="s1">&#39;pink&#39;</span><span class="p">,</span> <span class="s1">&#39;2020&#39;</span><span class="p">:</span> <span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="s1">&#39;2019&#39;</span><span class="p">:</span> <span class="s1">&#39;lightgreen&#39;</span><span class="p">}</span>
+<span class="n">highlight_long_format</span><span class="p">(</span><span class="n">tsa</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">colors</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+#T_5fae8_row0_col1, #T_5fae8_row1_col1 {
+  background-color: pink;
+}
+#T_5fae8_row0_col2, #T_5fae8_row1_col2 {
+  background-color: skyblue;
+}
+#T_5fae8_row0_col3, #T_5fae8_row1_col3 {
+  background-color: lightgreen;
+}
+#T_5fae8_level0_col1 {
+  background-color: pink;
+}
+#T_5fae8_level0_col2 {
+  background-color: skyblue;
+}
+#T_5fae8_level0_col3 {
+  background-color: lightgreen;
+}
+</style>
+<table id="T_5fae8">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_5fae8_level0_col0" class="col_heading level0 col0" >date</th>
+      <th id="T_5fae8_level0_col1" class="col_heading level0 col1" >2021</th>
+      <th id="T_5fae8_level0_col2" class="col_heading level0 col2" >2020</th>
+      <th id="T_5fae8_level0_col3" class="col_heading level0 col3" >2019</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_5fae8_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_5fae8_row0_col0" class="data row0 col0" >2021-05-14 00:00:00</td>
+      <td id="T_5fae8_row0_col1" class="data row0 col1" >1716561.000000</td>
+      <td id="T_5fae8_row0_col2" class="data row0 col2" >250467</td>
+      <td id="T_5fae8_row0_col3" class="data row0 col3" >2664549</td>
+    </tr>
+    <tr>
+      <th id="T_5fae8_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_5fae8_row1_col0" class="data row1 col0" >2021-05-13 00:00:00</td>
+      <td id="T_5fae8_row1_col1" class="data row1 col1" >1743515.000000</td>
+      <td id="T_5fae8_row1_col2" class="data row1 col2" >234928</td>
+      <td id="T_5fae8_row1_col3" class="data row1 col3" >2611324</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Note that the two rows above contain the same data as the six rows below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">highlight_wide_format</span>
+
+<span class="n">highlight_wide_format</span><span class="p">(</span><span class="n">tsa</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">colors</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+#T_2c171_row0_col1, #T_2c171_row0_col2, #T_2c171_row1_col1, #T_2c171_row1_col2 {
+  background-color: pink;
+}
+#T_2c171_row2_col1, #T_2c171_row2_col2, #T_2c171_row3_col1, #T_2c171_row3_col2 {
+  background-color: skyblue;
+}
+#T_2c171_row4_col1, #T_2c171_row4_col2, #T_2c171_row5_col1, #T_2c171_row5_col2 {
+  background-color: lightgreen;
+}
+</style>
+<table id="T_2c171">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_2c171_level0_col0" class="col_heading level0 col0" >date</th>
+      <th id="T_2c171_level0_col1" class="col_heading level0 col1" >year</th>
+      <th id="T_2c171_level0_col2" class="col_heading level0 col2" >travelers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_2c171_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_2c171_row0_col0" class="data row0 col0" >2021-05-14 00:00:00</td>
+      <td id="T_2c171_row0_col1" class="data row0 col1" >2021</td>
+      <td id="T_2c171_row0_col2" class="data row0 col2" >1716561.000000</td>
+    </tr>
+    <tr>
+      <th id="T_2c171_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_2c171_row1_col0" class="data row1 col0" >2021-05-13 00:00:00</td>
+      <td id="T_2c171_row1_col1" class="data row1 col1" >2021</td>
+      <td id="T_2c171_row1_col2" class="data row1 col2" >1743515.000000</td>
+    </tr>
+    <tr>
+      <th id="T_2c171_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_2c171_row2_col0" class="data row2 col0" >2020-05-14 00:00:00</td>
+      <td id="T_2c171_row2_col1" class="data row2 col1" >2020</td>
+      <td id="T_2c171_row2_col2" class="data row2 col2" >250467.000000</td>
+    </tr>
+    <tr>
+      <th id="T_2c171_level0_row3" class="row_heading level0 row3" >3</th>
+      <td id="T_2c171_row3_col0" class="data row3 col0" >2020-05-13 00:00:00</td>
+      <td id="T_2c171_row3_col1" class="data row3 col1" >2020</td>
+      <td id="T_2c171_row3_col2" class="data row3 col2" >234928.000000</td>
+    </tr>
+    <tr>
+      <th id="T_2c171_level0_row4" class="row_heading level0 row4" >4</th>
+      <td id="T_2c171_row4_col0" class="data row4 col0" >2019-05-14 00:00:00</td>
+      <td id="T_2c171_row4_col1" class="data row4 col1" >2019</td>
+      <td id="T_2c171_row4_col2" class="data row4 col2" >2664549.000000</td>
+    </tr>
+    <tr>
+      <th id="T_2c171_level0_row5" class="row_heading level0 row5" >5</th>
+      <td id="T_2c171_row5_col0" class="data row5 col0" >2019-05-13 00:00:00</td>
+      <td id="T_2c171_row5_col1" class="data row5 col1" >2019</td>
+      <td id="T_2c171_row5_col2" class="data row5 col2" >2611324.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Let’s work on making this transformation.</p>
+<section id="melting">
+<h3>Melting<a class="headerlink" href="#melting" title="Link to this heading">#</a></h3>
+<p>Melting helps convert our data into long format. Now, we have all the traveler throughput numbers in a single column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted</span> <span class="o">=</span> <span class="n">tsa</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span>
+    <span class="n">id_vars</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="c1"># column that uniquely identifies a row (can be multiple)</span>
+    <span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="c1"># name for the new column created by melting</span>
+    <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;travelers&#39;</span> <span class="c1"># name for new column containing values from melted columns</span>
+<span class="p">)</span>
+<span class="n">tsa_melted</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># show some random entries</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>year</th>
+      <th>travelers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>974</th>
+      <td>2020-09-12</td>
+      <td>2019</td>
+      <td>1879822.0</td>
+    </tr>
+    <tr>
+      <th>435</th>
+      <td>2021-03-05</td>
+      <td>2020</td>
+      <td>2198517.0</td>
+    </tr>
+    <tr>
+      <th>1029</th>
+      <td>2020-07-19</td>
+      <td>2019</td>
+      <td>2727355.0</td>
+    </tr>
+    <tr>
+      <th>680</th>
+      <td>2020-07-03</td>
+      <td>2020</td>
+      <td>718988.0</td>
+    </tr>
+    <tr>
+      <th>867</th>
+      <td>2020-12-28</td>
+      <td>2019</td>
+      <td>2500396.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To convert this into a time series of traveler throughput, we need to replace the year in the <code class="docutils literal notranslate"><span class="pre">date</span></code> column with the one in the <code class="docutils literal notranslate"><span class="pre">year</span></code> column. Otherwise, we are marking prior years’ numbers with the wrong year.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted</span> <span class="o">=</span> <span class="n">tsa_melted</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+    <span class="n">date</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">year</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="n">tsa_melted</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>year</th>
+      <th>travelers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>974</th>
+      <td>2019-09-12</td>
+      <td>2019</td>
+      <td>1879822.0</td>
+    </tr>
+    <tr>
+      <th>435</th>
+      <td>2020-03-05</td>
+      <td>2020</td>
+      <td>2198517.0</td>
+    </tr>
+    <tr>
+      <th>1029</th>
+      <td>2019-07-19</td>
+      <td>2019</td>
+      <td>2727355.0</td>
+    </tr>
+    <tr>
+      <th>680</th>
+      <td>2020-07-03</td>
+      <td>2020</td>
+      <td>718988.0</td>
+    </tr>
+    <tr>
+      <th>867</th>
+      <td>2019-12-28</td>
+      <td>2019</td>
+      <td>2500396.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This leaves us with some null values (the dates that aren’t present in the dataset):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>year</th>
+      <th>travelers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>136</th>
+      <td>2021-12-29</td>
+      <td>2021</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>135</th>
+      <td>2021-12-30</td>
+      <td>2021</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>134</th>
+      <td>2021-12-31</td>
+      <td>2021</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>These can be dropped with the <code class="docutils literal notranslate"><span class="pre">dropna()</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted</span> <span class="o">=</span> <span class="n">tsa_melted</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">tsa_melted</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>year</th>
+      <th>travelers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>2021-05-12</td>
+      <td>2021</td>
+      <td>1424664.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2021-05-13</td>
+      <td>2021</td>
+      <td>1743515.0</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>2021-05-14</td>
+      <td>2021</td>
+      <td>1716561.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="pivoting">
+<h3>Pivoting<a class="headerlink" href="#pivoting" title="Link to this heading">#</a></h3>
+<p>Using the melted data, we can pivot the data to compare TSA traveler throughput on specific days across years:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_pivoted</span> <span class="o">=</span> <span class="n">tsa_melted</span>\
+    <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;date.dt.month == 3 and date.dt.day &lt;= 10&#39;</span><span class="p">)</span>\
+    <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">day_in_march</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>\
+    <span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;day_in_march&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;travelers&#39;</span><span class="p">)</span>
+<span class="n">tsa_pivoted</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>day_in_march</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019</th>
+      <td>2257920.0</td>
+      <td>1979558.0</td>
+      <td>2143619.0</td>
+      <td>2402692.0</td>
+      <td>2543689.0</td>
+      <td>2156262.0</td>
+      <td>2485430.0</td>
+      <td>2378673.0</td>
+      <td>2122898.0</td>
+      <td>2187298.0</td>
+    </tr>
+    <tr>
+      <th>2020</th>
+      <td>2089641.0</td>
+      <td>1736393.0</td>
+      <td>1877401.0</td>
+      <td>2130015.0</td>
+      <td>2198517.0</td>
+      <td>1844811.0</td>
+      <td>2119867.0</td>
+      <td>1909363.0</td>
+      <td>1617220.0</td>
+      <td>1702686.0</td>
+    </tr>
+    <tr>
+      <th>2021</th>
+      <td>1049692.0</td>
+      <td>744812.0</td>
+      <td>826924.0</td>
+      <td>1107534.0</td>
+      <td>1168734.0</td>
+      <td>992406.0</td>
+      <td>1278557.0</td>
+      <td>1119303.0</td>
+      <td>825745.0</td>
+      <td>974221.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Important</strong>: We aren’t covering the <code class="docutils literal notranslate"><span class="pre">unstack()</span></code> and <code class="docutils literal notranslate"><span class="pre">stack()</span></code> methods, which are additional ways to pivot and melt, respectively. These come in handy when we have a multi-level index (e.g., if we ran <code class="docutils literal notranslate"><span class="pre">set_index()</span></code> with more than one column). More information can be found <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html">here</a>.</p>
+</section>
+<section id="transposing">
+<h3>Transposing<a class="headerlink" href="#transposing" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">T</span></code> attribute provides a quick way to flip rows and columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_pivoted</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>year</th>
+      <th>2019</th>
+      <th>2020</th>
+      <th>2021</th>
+    </tr>
+    <tr>
+      <th>day_in_march</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2257920.0</td>
+      <td>2089641.0</td>
+      <td>1049692.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1979558.0</td>
+      <td>1736393.0</td>
+      <td>744812.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2143619.0</td>
+      <td>1877401.0</td>
+      <td>826924.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2402692.0</td>
+      <td>2130015.0</td>
+      <td>1107534.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2543689.0</td>
+      <td>2198517.0</td>
+      <td>1168734.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2156262.0</td>
+      <td>1844811.0</td>
+      <td>992406.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2485430.0</td>
+      <td>2119867.0</td>
+      <td>1278557.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2378673.0</td>
+      <td>1909363.0</td>
+      <td>1119303.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2122898.0</td>
+      <td>1617220.0</td>
+      <td>825745.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2187298.0</td>
+      <td>1702686.0</td>
+      <td>974221.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="merging">
+<h3>Merging<a class="headerlink" href="#merging" title="Link to this heading">#</a></h3>
+<p>We typically observe changes in air travel around the holidays, so adding information about the dates in the TSA dataset provides more context. The <code class="docutils literal notranslate"><span class="pre">holidays.csv</span></code> file contains a few major holidays in the United States:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">holidays</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/holidays.csv&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
+<span class="n">holidays</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2019&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>holiday</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019-01-01</th>
+      <td>New Year's Day</td>
+    </tr>
+    <tr>
+      <th>2019-05-27</th>
+      <td>Memorial Day</td>
+    </tr>
+    <tr>
+      <th>2019-07-04</th>
+      <td>July 4th</td>
+    </tr>
+    <tr>
+      <th>2019-09-02</th>
+      <td>Labor Day</td>
+    </tr>
+    <tr>
+      <th>2019-11-28</th>
+      <td>Thanksgiving</td>
+    </tr>
+    <tr>
+      <th>2019-12-24</th>
+      <td>Christmas Eve</td>
+    </tr>
+    <tr>
+      <th>2019-12-25</th>
+      <td>Christmas Day</td>
+    </tr>
+    <tr>
+      <th>2019-12-31</th>
+      <td>New Year's Eve</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Merging the holidays with the TSA traveler throughput data will provide more context for our analysis:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holidays</span> <span class="o">=</span> <span class="n">tsa_melted</span>\
+    <span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">holidays</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>\
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
+<span class="n">tsa_melted_holidays</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>year</th>
+      <th>travelers</th>
+      <th>holiday</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>863</th>
+      <td>2019-01-01</td>
+      <td>2019</td>
+      <td>2126398.0</td>
+      <td>New Year's Day</td>
+    </tr>
+    <tr>
+      <th>862</th>
+      <td>2019-01-02</td>
+      <td>2019</td>
+      <td>2345103.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>861</th>
+      <td>2019-01-03</td>
+      <td>2019</td>
+      <td>2202111.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>860</th>
+      <td>2019-01-04</td>
+      <td>2019</td>
+      <td>2150571.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>859</th>
+      <td>2019-01-05</td>
+      <td>2019</td>
+      <td>1975947.0</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><em>Tip: There are many parameters for this method, so be sure to check out the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html">documentation</a>. To append rows, take a look at the <code class="docutils literal notranslate"><span class="pre">pd.concat()</span></code> function.</em></p>
+<p>We can take this a step further by marking a few days before and after each holiday as part of the holiday. This would make it easier to compare holiday travel across years and look for any uptick in travel around the holidays:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holiday_travel</span> <span class="o">=</span> <span class="n">tsa_melted_holidays</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+    <span class="n">holiday</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">holiday</span>\
+            <span class="o">.</span><span class="n">ffill</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>\
+            <span class="o">.</span><span class="n">bfill</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Tip: Check out the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html"><code class="docutils literal notranslate"><span class="pre">fillna()</span></code> method documentation</a> for additional functionality for replacing <code class="docutils literal notranslate"><span class="pre">NA</span></code>/<code class="docutils literal notranslate"><span class="pre">NaN</span></code> values.</em></p>
+<p>Notice that we now have values for the day after each holiday and the two days prior. Thanksgiving in 2019 was on November 28th, so the 26th, 27th, and 29th were filled. Since we are only replacing null values, we don’t override Christmas Day with the forward fill of Christmas Eve:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+    <span class="s1">&#39;year == &quot;2019&quot; and &#39;</span>
+    <span class="s1">&#39;(holiday == &quot;Thanksgiving&quot; or holiday.str.contains(&quot;Christmas&quot;))&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>year</th>
+      <th>travelers</th>
+      <th>holiday</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>899</th>
+      <td>2019-11-26</td>
+      <td>2019</td>
+      <td>1591158.0</td>
+      <td>Thanksgiving</td>
+    </tr>
+    <tr>
+      <th>898</th>
+      <td>2019-11-27</td>
+      <td>2019</td>
+      <td>1968137.0</td>
+      <td>Thanksgiving</td>
+    </tr>
+    <tr>
+      <th>897</th>
+      <td>2019-11-28</td>
+      <td>2019</td>
+      <td>2648268.0</td>
+      <td>Thanksgiving</td>
+    </tr>
+    <tr>
+      <th>896</th>
+      <td>2019-11-29</td>
+      <td>2019</td>
+      <td>2882915.0</td>
+      <td>Thanksgiving</td>
+    </tr>
+    <tr>
+      <th>873</th>
+      <td>2019-12-22</td>
+      <td>2019</td>
+      <td>1981433.0</td>
+      <td>Christmas Eve</td>
+    </tr>
+    <tr>
+      <th>872</th>
+      <td>2019-12-23</td>
+      <td>2019</td>
+      <td>1937235.0</td>
+      <td>Christmas Eve</td>
+    </tr>
+    <tr>
+      <th>871</th>
+      <td>2019-12-24</td>
+      <td>2019</td>
+      <td>2552194.0</td>
+      <td>Christmas Eve</td>
+    </tr>
+    <tr>
+      <th>870</th>
+      <td>2019-12-25</td>
+      <td>2019</td>
+      <td>2582580.0</td>
+      <td>Christmas Day</td>
+    </tr>
+    <tr>
+      <th>869</th>
+      <td>2019-12-26</td>
+      <td>2019</td>
+      <td>2470786.0</td>
+      <td>Christmas Day</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="aggregations-and-grouping">
+<h2>Aggregations and grouping<a class="headerlink" href="#aggregations-and-grouping" title="Link to this heading">#</a></h2>
+<p>After reshaping and cleaning our data, we can perform aggregations to summarize it in a variety of ways. In this section, we will explore using pivot tables, crosstabs, and group by operations to aggregate the data.</p>
+<section id="pivot-tables">
+<h3>Pivot tables<a class="headerlink" href="#pivot-tables" title="Link to this heading">#</a></h3>
+<p>We can build a pivot table to compare holiday travel across the years in our dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;holiday&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="s1">&#39;travelers&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>holiday</th>
+      <th>New Year's Day</th>
+      <th>Memorial Day</th>
+      <th>July 4th</th>
+      <th>Labor Day</th>
+      <th>Thanksgiving</th>
+      <th>Christmas Eve</th>
+      <th>Christmas Day</th>
+      <th>New Year's Eve</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019</th>
+      <td>4471501.0</td>
+      <td>9720691.0</td>
+      <td>9414228.0</td>
+      <td>8314811.0</td>
+      <td>9090478.0</td>
+      <td>6470862.0</td>
+      <td>5053366.0</td>
+      <td>6535464.0</td>
+    </tr>
+    <tr>
+      <th>2020</th>
+      <td>4490388.0</td>
+      <td>1126253.0</td>
+      <td>2682541.0</td>
+      <td>2993653.0</td>
+      <td>3364358.0</td>
+      <td>3029810.0</td>
+      <td>1745242.0</td>
+      <td>3057449.0</td>
+    </tr>
+    <tr>
+      <th>2021</th>
+      <td>1998871.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">pct_change()</span></code> method on this result to see which holiday travel periods saw the biggest change in travel:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;holiday&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="s1">&#39;travelers&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pct_change</span><span class="p">(</span><span class="n">fill_method</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>holiday</th>
+      <th>New Year's Day</th>
+      <th>Memorial Day</th>
+      <th>July 4th</th>
+      <th>Labor Day</th>
+      <th>Thanksgiving</th>
+      <th>Christmas Eve</th>
+      <th>Christmas Day</th>
+      <th>New Year's Eve</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2020</th>
+      <td>0.004224</td>
+      <td>-0.884139</td>
+      <td>-0.715055</td>
+      <td>-0.639961</td>
+      <td>-0.629903</td>
+      <td>-0.531776</td>
+      <td>-0.654638</td>
+      <td>-0.532176</td>
+    </tr>
+    <tr>
+      <th>2021</th>
+      <td>-0.554856</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Let’s make one last pivot table with column and row subtotals, along with some formatting improvements. First, we set a display option for all floats:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.float_format&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{:,.0f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we group together Christmas Eve and Christmas Day, likewise for New Year’s Eve and New Year’s Day (handling for the change in year), and create the pivot table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">pivot_table</span> <span class="o">=</span> <span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+    <span class="n">year</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">holiday</span> <span class="o">==</span> <span class="s2">&quot;New Year&#39;s Day&quot;</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">year</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">year</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span>
+    <span class="n">holiday</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">holiday</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Christmas|New Year&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">x</span><span class="o">.</span><span class="n">holiday</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Day|Eve&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> 
+        <span class="n">x</span><span class="o">.</span><span class="n">holiday</span>
+    <span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;holiday&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="s1">&#39;travelers&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> 
+    <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">margins_name</span><span class="o">=</span><span class="s1">&#39;Total&#39;</span>
+<span class="p">)</span>
+<span class="c1"># reorder columns by order in the year</span>
+<span class="n">pivot_table</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;New Year&#39;s&quot;</span><span class="p">,</span> <span class="n">pivot_table</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;New Year&#39;s&quot;</span><span class="p">))</span>
+<span class="n">pivot_table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>holiday</th>
+      <th>Memorial Day</th>
+      <th>July 4th</th>
+      <th>Labor Day</th>
+      <th>Thanksgiving</th>
+      <th>Christmas</th>
+      <th>New Year's</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2018</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4,471,501</td>
+      <td>4,471,501</td>
+    </tr>
+    <tr>
+      <th>2019</th>
+      <td>9,720,691</td>
+      <td>9,414,228</td>
+      <td>8,314,811</td>
+      <td>9,090,478</td>
+      <td>11,524,228</td>
+      <td>11,025,852</td>
+      <td>59,090,288</td>
+    </tr>
+    <tr>
+      <th>2020</th>
+      <td>1,126,253</td>
+      <td>2,682,541</td>
+      <td>2,993,653</td>
+      <td>3,364,358</td>
+      <td>4,775,052</td>
+      <td>5,056,320</td>
+      <td>19,998,177</td>
+    </tr>
+    <tr>
+      <th>Total</th>
+      <td>10,846,944</td>
+      <td>12,096,769</td>
+      <td>11,308,464</td>
+      <td>12,454,836</td>
+      <td>16,299,280</td>
+      <td>20,553,673</td>
+      <td>83,559,966</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Before moving on, let’s reset the display option:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">reset_option</span><span class="p">(</span><span class="s1">&#39;display.float_format&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Tip: Read more about options in the documentation <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/options.html">here</a>.</em></p>
+</section>
+<section id="id2">
+<h3><a class="reference internal" href="#./workbook.ipynb#Exercise-2.3"><span class="xref myst">Exercise 2.3</span></a><a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="using-the-meteorite-data-from-the-meteorite-landings-csv-file-create-a-pivot-table-that-shows-both-the-number-of-meteorites-and-the-95th-percentile-of-meteorite-mass-for-those-that-were-found-versus-observed-falling-per-year-from-2005-through-2009-inclusive-hint-be-sure-to-convert-the-year-column-to-a-number-as-we-did-in-the-previous-exercise">
+<h4>Using the meteorite data from the <code class="docutils literal notranslate"><span class="pre">Meteorite_Landings.csv</span></code> file, create a pivot table that shows both the number of meteorites and the 95th percentile of meteorite mass for those that were found versus observed falling per year from 2005 through 2009 (inclusive). Hint: Be sure to convert the <code class="docutils literal notranslate"><span class="pre">year</span></code> column to a number as we did in the previous exercise.<a class="headerlink" href="#using-the-meteorite-data-from-the-meteorite-landings-csv-file-create-a-pivot-table-that-shows-both-the-number-of-meteorites-and-the-95th-percentile-of-meteorite-mass-for-those-that-were-found-versus-observed-falling-per-year-from-2005-through-2009-inclusive-hint-be-sure-to-convert-the-year-column-to-a-number-as-we-did-in-the-previous-exercise" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Complete this exercise in the workbook.ipynb file</span>
+<span class="c1"># Click on `Exercise 2.3` above to open the workbook.ipynb file</span>
+
+<span class="c1"># WARNING: if you complete the exercise here, your cell numbers</span>
+<span class="c1"># for the rest of the training might not match the slides</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="crosstabs">
+<h3>Crosstabs<a class="headerlink" href="#crosstabs" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">pd.crosstab()</span></code> function provides an easy way to create a frequency table. Here, we count the number of low-, medium-, and high-volume travel days per year, using the <code class="docutils literal notranslate"><span class="pre">pd.cut()</span></code> function to create three travel volume bins of equal width:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span>
+        <span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">travelers</span><span class="p">,</span> 
+        <span class="n">bins</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="s1">&#39;medium&#39;</span><span class="p">,</span> <span class="s1">&#39;high&#39;</span><span class="p">]</span>
+    <span class="p">),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">year</span><span class="p">,</span>
+    <span class="n">rownames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;travel_volume&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>year</th>
+      <th>2019</th>
+      <th>2020</th>
+      <th>2021</th>
+    </tr>
+    <tr>
+      <th>travel_volume</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>low</th>
+      <td>0</td>
+      <td>277</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>medium</th>
+      <td>42</td>
+      <td>44</td>
+      <td>80</td>
+    </tr>
+    <tr>
+      <th>high</th>
+      <td>323</td>
+      <td>44</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><em>Tip: The <code class="docutils literal notranslate"><span class="pre">pd.cut()</span></code> function can also be used to specify custom bin ranges. For equal-sized bins based on quantiles, use the <code class="docutils literal notranslate"><span class="pre">pd.qcut()</span></code> function instead.</em></p>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">pd.crosstab()</span></code> function supports other aggregations provided you pass in the data to aggregate as <code class="docutils literal notranslate"><span class="pre">values</span></code> and specify the aggregation with <code class="docutils literal notranslate"><span class="pre">aggfunc</span></code>. You can also add subtotals and normalize the data. See the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.crosstab.html">documentation</a> for more information.</p>
+</section>
+<section id="group-by-operations">
+<h3>Group by operations<a class="headerlink" href="#group-by-operations" title="Link to this heading">#</a></h3>
+<p>Rather than perform aggregations, like <code class="docutils literal notranslate"><span class="pre">mean()</span></code> or <code class="docutils literal notranslate"><span class="pre">describe()</span></code>, on the full dataset at once, we can perform these calculations per group by first calling <code class="docutils literal notranslate"><span class="pre">groupby()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="8" halign="left">travelers</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019</th>
+      <td>365.0</td>
+      <td>2.309482e+06</td>
+      <td>285061.490784</td>
+      <td>1534386.0</td>
+      <td>2091116.0</td>
+      <td>2358007.0</td>
+      <td>2538384.00</td>
+      <td>2882915.0</td>
+    </tr>
+    <tr>
+      <th>2020</th>
+      <td>365.0</td>
+      <td>8.818674e+05</td>
+      <td>639775.194297</td>
+      <td>87534.0</td>
+      <td>507129.0</td>
+      <td>718310.0</td>
+      <td>983745.00</td>
+      <td>2507588.0</td>
+    </tr>
+    <tr>
+      <th>2021</th>
+      <td>134.0</td>
+      <td>1.112632e+06</td>
+      <td>338040.673782</td>
+      <td>468933.0</td>
+      <td>807156.0</td>
+      <td>1117391.0</td>
+      <td>1409377.75</td>
+      <td>1743515.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Groups can also be used to perform separate calculations per subset of the data. For example, we can find the highest-volume travel day per year using <code class="docutils literal notranslate"><span class="pre">rank()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+    <span class="n">travel_volume_rank</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">travelers</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;travel_volume_rank&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>year</th>
+      <th>travelers</th>
+      <th>holiday</th>
+      <th>travel_volume_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>896</th>
+      <td>2019-11-29</td>
+      <td>2019</td>
+      <td>2882915.0</td>
+      <td>Thanksgiving</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>456</th>
+      <td>2020-02-12</td>
+      <td>2020</td>
+      <td>2507588.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2021-05-13</td>
+      <td>2021</td>
+      <td>1743515.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The previous two examples called a single method on the grouped data, but using the <code class="docutils literal notranslate"><span class="pre">agg()</span></code> method we can specify any number of them:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+    <span class="n">holiday_travelers</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">x</span><span class="o">.</span><span class="n">holiday</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">travelers</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+    <span class="n">non_holiday_travelers</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">holiday</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">travelers</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+    <span class="n">year</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;number&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">travelers</th>
+      <th colspan="2" halign="left">holiday_travelers</th>
+      <th colspan="2" halign="left">non_holiday_travelers</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>mean</th>
+      <th>std</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>mean</th>
+      <th>std</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019</th>
+      <td>2.309482e+06</td>
+      <td>285061.490784</td>
+      <td>2.271977e+06</td>
+      <td>303021.675751</td>
+      <td>2.312359e+06</td>
+      <td>283906.226598</td>
+    </tr>
+    <tr>
+      <th>2020</th>
+      <td>8.818674e+05</td>
+      <td>639775.194297</td>
+      <td>8.649882e+05</td>
+      <td>489938.240989</td>
+      <td>8.831619e+05</td>
+      <td>650399.772930</td>
+    </tr>
+    <tr>
+      <th>2021</th>
+      <td>1.112632e+06</td>
+      <td>338040.673782</td>
+      <td>9.994355e+05</td>
+      <td>273573.249680</td>
+      <td>1.114347e+06</td>
+      <td>339479.298658</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><em>Tip: The <code class="docutils literal notranslate"><span class="pre">select_dtypes()</span></code> method makes it possible to select columns by their data type. We can specify the data types to <code class="docutils literal notranslate"><span class="pre">exclude</span></code> and/or <code class="docutils literal notranslate"><span class="pre">include</span></code>.</em></p>
+<p>In addition, we can specify which aggregations to perform on each column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+    <span class="n">holiday_travelers</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">x</span><span class="o">.</span><span class="n">holiday</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">travelers</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+    <span class="n">non_holiday_travelers</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">holiday</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">travelers</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+    <span class="s1">&#39;holiday_travelers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">],</span> 
+    <span class="s1">&#39;holiday&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;nunique&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">]</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">holiday_travelers</th>
+      <th colspan="2" halign="left">holiday</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>mean</th>
+      <th>std</th>
+      <th>nunique</th>
+      <th>count</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019</th>
+      <td>2.271977e+06</td>
+      <td>303021.675751</td>
+      <td>8</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>2020</th>
+      <td>8.649882e+05</td>
+      <td>489938.240989</td>
+      <td>8</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>2021</th>
+      <td>9.994355e+05</td>
+      <td>273573.249680</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We are only scratching the surface; some additional functionalities to be aware of include the following:</p>
+<ul class="simple">
+<li><p>We can group by multiple columns – this creates a hierarchical index.</p></li>
+<li><p>Groups can be excluded from calculations with the <code class="docutils literal notranslate"><span class="pre">filter()</span></code> method.</p></li>
+<li><p>We can group on content in the index using the <code class="docutils literal notranslate"><span class="pre">level</span></code> or <code class="docutils literal notranslate"><span class="pre">name</span></code> parameters e.g., <code class="docutils literal notranslate"><span class="pre">groupby(level=0)</span></code> or <code class="docutils literal notranslate"><span class="pre">groupby(name='year')</span></code>.</p></li>
+<li><p>We can group by date ranges if we use a <code class="docutils literal notranslate"><span class="pre">pd.Grouper()</span></code> object.</p></li>
+</ul>
+<p>Be sure to check out the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html">documentation</a> for more details.</p>
+</section>
+<section id="exercise-2-4">
+<h3><a class="reference internal" href="#./workbook.ipynb#Exercise-2.4"><span class="xref myst">Exercise 2.4</span></a><a class="headerlink" href="#exercise-2-4" title="Link to this heading">#</a></h3>
+<section id="using-the-meteorite-data-from-the-meteorite-landings-csv-file-compare-summary-statistics-of-the-mass-column-for-the-meteorites-that-were-found-versus-observed-falling">
+<h4>Using the meteorite data from the <code class="docutils literal notranslate"><span class="pre">Meteorite_Landings.csv</span></code> file, compare summary statistics of the mass column for the meteorites that were found versus observed falling.<a class="headerlink" href="#using-the-meteorite-data-from-the-meteorite-landings-csv-file-compare-summary-statistics-of-the-mass-column-for-the-meteorites-that-were-found-versus-observed-falling" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Complete this exercise in the workbook.ipynb file</span>
+<span class="c1"># Click on `Exercise 2.4` above to open the workbook.ipynb file</span>
+
+<span class="c1"># WARNING: if you complete the exercise here, your cell numbers</span>
+<span class="c1"># for the rest of the training might not match the slides</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="time-series">
+<h2>Time series<a class="headerlink" href="#time-series" title="Link to this heading">#</a></h2>
+<p>When working with time series data, pandas provides us with additional functionality to not just compare the observations in our dataset, but to use their relationship in time to analyze the data. In this section, we will see a few such operations for selecting date/time ranges, calculating changes over time, performing window calculations, and resampling the data to different date/time intervals.</p>
+<section id="selecting-based-on-date-and-time">
+<h3>Selecting based on date and time<a class="headerlink" href="#selecting-based-on-date-and-time" title="Link to this heading">#</a></h3>
+<p>Let’s switch back to the <code class="docutils literal notranslate"><span class="pre">taxis</span></code> dataset, which has timestamps of pickups and dropoffs. First, we will set the <code class="docutils literal notranslate"><span class="pre">dropoff</span></code> column as the index and sort the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">taxis</span> <span class="o">=</span> <span class="n">taxis</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;dropoff&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We saw earlier that we can slice on the datetimes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">taxis</span><span class="p">[</span><span class="s1">&#39;2019-10-24 12&#39;</span><span class="p">:</span><span class="s1">&#39;2019-10-24 13&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pickup</th>
+      <th>passenger_count</th>
+      <th>trip_distance</th>
+      <th>payment_type</th>
+      <th>fare_amount</th>
+      <th>extra</th>
+      <th>mta_tax</th>
+      <th>tip_amount</th>
+      <th>tolls_amount</th>
+      <th>improvement_surcharge</th>
+      <th>total_amount</th>
+      <th>congestion_surcharge</th>
+      <th>elapsed_time</th>
+      <th>cost_before_tip</th>
+      <th>tip_pct</th>
+      <th>fees</th>
+      <th>avg_speed</th>
+    </tr>
+    <tr>
+      <th>dropoff</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019-10-24 12:30:08</th>
+      <td>2019-10-23 13:25:42</td>
+      <td>4</td>
+      <td>0.76</td>
+      <td>2</td>
+      <td>5.0</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>9.30</td>
+      <td>2.5</td>
+      <td>0 days 23:04:26</td>
+      <td>9.3</td>
+      <td>0.0</td>
+      <td>4.3</td>
+      <td>0.032938</td>
+    </tr>
+    <tr>
+      <th>2019-10-24 12:42:01</th>
+      <td>2019-10-23 13:34:03</td>
+      <td>2</td>
+      <td>1.58</td>
+      <td>1</td>
+      <td>7.5</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>2.36</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>14.16</td>
+      <td>2.5</td>
+      <td>0 days 23:07:58</td>
+      <td>11.8</td>
+      <td>0.2</td>
+      <td>4.3</td>
+      <td>0.068301</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can also represent this range with shorthand. Note that we must use <code class="docutils literal notranslate"><span class="pre">loc[]</span></code> here:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">taxis</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2019-10-24 12&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pickup</th>
+      <th>passenger_count</th>
+      <th>trip_distance</th>
+      <th>payment_type</th>
+      <th>fare_amount</th>
+      <th>extra</th>
+      <th>mta_tax</th>
+      <th>tip_amount</th>
+      <th>tolls_amount</th>
+      <th>improvement_surcharge</th>
+      <th>total_amount</th>
+      <th>congestion_surcharge</th>
+      <th>elapsed_time</th>
+      <th>cost_before_tip</th>
+      <th>tip_pct</th>
+      <th>fees</th>
+      <th>avg_speed</th>
+    </tr>
+    <tr>
+      <th>dropoff</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019-10-24 12:30:08</th>
+      <td>2019-10-23 13:25:42</td>
+      <td>4</td>
+      <td>0.76</td>
+      <td>2</td>
+      <td>5.0</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>9.30</td>
+      <td>2.5</td>
+      <td>0 days 23:04:26</td>
+      <td>9.3</td>
+      <td>0.0</td>
+      <td>4.3</td>
+      <td>0.032938</td>
+    </tr>
+    <tr>
+      <th>2019-10-24 12:42:01</th>
+      <td>2019-10-23 13:34:03</td>
+      <td>2</td>
+      <td>1.58</td>
+      <td>1</td>
+      <td>7.5</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>2.36</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>14.16</td>
+      <td>2.5</td>
+      <td>0 days 23:07:58</td>
+      <td>11.8</td>
+      <td>0.2</td>
+      <td>4.3</td>
+      <td>0.068301</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>However, if we want to look at this time range across days, we need another strategy.</p>
+<p>We can pull out the dropoffs that happened between a certain time range on <em>any</em> day with the <code class="docutils literal notranslate"><span class="pre">between_time()</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">taxis</span><span class="o">.</span><span class="n">between_time</span><span class="p">(</span><span class="s1">&#39;12:00&#39;</span><span class="p">,</span> <span class="s1">&#39;13:00&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pickup</th>
+      <th>passenger_count</th>
+      <th>trip_distance</th>
+      <th>payment_type</th>
+      <th>fare_amount</th>
+      <th>extra</th>
+      <th>mta_tax</th>
+      <th>tip_amount</th>
+      <th>tolls_amount</th>
+      <th>improvement_surcharge</th>
+      <th>total_amount</th>
+      <th>congestion_surcharge</th>
+      <th>elapsed_time</th>
+      <th>cost_before_tip</th>
+      <th>tip_pct</th>
+      <th>fees</th>
+      <th>avg_speed</th>
+    </tr>
+    <tr>
+      <th>dropoff</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019-10-23 12:53:49</th>
+      <td>2019-10-23 12:35:27</td>
+      <td>5</td>
+      <td>2.49</td>
+      <td>1</td>
+      <td>13.5</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>2.20</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>20.00</td>
+      <td>2.5</td>
+      <td>0 days 00:18:22</td>
+      <td>17.8</td>
+      <td>0.123596</td>
+      <td>4.3</td>
+      <td>8.134301</td>
+    </tr>
+    <tr>
+      <th>2019-10-24 12:30:08</th>
+      <td>2019-10-23 13:25:42</td>
+      <td>4</td>
+      <td>0.76</td>
+      <td>2</td>
+      <td>5.0</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>9.30</td>
+      <td>2.5</td>
+      <td>0 days 23:04:26</td>
+      <td>9.3</td>
+      <td>0.000000</td>
+      <td>4.3</td>
+      <td>0.032938</td>
+    </tr>
+    <tr>
+      <th>2019-10-24 12:42:01</th>
+      <td>2019-10-23 13:34:03</td>
+      <td>2</td>
+      <td>1.58</td>
+      <td>1</td>
+      <td>7.5</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>2.36</td>
+      <td>0.0</td>
+      <td>0.3</td>
+      <td>14.16</td>
+      <td>2.5</td>
+      <td>0 days 23:07:58</td>
+      <td>11.8</td>
+      <td>0.200000</td>
+      <td>4.3</td>
+      <td>0.068301</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><em>Tip: The <code class="docutils literal notranslate"><span class="pre">at_time()</span></code> method can be used to extract all entries at a given time (e.g., 12:35:27).</em></p>
+<p>For the rest of this section, we will be working with the TSA traveler throughput data. Let’s start by setting the index to the <code class="docutils literal notranslate"><span class="pre">date</span></code> column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holiday_travel</span> <span class="o">=</span> <span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="calculating-change-over-time">
+<h3>Calculating change over time<a class="headerlink" href="#calculating-change-over-time" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2020&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+    <span class="n">one_day_change</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">travelers</span><span class="o">.</span><span class="n">diff</span><span class="p">(),</span>
+    <span class="n">seven_day_change</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">travelers</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>travelers</th>
+      <th>holiday</th>
+      <th>one_day_change</th>
+      <th>seven_day_change</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-01</th>
+      <td>2020</td>
+      <td>2311732.0</td>
+      <td>New Year's Day</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2020-01-02</th>
+      <td>2020</td>
+      <td>2178656.0</td>
+      <td>New Year's Day</td>
+      <td>-133076.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2020-01-03</th>
+      <td>2020</td>
+      <td>2422272.0</td>
+      <td>NaN</td>
+      <td>243616.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2020-01-04</th>
+      <td>2020</td>
+      <td>2210542.0</td>
+      <td>NaN</td>
+      <td>-211730.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2020-01-05</th>
+      <td>2020</td>
+      <td>1806480.0</td>
+      <td>NaN</td>
+      <td>-404062.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2020-01-06</th>
+      <td>2020</td>
+      <td>1815040.0</td>
+      <td>NaN</td>
+      <td>8560.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2020-01-07</th>
+      <td>2020</td>
+      <td>2034472.0</td>
+      <td>NaN</td>
+      <td>219432.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2020-01-08</th>
+      <td>2020</td>
+      <td>2072543.0</td>
+      <td>NaN</td>
+      <td>38071.0</td>
+      <td>-239189.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-09</th>
+      <td>2020</td>
+      <td>1687974.0</td>
+      <td>NaN</td>
+      <td>-384569.0</td>
+      <td>-490682.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-10</th>
+      <td>2020</td>
+      <td>2183734.0</td>
+      <td>NaN</td>
+      <td>495760.0</td>
+      <td>-238538.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><em>Tip: To perform operations other than subtraction, take a look at the <code class="docutils literal notranslate"><span class="pre">shift()</span></code> method. It also makes it possible to perform operations across columns.</em></p>
+</section>
+<section id="resampling">
+<h3>Resampling<a class="headerlink" href="#resampling" title="Link to this heading">#</a></h3>
+<p>We can use resampling to aggregate time series data to a new <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases">frequency</a>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holiday_travel</span><span class="p">[</span><span class="s1">&#39;2019&#39;</span><span class="p">:</span><span class="s1">&#39;2021-Q1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;number&#39;</span><span class="p">)</span>\
+    <span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;QE&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3" halign="left">travelers</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>sum</th>
+      <th>mean</th>
+      <th>std</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019-03-31</th>
+      <td>189281658.0</td>
+      <td>2.103130e+06</td>
+      <td>282239.618354</td>
+    </tr>
+    <tr>
+      <th>2019-06-30</th>
+      <td>221756667.0</td>
+      <td>2.436886e+06</td>
+      <td>212600.697665</td>
+    </tr>
+    <tr>
+      <th>2019-09-30</th>
+      <td>220819236.0</td>
+      <td>2.400209e+06</td>
+      <td>260140.242892</td>
+    </tr>
+    <tr>
+      <th>2019-12-31</th>
+      <td>211103512.0</td>
+      <td>2.294603e+06</td>
+      <td>260510.040655</td>
+    </tr>
+    <tr>
+      <th>2020-03-31</th>
+      <td>155354148.0</td>
+      <td>1.726157e+06</td>
+      <td>685094.277420</td>
+    </tr>
+    <tr>
+      <th>2020-06-30</th>
+      <td>25049083.0</td>
+      <td>2.752646e+05</td>
+      <td>170127.402046</td>
+    </tr>
+    <tr>
+      <th>2020-09-30</th>
+      <td>63937115.0</td>
+      <td>6.949686e+05</td>
+      <td>103864.705739</td>
+    </tr>
+    <tr>
+      <th>2020-12-31</th>
+      <td>77541248.0</td>
+      <td>8.428397e+05</td>
+      <td>170245.484185</td>
+    </tr>
+    <tr>
+      <th>2021-03-31</th>
+      <td>86094635.0</td>
+      <td>9.566071e+05</td>
+      <td>280399.809061</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="window-calculations">
+<h3>Window calculations<a class="headerlink" href="#window-calculations" title="Link to this heading">#</a></h3>
+<p>Window calculations are similar to group by calculations except the group over which the calculation is performed isn’t static – it can move or expand. Pandas provides functionality for constructing a variety of windows, including moving/rolling windows, expanding windows (e.g., cumulative sum or mean up to the current date in a time series), and exponentially weighted moving windows (to weight closer observations more than further ones). We will only look at rolling and expanding calculations here.</p>
+<p>Performing a window calculation is very similar to a group by calculation – we first define the window, and then we specify the aggregation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2020&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+    <span class="o">**</span><span class="p">{</span>
+        <span class="s1">&#39;7D MA&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="s1">&#39;7D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">travelers</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="s1">&#39;YTD mean&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">expanding</span><span class="p">()</span><span class="o">.</span><span class="n">travelers</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+      <span class="p">}</span>
+<span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>travelers</th>
+      <th>holiday</th>
+      <th>7D MA</th>
+      <th>YTD mean</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-01</th>
+      <td>2020</td>
+      <td>2311732.0</td>
+      <td>New Year's Day</td>
+      <td>2.311732e+06</td>
+      <td>2.311732e+06</td>
+    </tr>
+    <tr>
+      <th>2020-01-02</th>
+      <td>2020</td>
+      <td>2178656.0</td>
+      <td>New Year's Day</td>
+      <td>2.245194e+06</td>
+      <td>2.245194e+06</td>
+    </tr>
+    <tr>
+      <th>2020-01-03</th>
+      <td>2020</td>
+      <td>2422272.0</td>
+      <td>NaN</td>
+      <td>2.304220e+06</td>
+      <td>2.304220e+06</td>
+    </tr>
+    <tr>
+      <th>2020-01-04</th>
+      <td>2020</td>
+      <td>2210542.0</td>
+      <td>NaN</td>
+      <td>2.280800e+06</td>
+      <td>2.280800e+06</td>
+    </tr>
+    <tr>
+      <th>2020-01-05</th>
+      <td>2020</td>
+      <td>1806480.0</td>
+      <td>NaN</td>
+      <td>2.185936e+06</td>
+      <td>2.185936e+06</td>
+    </tr>
+    <tr>
+      <th>2020-01-06</th>
+      <td>2020</td>
+      <td>1815040.0</td>
+      <td>NaN</td>
+      <td>2.124120e+06</td>
+      <td>2.124120e+06</td>
+    </tr>
+    <tr>
+      <th>2020-01-07</th>
+      <td>2020</td>
+      <td>2034472.0</td>
+      <td>NaN</td>
+      <td>2.111313e+06</td>
+      <td>2.111313e+06</td>
+    </tr>
+    <tr>
+      <th>2020-01-08</th>
+      <td>2020</td>
+      <td>2072543.0</td>
+      <td>NaN</td>
+      <td>2.077144e+06</td>
+      <td>2.106467e+06</td>
+    </tr>
+    <tr>
+      <th>2020-01-09</th>
+      <td>2020</td>
+      <td>1687974.0</td>
+      <td>NaN</td>
+      <td>2.007046e+06</td>
+      <td>2.059968e+06</td>
+    </tr>
+    <tr>
+      <th>2020-01-10</th>
+      <td>2020</td>
+      <td>2183734.0</td>
+      <td>NaN</td>
+      <td>1.972969e+06</td>
+      <td>2.072344e+06</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To understand what’s happening, it’s best to visualize the original data and the result, so here’s a sneak peek of plotting with pandas. First, some setup to embed SVG plots in the notebook:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib_inline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">mpl_svg_config</span>
+
+<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span>
+    <span class="s1">&#39;svg&#39;</span><span class="p">,</span> <span class="c1"># output images using SVG format</span>
+    <span class="o">**</span><span class="n">mpl_svg_config</span><span class="p">(</span><span class="s1">&#39;section-2&#39;</span><span class="p">)</span> <span class="c1"># optional: configure metadata</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Tip: For most use cases, only the first argument is necessary – we will discuss the second argument in more detail in the next section.</em></p>
+<p>Now, we call the <code class="docutils literal notranslate"><span class="pre">plot()</span></code> method to visualize the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">tsa_melted_holiday_travel</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2020&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+    <span class="o">**</span><span class="p">{</span>
+        <span class="s1">&#39;7D MA&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="s1">&#39;7D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">travelers</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="s1">&#39;YTD mean&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">expanding</span><span class="p">()</span><span class="o">.</span><span class="n">travelers</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+      <span class="p">}</span>
+<span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;2020 TSA Traveler Throughput&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;travelers&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d82e9788b1c9a5a633232c58b6e074b5400089d9559602079a11722fdb1d180a.svg" src="../../_images/d82e9788b1c9a5a633232c58b6e074b5400089d9559602079a11722fdb1d180a.svg" />
+</div>
+</div>
+<p>Other types of windows:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.ewm.html">exponentially weighted moving</a>: use the <code class="docutils literal notranslate"><span class="pre">ewm()</span></code> method</p></li>
+<li><p><a class="reference external" href="https://pandas.pydata.org/docs/user_guide/window.html#window-custom-rolling-window">custom</a>: create a subclass of <code class="docutils literal notranslate"><span class="pre">pandas.api.indexers.BaseIndexer</span></code> or use a pre-built one in <code class="docutils literal notranslate"><span class="pre">pandas.api.indexers</span></code></p></li>
+</ul>
+</section>
+<section id="exercise-2-5">
+<h3><a class="reference internal" href="#./workbook.ipynb#Exercise-2.5"><span class="xref myst">Exercise 2.5</span></a><a class="headerlink" href="#exercise-2-5" title="Link to this heading">#</a></h3>
+<section id="using-the-taxi-trip-data-in-the-2019-yellow-taxi-trip-data-csv-file-resample-the-data-to-an-hourly-frequency-based-on-the-dropoff-time-calculate-the-total-trip-distance-fare-amount-tolls-amount-and-tip-amount-then-find-the-5-hours-with-the-most-tips">
+<h4>Using the taxi trip data in the <code class="docutils literal notranslate"><span class="pre">2019_Yellow_Taxi_Trip_Data.csv</span></code> file, resample the data to an hourly frequency based on the dropoff time. Calculate the total <code class="docutils literal notranslate"><span class="pre">trip_distance</span></code>, <code class="docutils literal notranslate"><span class="pre">fare_amount</span></code>, <code class="docutils literal notranslate"><span class="pre">tolls_amount</span></code>, and <code class="docutils literal notranslate"><span class="pre">tip_amount</span></code>, then find the 5 hours with the most tips.<a class="headerlink" href="#using-the-taxi-trip-data-in-the-2019-yellow-taxi-trip-data-csv-file-resample-the-data-to-an-hourly-frequency-based-on-the-dropoff-time-calculate-the-total-trip-distance-fare-amount-tolls-amount-and-tip-amount-then-find-the-5-hours-with-the-most-tips" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Complete this exercise in the workbook.ipynb file</span>
+<span class="c1"># Click on `Exercise 2.5` above to open the workbook.ipynb file</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="up-next-data-visualization">
+<h2>Up Next: <a class="reference internal" href="#./3-data_visualization.ipynb"><span class="xref myst">Data Visualization</span></a><a class="headerlink" href="#up-next-data-visualization" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-cleaning">Data cleaning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-columns">Dropping columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tips">Tips:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming-columns">Renaming columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-1"><span class="xref myst">Exercise 2.1</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#groupbying-and-sorting-by-values">Groupbying and Sorting by values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-2"><span class="xref myst">Exercise 2.2</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-out-top-10-dominant-tree-species-for-2015-2005-and-1995-nyc-tree-datasets">Find out top 10 dominant tree species for 2015, 2005 and 1995 NYC tree datasets</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-3"><span class="xref myst">Exercise 2.3</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-most-dominant-species-and-tree-counts-for-tree-dbh-40-inches-for-2015-2005-and-1995-nyc-tree-datasets">Find the most dominant species and tree counts for tree dbh &gt; 40 inches for 2015, 2005 and 1995 NYC tree datasets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-the-index">Working with the index</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-and-sorting-the-index">Setting and sorting the index</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resetting-the-index">Resetting the index</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><span class="xref myst">Exercise 2.2</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-meteorite-data-from-the-meteorite-landings-csv-file-update-the-year-column-to-only-contain-the-year-convert-it-to-a-numeric-data-type-and-create-a-new-column-indicating-whether-the-meteorite-was-observed-falling-before-1970-set-the-index-to-the-id-column-and-extract-all-the-rows-with-ids-between-10-036-and-10-040-inclusive-with-loc">Using the meteorite data from the <code class="docutils literal notranslate"><span class="pre">Meteorite_Landings.csv</span></code> file, update the <code class="docutils literal notranslate"><span class="pre">year</span></code> column to only contain the year, convert it to a numeric data type, and create a new column indicating whether the meteorite was observed falling before 1970. Set the index to the <code class="docutils literal notranslate"><span class="pre">id</span></code> column and extract all the rows with IDs between 10,036 and 10,040 (inclusive) with <code class="docutils literal notranslate"><span class="pre">loc[]</span></code>.</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#hint-1-use-year-str-slice-to-grab-a-substring"><strong>Hint 1</strong>: Use <code class="docutils literal notranslate"><span class="pre">year.str.slice()</span></code> to grab a substring.</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#hint-2-make-sure-to-sort-the-index-before-using-loc-to-select-the-range"><strong>Hint 2</strong>: Make sure to sort the index before using <code class="docutils literal notranslate"><span class="pre">loc[]</span></code> to select the range.</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#bonus-there-s-a-data-entry-error-in-the-year-column-can-you-find-it-don-t-spend-too-much-time-on-this"><strong>Bonus</strong>: There’s a data entry error in the <code class="docutils literal notranslate"><span class="pre">year</span></code> column. Can you find it? (Don’t spend too much time on this.)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reshaping-data">Reshaping data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#melting">Melting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pivoting">Pivoting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transposing">Transposing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merging">Merging</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregations-and-grouping">Aggregations and grouping</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pivot-tables">Pivot tables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><span class="xref myst">Exercise 2.3</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-meteorite-data-from-the-meteorite-landings-csv-file-create-a-pivot-table-that-shows-both-the-number-of-meteorites-and-the-95th-percentile-of-meteorite-mass-for-those-that-were-found-versus-observed-falling-per-year-from-2005-through-2009-inclusive-hint-be-sure-to-convert-the-year-column-to-a-number-as-we-did-in-the-previous-exercise">Using the meteorite data from the <code class="docutils literal notranslate"><span class="pre">Meteorite_Landings.csv</span></code> file, create a pivot table that shows both the number of meteorites and the 95th percentile of meteorite mass for those that were found versus observed falling per year from 2005 through 2009 (inclusive). Hint: Be sure to convert the <code class="docutils literal notranslate"><span class="pre">year</span></code> column to a number as we did in the previous exercise.</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#crosstabs">Crosstabs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-by-operations">Group by operations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-4"><span class="xref myst">Exercise 2.4</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-meteorite-data-from-the-meteorite-landings-csv-file-compare-summary-statistics-of-the-mass-column-for-the-meteorites-that-were-found-versus-observed-falling">Using the meteorite data from the <code class="docutils literal notranslate"><span class="pre">Meteorite_Landings.csv</span></code> file, compare summary statistics of the mass column for the meteorites that were found versus observed falling.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series">Time series</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-based-on-date-and-time">Selecting based on date and time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-change-over-time">Calculating change over time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resampling">Resampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#window-calculations">Window calculations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-5"><span class="xref myst">Exercise 2.5</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-taxi-trip-data-in-the-2019-yellow-taxi-trip-data-csv-file-resample-the-data-to-an-hourly-frequency-based-on-the-dropoff-time-calculate-the-total-trip-distance-fare-amount-tolls-amount-and-tip-amount-then-find-the-5-hours-with-the-most-tips">Using the taxi trip data in the <code class="docutils literal notranslate"><span class="pre">2019_Yellow_Taxi_Trip_Data.csv</span></code> file, resample the data to an hourly frequency based on the dropoff time. Calculate the total <code class="docutils literal notranslate"><span class="pre">trip_distance</span></code>, <code class="docutils literal notranslate"><span class="pre">fare_amount</span></code>, <code class="docutils literal notranslate"><span class="pre">tolls_amount</span></code>, and <code class="docutils literal notranslate"><span class="pre">tip_amount</span></code>, then find the 5 hours with the most tips.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#up-next-data-visualization">Up Next: <span class="xref myst">Data Visualization</span></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

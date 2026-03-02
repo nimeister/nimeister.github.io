@@ -1,0 +1,1143 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lab 3 Pandas Series and Dataframe &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/05/wk5_pandas_ans';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01/01_intro.html">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02/02_basicPy1.html">02 - Basic Python - 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03_basicPy2.html">03 - Basic Python - 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04_Numpy_Pandas1.html">04 - Numpy and Pandas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_Numpy_Pandas2.html">05 - Numpy and Pandas 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07/07_Midterm_Exam.html">07 - Midterm Exam</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/05/wk5_pandas_ans.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/modules/05/wk5_pandas_ans.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 3 Pandas Series and Dataframe</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lab 3 Pandas Series and Dataframe</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-find-out-july-maximum-temperature">Question 1 - Find out July maximum temperature</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2">Question 2 -</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="lab-3-pandas-series-and-dataframe">
+<h1>Lab 3 Pandas Series and Dataframe<a class="headerlink" href="#lab-3-pandas-series-and-dataframe" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>Author</strong> - Wenge Ni-Meister</p></li>
+<li><p><strong>Date</strong> - 9/21/2021</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import necessary Python packages</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the monthly average precipitation values as a pandas dataframe</span>
+<span class="n">TempF</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://www.geography.hunter.cuny.edu/~wenge/EDS2023F/data/NYCMet/CPannualT.csv&#39;</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">TempF</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TimeoutError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
+<span class="nn">File ~\miniforge3\envs\sds\Lib\urllib\request.py:1319,</span> in <span class="ni">AbstractHTTPHandler.do_open</span><span class="nt">(self, http_class, req, **http_conn_args)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1318</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1319</span>     <span class="n">h</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">get_method</span><span class="p">(),</span> <span class="n">req</span><span class="o">.</span><span class="n">selector</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1320</span>               <span class="n">encode_chunked</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">has_header</span><span class="p">(</span><span class="s1">&#39;Transfer-encoding&#39;</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">1321</span> <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span> <span class="c1"># timeout error</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\http\client.py:1338,</span> in <span class="ni">HTTPConnection.request</span><span class="nt">(self, method, url, body, headers, encode_chunked)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1337</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Send a complete request to the server.&quot;&quot;&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1338</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">encode_chunked</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\http\client.py:1384,</span> in <span class="ni">HTTPConnection._send_request</span><span class="nt">(self, method, url, body, headers, encode_chunked)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1383</span>     <span class="n">body</span> <span class="o">=</span> <span class="n">_encode</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1384</span> <span class="bp">self</span><span class="o">.</span><span class="n">endheaders</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">encode_chunked</span><span class="o">=</span><span class="n">encode_chunked</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\http\client.py:1333,</span> in <span class="ni">HTTPConnection.endheaders</span><span class="nt">(self, message_body, encode_chunked)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1332</span>     <span class="k">raise</span> <span class="n">CannotSendHeader</span><span class="p">()</span>
+<span class="ne">-&gt; </span><span class="mi">1333</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_output</span><span class="p">(</span><span class="n">message_body</span><span class="p">,</span> <span class="n">encode_chunked</span><span class="o">=</span><span class="n">encode_chunked</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\http\client.py:1093,</span> in <span class="ni">HTTPConnection._send_output</span><span class="nt">(self, message_body, encode_chunked)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1092</span> <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">[:]</span>
+<span class="ne">-&gt; </span><span class="mi">1093</span> <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1095</span> <span class="k">if</span> <span class="n">message_body</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1096</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1097</span>     <span class="c1"># create a consistent interface to message_body</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\http\client.py:1037,</span> in <span class="ni">HTTPConnection.send</span><span class="nt">(self, data)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1036</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_open</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1037</span>     <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1038</span> <span class="k">else</span><span class="p">:</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\http\client.py:1003,</span> in <span class="ni">HTTPConnection.connect</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1002</span> <span class="n">sys</span><span class="o">.</span><span class="n">audit</span><span class="p">(</span><span class="s2">&quot;http.client.connect&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1003</span> <span class="bp">self</span><span class="o">.</span><span class="n">sock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_connection</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1004</span>     <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_address</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1005</span> <span class="c1"># Might fail in OSs that don&#39;t implement TCP_NODELAY</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\socket.py:864,</span> in <span class="ni">create_connection</span><span class="nt">(address, timeout, source_address, all_errors)</span>
+<span class="g g-Whitespace">    </span><span class="mi">863</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">all_errors</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">864</span>     <span class="k">raise</span> <span class="n">exceptions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">865</span> <span class="k">raise</span> <span class="n">ExceptionGroup</span><span class="p">(</span><span class="s2">&quot;create_connection failed&quot;</span><span class="p">,</span> <span class="n">exceptions</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\socket.py:849,</span> in <span class="ni">create_connection</span><span class="nt">(address, timeout, source_address, all_errors)</span>
+<span class="g g-Whitespace">    </span><span class="mi">848</span>     <span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">source_address</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">849</span> <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">sa</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">850</span> <span class="c1"># Break explicitly a reference cycle</span>
+
+<span class="ne">TimeoutError</span>: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">URLError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import the monthly average precipitation values as a pandas dataframe</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">TempF</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://www.geography.hunter.cuny.edu/~wenge/EDS2023F/data/NYCMet/CPannualT.csv&#39;</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">TempF</span><span class="o">.</span><span class="n">index</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\parsers\readers.py:1026,</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1013</span> <span class="n">kwds_defaults</span> <span class="o">=</span> <span class="n">_refine_defaults_read</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1014</span>     <span class="n">dialect</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1015</span>     <span class="n">delimiter</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">1022</span>     <span class="n">dtype_backend</span><span class="o">=</span><span class="n">dtype_backend</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1023</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1024</span> <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1026</span> <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\parsers\readers.py:620,</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">617</span> <span class="n">_validate_names</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">619</span> <span class="c1"># Create the parser.</span>
+<span class="ne">--&gt; </span><span class="mi">620</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">622</span> <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">623</span>     <span class="k">return</span> <span class="n">parser</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\parsers\readers.py:1620,</span> in <span class="ni">TextFileReader.__init__</span><span class="nt">(self, f, engine, **kwds)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1617</span>     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1619</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span> <span class="n">IOHandles</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="ne">-&gt; </span><span class="mi">1620</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\parsers\readers.py:1880,</span> in <span class="ni">TextFileReader._make_engine</span><span class="nt">(self, f, engine)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1878</span>     <span class="k">if</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1879</span>         <span class="n">mode</span> <span class="o">+=</span> <span class="s2">&quot;b&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1880</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="o">=</span> <span class="n">get_handle</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1881</span>     <span class="n">f</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1882</span>     <span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1883</span>     <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1884</span>     <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;compression&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1885</span>     <span class="n">memory_map</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_map&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1886</span>     <span class="n">is_text</span><span class="o">=</span><span class="n">is_text</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1887</span>     <span class="n">errors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding_errors&quot;</span><span class="p">,</span> <span class="s2">&quot;strict&quot;</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1888</span>     <span class="n">storage_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storage_options&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1889</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1890</span> <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1891</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">handle</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\common.py:728,</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">725</span>     <span class="n">codecs</span><span class="o">.</span><span class="n">lookup_error</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">727</span> <span class="c1"># open URLs</span>
+<span class="ne">--&gt; </span><span class="mi">728</span> <span class="n">ioargs</span> <span class="o">=</span> <span class="n">_get_filepath_or_buffer</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">729</span>     <span class="n">path_or_buf</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">730</span>     <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">731</span>     <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">732</span>     <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">733</span>     <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">734</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">736</span> <span class="n">handle</span> <span class="o">=</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">filepath_or_buffer</span>
+<span class="g g-Whitespace">    </span><span class="mi">737</span> <span class="n">handles</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseBuffer</span><span class="p">]</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\common.py:384,</span> in <span class="ni">_get_filepath_or_buffer</span><span class="nt">(filepath_or_buffer, encoding, compression, mode, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">382</span> <span class="c1"># assuming storage_options is to be interpreted as headers</span>
+<span class="g g-Whitespace">    </span><span class="mi">383</span> <span class="n">req_info</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">storage_options</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">384</span> <span class="k">with</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">req_info</span><span class="p">)</span> <span class="k">as</span> <span class="n">req</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">385</span>     <span class="n">content_encoding</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Encoding&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">386</span>     <span class="k">if</span> <span class="n">content_encoding</span> <span class="o">==</span> <span class="s2">&quot;gzip&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">387</span>         <span class="c1"># Override compression based on Content-Encoding header</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\io\common.py:289,</span> in <span class="ni">urlopen</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">283</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">284</span><span class="sd"> Lazy-import wrapper for stdlib urlopen, as that imports a big chunk of</span>
+<span class="g g-Whitespace">    </span><span class="mi">285</span><span class="sd"> the stdlib.</span>
+<span class="g g-Whitespace">    </span><span class="mi">286</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">287</span> <span class="kn">import</span><span class="w"> </span><span class="nn">urllib.request</span>
+<span class="ne">--&gt; </span><span class="mi">289</span> <span class="k">return</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\urllib\request.py:189,</span> in <span class="ni">urlopen</span><span class="nt">(url, data, timeout, context)</span>
+<span class="g g-Whitespace">    </span><span class="mi">187</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">188</span>     <span class="n">opener</span> <span class="o">=</span> <span class="n">_opener</span>
+<span class="ne">--&gt; </span><span class="mi">189</span> <span class="k">return</span> <span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\urllib\request.py:489,</span> in <span class="ni">OpenerDirector.open</span><span class="nt">(self, fullurl, data, timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">486</span>     <span class="n">req</span> <span class="o">=</span> <span class="n">meth</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">488</span> <span class="n">sys</span><span class="o">.</span><span class="n">audit</span><span class="p">(</span><span class="s1">&#39;urllib.Request&#39;</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">full_url</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">get_method</span><span class="p">())</span>
+<span class="ne">--&gt; </span><span class="mi">489</span> <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">491</span> <span class="c1"># post-process response</span>
+<span class="g g-Whitespace">    </span><span class="mi">492</span> <span class="n">meth_name</span> <span class="o">=</span> <span class="n">protocol</span><span class="o">+</span><span class="s2">&quot;_response&quot;</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\urllib\request.py:506,</span> in <span class="ni">OpenerDirector._open</span><span class="nt">(self, req, data)</span>
+<span class="g g-Whitespace">    </span><span class="mi">503</span>     <span class="k">return</span> <span class="n">result</span>
+<span class="g g-Whitespace">    </span><span class="mi">505</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">type</span>
+<span class="ne">--&gt; </span><span class="mi">506</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_chain</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_open</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">+</span>
+<span class="g g-Whitespace">    </span><span class="mi">507</span>                           <span class="s1">&#39;_open&#39;</span><span class="p">,</span> <span class="n">req</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">508</span> <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">509</span>     <span class="k">return</span> <span class="n">result</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\urllib\request.py:466,</span> in <span class="ni">OpenerDirector._call_chain</span><span class="nt">(self, chain, kind, meth_name, *args)</span>
+<span class="g g-Whitespace">    </span><span class="mi">464</span> <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">handlers</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">465</span>     <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">meth_name</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">466</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">467</span>     <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">468</span>         <span class="k">return</span> <span class="n">result</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\urllib\request.py:1348,</span> in <span class="ni">HTTPHandler.http_open</span><span class="nt">(self, req)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1347</span> <span class="k">def</span><span class="w"> </span><span class="nf">http_open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1348</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_open</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">,</span> <span class="n">req</span><span class="p">)</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\urllib\request.py:1322,</span> in <span class="ni">AbstractHTTPHandler.do_open</span><span class="nt">(self, http_class, req, **http_conn_args)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1319</span>         <span class="n">h</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">get_method</span><span class="p">(),</span> <span class="n">req</span><span class="o">.</span><span class="n">selector</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1320</span>                   <span class="n">encode_chunked</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">has_header</span><span class="p">(</span><span class="s1">&#39;Transfer-encoding&#39;</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">1321</span>     <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span> <span class="c1"># timeout error</span>
+<span class="ne">-&gt; </span><span class="mi">1322</span>         <span class="k">raise</span> <span class="n">URLError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1323</span>     <span class="n">r</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1324</span> <span class="k">except</span><span class="p">:</span>
+
+<span class="ne">URLError</span>: &lt;urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-1-find-out-july-maximum-temperature">
+<h1>Question 1 - Find out July maximum temperature<a class="headerlink" href="#question-1-find-out-july-maximum-temperature" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TempF_July</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">TempF</span><span class="p">[</span><span class="s1">&#39;JUL&#39;</span><span class="p">])</span>
+<span class="n">TempF_July</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JUL    81.3
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2">
+<h1>Question 2 -<a class="headerlink" href="#question-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Use two ways to convert the monthly temperature from Fahrenheit to Celsius using the following equation:
+Celsius = (Fahrenheit - 32) / 1.8</p></li>
+<li><p>Print out the Temperature values in Celsius of the for 2006-2015.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#TempC.iloc[1:21,1:14] = (TempF.iloc[1:21,1:14] - 32)/1.8</span>
+<span class="n">TempC</span> <span class="o">=</span> <span class="p">(</span><span class="n">TempF</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="mi">13</span><span class="p">]</span> <span class="o">-</span> <span class="mi">32</span><span class="p">)</span><span class="o">/</span><span class="mf">1.8</span>
+<span class="n">TempC</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>JAN</th>
+      <th>FEB</th>
+      <th>MAR</th>
+      <th>APR</th>
+      <th>MAY</th>
+      <th>JUN</th>
+      <th>JUL</th>
+      <th>AUG</th>
+      <th>SEP</th>
+      <th>OCT</th>
+      <th>NOV</th>
+      <th>DEC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.388889</td>
+      <td>2.944444</td>
+      <td>8.444444</td>
+      <td>10.555556</td>
+      <td>17.500000</td>
+      <td>21.833333</td>
+      <td>22.388889</td>
+      <td>22.611111</td>
+      <td>18.888889</td>
+      <td>13.888889</td>
+      <td>7.388889</td>
+      <td>-0.500000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.888889</td>
+      <td>2.166667</td>
+      <td>4.222222</td>
+      <td>12.333333</td>
+      <td>17.666667</td>
+      <td>22.722222</td>
+      <td>22.888889</td>
+      <td>25.944444</td>
+      <td>19.833333</td>
+      <td>14.722222</td>
+      <td>11.500000</td>
+      <td>6.722222</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.388889</td>
+      <td>4.777778</td>
+      <td>6.722222</td>
+      <td>13.388889</td>
+      <td>15.944444</td>
+      <td>21.888889</td>
+      <td>26.000000</td>
+      <td>25.388889</td>
+      <td>21.222222</td>
+      <td>12.888889</td>
+      <td>7.777778</td>
+      <td>2.222222</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-2.500000</td>
+      <td>-1.055556</td>
+      <td>6.166667</td>
+      <td>9.888889</td>
+      <td>14.833333</td>
+      <td>20.166667</td>
+      <td>24.333333</td>
+      <td>24.833333</td>
+      <td>19.944444</td>
+      <td>12.833333</td>
+      <td>10.000000</td>
+      <td>3.111111</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-4.055556</td>
+      <td>1.666667</td>
+      <td>6.388889</td>
+      <td>12.000000</td>
+      <td>18.444444</td>
+      <td>21.777778</td>
+      <td>23.611111</td>
+      <td>23.444444</td>
+      <td>20.722222</td>
+      <td>13.333333</td>
+      <td>9.000000</td>
+      <td>3.555556</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-0.388889</td>
+      <td>2.500000</td>
+      <td>4.111111</td>
+      <td>12.833333</td>
+      <td>14.944444</td>
+      <td>23.333333</td>
+      <td>25.277778</td>
+      <td>26.500000</td>
+      <td>22.944444</td>
+      <td>14.388889</td>
+      <td>9.777778</td>
+      <td>1.833333</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>4.944444</td>
+      <td>2.055556</td>
+      <td>6.166667</td>
+      <td>13.166667</td>
+      <td>17.277778</td>
+      <td>21.666667</td>
+      <td>25.500000</td>
+      <td>24.333333</td>
+      <td>19.222222</td>
+      <td>13.444444</td>
+      <td>11.055556</td>
+      <td>6.444444</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>3.055556</td>
+      <td>-2.111111</td>
+      <td>5.666667</td>
+      <td>10.166667</td>
+      <td>18.444444</td>
+      <td>21.888889</td>
+      <td>23.888889</td>
+      <td>23.333333</td>
+      <td>21.277778</td>
+      <td>17.555556</td>
+      <td>7.444444</td>
+      <td>2.777778</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2.500000</td>
+      <td>2.111111</td>
+      <td>5.888889</td>
+      <td>12.722222</td>
+      <td>15.611111</td>
+      <td>23.333333</td>
+      <td>25.777778</td>
+      <td>23.222222</td>
+      <td>20.444444</td>
+      <td>12.833333</td>
+      <td>7.666667</td>
+      <td>3.388889</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>-2.277778</td>
+      <td>2.611111</td>
+      <td>5.777778</td>
+      <td>12.500000</td>
+      <td>16.944444</td>
+      <td>19.722222</td>
+      <td>22.611111</td>
+      <td>24.277778</td>
+      <td>19.055556</td>
+      <td>12.777778</td>
+      <td>10.666667</td>
+      <td>2.166667</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.277778</td>
+      <td>0.611111</td>
+      <td>9.000000</td>
+      <td>14.388889</td>
+      <td>18.500000</td>
+      <td>23.722222</td>
+      <td>27.388889</td>
+      <td>25.222222</td>
+      <td>21.722222</td>
+      <td>14.500000</td>
+      <td>8.833333</td>
+      <td>0.444444</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>-1.277778</td>
+      <td>2.222222</td>
+      <td>5.722222</td>
+      <td>12.388889</td>
+      <td>18.055556</td>
+      <td>22.388889</td>
+      <td>26.777778</td>
+      <td>24.055556</td>
+      <td>21.111111</td>
+      <td>13.944444</td>
+      <td>11.055556</td>
+      <td>6.277778</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2.944444</td>
+      <td>4.944444</td>
+      <td>10.500000</td>
+      <td>12.666667</td>
+      <td>18.388889</td>
+      <td>21.666667</td>
+      <td>26.000000</td>
+      <td>24.833333</td>
+      <td>20.444444</td>
+      <td>14.444444</td>
+      <td>6.611111</td>
+      <td>5.277778</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1.722222</td>
+      <td>1.055556</td>
+      <td>4.500000</td>
+      <td>11.666667</td>
+      <td>17.111111</td>
+      <td>22.611111</td>
+      <td>26.555556</td>
+      <td>23.666667</td>
+      <td>19.944444</td>
+      <td>15.666667</td>
+      <td>7.388889</td>
+      <td>3.611111</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>-1.888889</td>
+      <td>-0.222222</td>
+      <td>3.166667</td>
+      <td>11.277778</td>
+      <td>17.777778</td>
+      <td>22.500000</td>
+      <td>24.500000</td>
+      <td>23.611111</td>
+      <td>20.944444</td>
+      <td>15.333333</td>
+      <td>7.388889</td>
+      <td>4.722222</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>-1.166667</td>
+      <td>-4.500000</td>
+      <td>3.388889</td>
+      <td>12.388889</td>
+      <td>20.277778</td>
+      <td>21.777778</td>
+      <td>26.000000</td>
+      <td>26.111111</td>
+      <td>23.611111</td>
+      <td>14.444444</td>
+      <td>11.555556</td>
+      <td>10.444444</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1.388889</td>
+      <td>3.166667</td>
+      <td>9.388889</td>
+      <td>11.833333</td>
+      <td>17.111111</td>
+      <td>22.388889</td>
+      <td>25.944444</td>
+      <td>26.222222</td>
+      <td>22.111111</td>
+      <td>14.888889</td>
+      <td>9.888889</td>
+      <td>3.500000</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>3.333333</td>
+      <td>5.333333</td>
+      <td>4.000000</td>
+      <td>14.000000</td>
+      <td>16.166667</td>
+      <td>22.222222</td>
+      <td>24.888889</td>
+      <td>23.333333</td>
+      <td>21.388889</td>
+      <td>17.833333</td>
+      <td>8.111111</td>
+      <td>0.777778</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>-0.166667</td>
+      <td>5.555556</td>
+      <td>4.500000</td>
+      <td>9.722222</td>
+      <td>19.388889</td>
+      <td>22.055556</td>
+      <td>25.333333</td>
+      <td>25.611111</td>
+      <td>21.500000</td>
+      <td>14.277778</td>
+      <td>6.888889</td>
+      <td>4.500000</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0.277778</td>
+      <td>2.333333</td>
+      <td>5.388889</td>
+      <td>13.055556</td>
+      <td>16.777778</td>
+      <td>22.055556</td>
+      <td>26.444444</td>
+      <td>24.166667</td>
+      <td>21.333333</td>
+      <td>15.500000</td>
+      <td>6.611111</td>
+      <td>3.500000</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>3.944444</td>
+      <td>4.500000</td>
+      <td>8.888889</td>
+      <td>10.222222</td>
+      <td>15.722222</td>
+      <td>23.166667</td>
+      <td>26.666667</td>
+      <td>24.944444</td>
+      <td>20.444444</td>
+      <td>14.388889</td>
+      <td>11.666667</td>
+      <td>4.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#TempC = (TempF[&#39;Jan&#39;:&#39;DEC&#39;] - 32)/1.8</span>
+<span class="n">TempC</span> <span class="o">=</span> <span class="p">(</span><span class="n">TempF</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;JAN&#39;</span><span class="p">:</span><span class="s1">&#39;DEC&#39;</span><span class="p">]</span> <span class="o">-</span><span class="mi">32</span><span class="p">)</span><span class="o">/</span><span class="mf">1.8</span>
+
+<span class="nb">print</span><span class="p">,</span><span class="n">TempC</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;function print&gt;,
+          JAN       FEB        MAR        APR        MAY        JUN        JUL  \
+ 0  -0.388889  2.944444   8.444444  10.555556  17.500000  21.833333  22.388889   
+ 1   0.888889  2.166667   4.222222  12.333333  17.666667  22.722222  22.888889   
+ 2   4.388889  4.777778   6.722222  13.388889  15.944444  21.888889  26.000000   
+ 3  -2.500000 -1.055556   6.166667   9.888889  14.833333  20.166667  24.333333   
+ 4  -4.055556  1.666667   6.388889  12.000000  18.444444  21.777778  23.611111   
+ 5  -0.388889  2.500000   4.111111  12.833333  14.944444  23.333333  25.277778   
+ 6   4.944444  2.055556   6.166667  13.166667  17.277778  21.666667  25.500000   
+ 7   3.055556 -2.111111   5.666667  10.166667  18.444444  21.888889  23.888889   
+ 8   2.500000  2.111111   5.888889  12.722222  15.611111  23.333333  25.777778   
+ 9  -2.277778  2.611111   5.777778  12.500000  16.944444  19.722222  22.611111   
+ 10  0.277778  0.611111   9.000000  14.388889  18.500000  23.722222  27.388889   
+ 11 -1.277778  2.222222   5.722222  12.388889  18.055556  22.388889  26.777778   
+ 12  2.944444  4.944444  10.500000  12.666667  18.388889  21.666667  26.000000   
+ 13  1.722222  1.055556   4.500000  11.666667  17.111111  22.611111  26.555556   
+ 14 -1.888889 -0.222222   3.166667  11.277778  17.777778  22.500000  24.500000   
+ 15 -1.166667 -4.500000   3.388889  12.388889  20.277778  21.777778  26.000000   
+ 16  1.388889  3.166667   9.388889  11.833333  17.111111  22.388889  25.944444   
+ 17  3.333333  5.333333   4.000000  14.000000  16.166667  22.222222  24.888889   
+ 18 -0.166667  5.555556   4.500000   9.722222  19.388889  22.055556  25.333333   
+ 19  0.277778  2.333333   5.388889  13.055556  16.777778  22.055556  26.444444   
+ 20  3.944444  4.500000   8.888889  10.222222  15.722222  23.166667  26.666667   
+ 
+           AUG        SEP        OCT        NOV        DEC  
+ 0   22.611111  18.888889  13.888889   7.388889  -0.500000  
+ 1   25.944444  19.833333  14.722222  11.500000   6.722222  
+ 2   25.388889  21.222222  12.888889   7.777778   2.222222  
+ 3   24.833333  19.944444  12.833333  10.000000   3.111111  
+ 4   23.444444  20.722222  13.333333   9.000000   3.555556  
+ 5   26.500000  22.944444  14.388889   9.777778   1.833333  
+ 6   24.333333  19.222222  13.444444  11.055556   6.444444  
+ 7   23.333333  21.277778  17.555556   7.444444   2.777778  
+ 8   23.222222  20.444444  12.833333   7.666667   3.388889  
+ 9   24.277778  19.055556  12.777778  10.666667   2.166667  
+ 10  25.222222  21.722222  14.500000   8.833333   0.444444  
+ 11  24.055556  21.111111  13.944444  11.055556   6.277778  
+ 12  24.833333  20.444444  14.444444   6.611111   5.277778  
+ 13  23.666667  19.944444  15.666667   7.388889   3.611111  
+ 14  23.611111  20.944444  15.333333   7.388889   4.722222  
+ 15  26.111111  23.611111  14.444444  11.555556  10.444444  
+ 16  26.222222  22.111111  14.888889   9.888889   3.500000  
+ 17  23.333333  21.388889  17.833333   8.111111   0.777778  
+ 18  25.611111  21.500000  14.277778   6.888889   4.500000  
+ 19  24.166667  21.333333  15.500000   6.611111   3.500000  
+ 20  24.944444  20.444444  14.388889  11.666667   4.000000  )
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lab 3 Pandas Series and Dataframe</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-find-out-july-maximum-temperature">Question 1 - Find out July maximum temperature</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2">Question 2 -</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
