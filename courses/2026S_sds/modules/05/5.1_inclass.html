@@ -1,0 +1,3352 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Section 1: Getting Started With Pandas &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/05/5.1_inclass';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01/01_intro.html">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02/02_basicPy1.html">02 - Basic Python - 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03_basicPy2.html">03 - Basic Python - 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04_Numpy_Pandas1.html">04 - Numpy and Pandas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_Numpy_Pandas2.html">05 - Numpy and Pandas 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06/06_visualization.html">06 - Data Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07/07_Midterm_Exam.html">07 - Midterm Exam</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/05/5.1_inclass.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/modules/05/5.1_inclass.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Section 1: Getting Started With Pandas</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series">1. Pandas Series</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series-formats">1.2. Pandas Series formats</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-pandas-series-object">1.3. Constructing a pandas series object</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-indexing-and-selection">1.4. Data Indexing and Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#series-as-dictionary-like-a-dictionary-the-series-object-provides-a-mapping-from-a-collection-of-keys-to-a-collection-of-values">Series as dictionary - Like a dictionary, the Series object provides a mapping from a collection of keys to a collection of values:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#series-as-one-dimensional-array">Series as one-dimensional array</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#indexers-loc-and-iloc">Indexers: loc and iloc</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anatomy-of-a-dataframe">Anatomy-of-a-DataFrame</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#series">Series:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#columns">Columns:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#index">Index:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-dataframes">Creating DataFrames</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-a-flat-file">Using a flat file</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspecting-the-data">Inspecting the data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-many-rows-and-columns-are-there">How many rows and columns are there?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-the-column-names">What are the column names?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-type-of-data-does-each-column-currently-hold">What type of data does each column currently hold?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-does-the-data-look-like">What does the data look like?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-some-information-about-the-dataframe">Get some information about the DataFrame</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-1"><span class="xref myst">Exercise 1.1</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-2"><span class="xref myst">Exercise 1.2</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-dimensions-number-of-rows-and-number-of-columns-in-the-data">Find the dimensions (number of rows and number of columns) in the data.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-subsets">Extracting subsets</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-columns">Selecting columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-rows">Selecting rows</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">Indexing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-with-boolean-masks">Filtering with Boolean masks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-summary-statistics">Calculating summary statistics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-was-the-mass-of-the-average-tee-dbh">What was the mass of the average tee_dbh</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-was-the-largest-tree">What was the largest tree?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-many-different-types-of-tree-species-are-in-this-dataset-and-what-are-they">How many different types of tree species are in this dataset and what are they?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-some-summary-statistics-on-the-data-itself">Get some summary statistics on the data itself</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-out-the-documentation-for-more-descriptive-statistics">Check out the documentation for more descriptive statistics:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-3"><span class="xref myst">Exercise 1.3</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-data-in-the-2005-nyc-tree-data-calculate-summary-statistics-for-tree-dbh-column">Using the data in the 2005 NYC tree data, calculate summary statistics for tree_dbh column.</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-4"><span class="xref myst">Exercise 1.4</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-out-how-many-tree-species-and-what-they-are-in-the-2005-tree-dataset">Find out how many tree species and what they are in the 2005 tree dataset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="section-1-getting-started-with-pandas">
+<h1>Section 1: Getting Started With Pandas<a class="headerlink" href="#section-1-getting-started-with-pandas" title="Link to this heading">#</a></h1>
+<p>We will begin by introducing the <code class="docutils literal notranslate"><span class="pre">Series</span></code>, <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, and <code class="docutils literal notranslate"><span class="pre">Index</span></code> classes, which are the basic building blocks of the pandas library, and showing how to work with them. By the end of this section, you will be able to create DataFrames and perform operations on them to inspect and filter the data.</p>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#Pandas-Series"><span class="xref myst">Pandas Series</span></a></p></li>
+<li><p><a class="reference internal" href="#Anatomy-of-a-DataFrame"><span class="xref myst">Anatomy of a DataFrame</span></a></p></li>
+<li><p><a class="reference internal" href="#Creating-Dataframes"><span class="xref myst">Creating DataFrames</span></a></p></li>
+<li><p><a class="reference internal" href="#Calculating-summary-statistics"><span class="xref myst">Calculating summary statistics</span></a></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pandas-series">
+<h2>1. Pandas Series<a class="headerlink" href="#pandas-series" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A Pandas Series is a one-dimensional array of indexed data. The Pandas Series wraps both a sequence of values and a sequence of indices.</p></li>
+<li><p>The Pandas Series has an explicitly defined index associated with the values. The index can be integers or values of any desired type.</p></li>
+<li><p>We can access the values and index attributes.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Pandas series can be created from a list or array as follows.</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    0.25
+1    0.50
+2    0.75
+3    1.00
+dtype: float64
+&lt;class &#39;pandas.core.series.Series&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Data can also be accessed by the associated index</span>
+<span class="n">data</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.25, 0.5 , 0.75, 1.  ])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Data can also be accessed by via the familiar Python square-bracket notation.</span>
+<span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    0.25
+1    0.50
+2    0.75
+3    1.00
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RangeIndex(start=0, stop=4, step=1)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The index can be integers or values of any desired type.</span>
+<span class="c1"># use strings as an index: </span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+                 <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a    0.25
+b    0.50
+c    0.75
+d    1.00
+dtype: float64
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.25)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.25)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="pandas-series-formats">
+<h3>1.2. Pandas Series formats<a class="headerlink" href="#pandas-series-formats" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Pandas series as a list of array - just discussed before</p></li>
+<li><p>Pandas series as a specialized dictionary:<br />
+A dictionary is a structure that maps arbitrary keys to a set of arbitrary values, and a Series is a structure that maps typed keys to a set of typed values.  It is more efficient than a Python list for certain operations, the type information of a Pandas Series makes it much more efficient than Python dictionaries for certain operations.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># NYC tree species percentage dictionary</span>
+<span class="n">NYC_treespecies_dict</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;London Planetree&#39;</span><span class="p">:</span> <span class="mf">13.3</span><span class="p">,</span>
+               <span class="s1">&#39;HoneyLocust&#39;</span><span class="p">:</span> <span class="mf">9.9</span><span class="p">,</span>
+               <span class="s1">&#39;Callery Pear&#39;</span><span class="p">:</span> <span class="mf">9.0</span><span class="p">,</span>
+               <span class="s1">&#39;Pin Oak&#39;</span><span class="p">:</span><span class="mf">8.2</span><span class="p">,</span>
+               <span class="s1">&#39;Norway Maple&#39;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">NYC_treespecies_dict</span><span class="p">)</span>
+<span class="n">NYC_treespecies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">NYC_treespecies_dict</span><span class="p">)</span>
+<span class="n">NYC_treespecies</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;London Planetree&#39;: 13.3, &#39;HoneyLocust&#39;: 9.9, &#39;Callery Pear&#39;: 9.0, &#39;Pin Oak&#39;: 8.2, &#39;Norway Maple&#39;: 5.2}
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>London Planetree    13.3
+HoneyLocust          9.9
+Callery Pear         9.0
+Pin Oak              8.2
+Norway Maple         5.2
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NYC_treespecies</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;London Planetree&#39;, &#39;HoneyLocust&#39;, &#39;Callery Pear&#39;, &#39;Pin Oak&#39;,
+       &#39;Norway Maple&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NYC_treespecies</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([13.3,  9.9,  9. ,  8.2,  5.2])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># print % of HoneyLocust</span>
+<span class="n">NYC_treespecies</span><span class="p">[</span><span class="s1">&#39;HoneyLocust&#39;</span><span class="p">]</span>
+<span class="n">NYC_treespecies</span><span class="p">[</span><span class="s1">&#39;HoneyLocust&#39;</span><span class="p">:</span><span class="s1">&#39;Pin Oak&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HoneyLocust     9.9
+Callery Pear    9.0
+Pin Oak         8.2
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># print % of HoneyLocust using Dict, line 2 will not work</span>
+<span class="n">NYC_treespecies_dict</span><span class="p">[</span><span class="s1">&#39;HoneyLocust&#39;</span><span class="p">]</span>
+<span class="c1">#NYC_treespecies_dict[&#39;HoneyLocust&#39;:&#39;Pin Oak&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>9.9
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="constructing-a-pandas-series-object">
+<h3>1.3. Constructing a pandas series object<a class="headerlink" href="#constructing-a-pandas-series-object" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"> <span class="pre">pd.Series(data,</span> <span class="pre">index=index)</span></code></p></li>
+<li><p>where index is an optional argument, and data can be one of many entities.</p></li>
+<li><p>Data can be a list or a scalar. Data can be a dictionary, in which index defaults to the sorted dictionary keys</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creat a pandas series as a list of array </span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    2
+1    4
+2    6
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a pandas data as a scalar </span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a    5
+b    5
+c    5
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creat a pandas data as  a dictionary </span>
+<span class="c1"># NYC tree species percentage dictionary</span>
+<span class="n">NYC_treespecies_dict</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;London Planetree&#39;</span><span class="p">:</span> <span class="mf">13.3</span><span class="p">,</span>
+               <span class="s1">&#39;HoneyLocust&#39;</span><span class="p">:</span> <span class="mf">9.9</span><span class="p">,</span>
+               <span class="s1">&#39;Callery Pear&#39;</span><span class="p">:</span> <span class="mf">9.0</span><span class="p">,</span>
+               <span class="s1">&#39;Pin Oak&#39;</span><span class="p">:</span><span class="mf">8.2</span><span class="p">,</span>
+               <span class="s1">&#39;Norway Maple&#39;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">NYC_treespecies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">NYC_treespecies_dict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">NYC_treespecies</span><span class="p">)</span>
+
+<span class="n">NYC_treespecies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">NYC_treespecies_dict</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;HoneyLocust&#39;</span><span class="p">,</span> <span class="s1">&#39;Norway Maple&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">NYC_treespecies</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>London Planetree    13.3
+HoneyLocust          9.9
+Callery Pear         9.0
+Pin Oak              8.2
+Norway Maple         5.2
+dtype: float64
+HoneyLocust     9.9
+Norway Maple    5.2
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-indexing-and-selection">
+<h3>1.4. Data Indexing and Selection<a class="headerlink" href="#data-indexing-and-selection" title="Link to this heading">#</a></h3>
+<section id="series-as-dictionary-like-a-dictionary-the-series-object-provides-a-mapping-from-a-collection-of-keys-to-a-collection-of-values">
+<h4>Series as dictionary - Like a dictionary, the Series object provides a mapping from a collection of keys to a collection of values:<a class="headerlink" href="#series-as-dictionary-like-a-dictionary-the-series-object-provides-a-mapping-from-a-collection-of-keys-to-a-collection-of-values" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+                 <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">])</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a    0.25
+b    0.50
+c    0.75
+d    1.00
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.5)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can also use dictionary-like Python expressions and methods to examine the keys/indices and values:</span>
+<span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;a&#39;, 0.25), (&#39;b&#39;, 0.5), (&#39;c&#39;, 0.75), (&#39;d&#39;, 1.0)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># You can assign a new index value</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a    0.25
+b    2.00
+c    0.75
+d    1.00
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="series-as-one-dimensional-array">
+<h4>Series as one-dimensional array<a class="headerlink" href="#series-as-one-dimensional-array" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># slicing by explicit index</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="s1">&#39;c&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a    0.25
+b    2.00
+c    0.75
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># slicing by implicit integer index</span>
+<span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a    0.25
+b    2.00
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># masking</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[(</span><span class="n">data</span> <span class="o">&gt;</span> <span class="mf">0.3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span> <span class="o">&lt;</span> <span class="mf">0.8</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a    0.25
+b    2.00
+c    0.75
+d    1.00
+dtype: float64
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c    0.75
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fancy indexing</span>
+<span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a    0.25
+d    1.00
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="indexers-loc-and-iloc">
+<h4>Indexers: loc and iloc<a class="headerlink" href="#indexers-loc-and-iloc" title="Link to this heading">#</a></h4>
+<p>loc gets DataFrame rows &amp; columns by labels/names and iloc gets by integer Index/position. For loc, if the label is not present it gives a key error. For iloc, if the position is not present it gives an index error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    a
+1    b
+2    c
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;b&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the loc attribute allows indexing and slicing that always references the explicit index:</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    a
+1    b
+2    c
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The iloc attribute allows indexing and slicing that always references the implicit Python-style index:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    a
+1    b
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    a
+1    b
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="anatomy-of-a-dataframe">
+<h2>Anatomy-of-a-DataFrame<a class="headerlink" href="#anatomy-of-a-dataframe" title="Link to this heading">#</a></h2>
+<p>A <strong>DataFrame</strong> is composed of one or more <strong>Series</strong>. The names of the <strong>Series</strong> form the column names, and the row labels form the <strong>Index</strong>.</p>
+<p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/version/1.1.3/getting_started/intro_tutorials/02_read_write.html#min-tut-02-read-write">Pandsa can read and write different formats csvm  of files</a> - csv, json,xls, hdf5,sql etc. We read csv files for this excercise.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read NYC tree data. I downloaded the tree data, which can be read directly from the links below.</span>
+<span class="c1"># https://data.cityofnewyork.us/Environment/2015-Street-Tree-Census-Tree-Data/uvpi-gqnh/about_data.</span>
+<span class="c1"># Download the 2015 tree data and put it under the /data subdirectory in your current working directory. </span>
+<span class="c1"># Read 2015 tree census data using pd.read_csv </span>
+<span class="n">tree2015</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/2015_Street_Tree_Census.csv&#39;</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">tree2015</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tree_id</th>
+      <th>block_id</th>
+      <th>created_at</th>
+      <th>tree_dbh</th>
+      <th>stump_diam</th>
+      <th>curb_loc</th>
+      <th>status</th>
+      <th>health</th>
+      <th>spc_latin</th>
+      <th>spc_common</th>
+      <th>...</th>
+      <th>boro_ct</th>
+      <th>state</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>x_sp</th>
+      <th>y_sp</th>
+      <th>council district</th>
+      <th>census tract</th>
+      <th>bin</th>
+      <th>bbl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>180683</td>
+      <td>348711</td>
+      <td>08/27/2015</td>
+      <td>3</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Fair</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>4073900</td>
+      <td>New York</td>
+      <td>40.723092</td>
+      <td>-73.844215</td>
+      <td>1027431.148</td>
+      <td>202756.7687</td>
+      <td>29</td>
+      <td>739</td>
+      <td>4052307</td>
+      <td>4022210001</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>200540</td>
+      <td>315986</td>
+      <td>09/03/2015</td>
+      <td>21</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Fair</td>
+      <td>Quercus palustris</td>
+      <td>pin oak</td>
+      <td>...</td>
+      <td>4097300</td>
+      <td>New York</td>
+      <td>40.794111</td>
+      <td>-73.818679</td>
+      <td>1034455.701</td>
+      <td>228644.8374</td>
+      <td>19</td>
+      <td>973</td>
+      <td>4101931</td>
+      <td>4044750045</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>204026</td>
+      <td>218365</td>
+      <td>09/05/2015</td>
+      <td>3</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Gleditsia triacanthos var. inermis</td>
+      <td>honeylocust</td>
+      <td>...</td>
+      <td>3044900</td>
+      <td>New York</td>
+      <td>40.717581</td>
+      <td>-73.936608</td>
+      <td>1001822.831</td>
+      <td>200716.8913</td>
+      <td>34</td>
+      <td>449</td>
+      <td>3338310</td>
+      <td>3028870001</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>204337</td>
+      <td>217969</td>
+      <td>09/05/2015</td>
+      <td>10</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Gleditsia triacanthos var. inermis</td>
+      <td>honeylocust</td>
+      <td>...</td>
+      <td>3044900</td>
+      <td>New York</td>
+      <td>40.713537</td>
+      <td>-73.934456</td>
+      <td>1002420.358</td>
+      <td>199244.2531</td>
+      <td>34</td>
+      <td>449</td>
+      <td>3338342</td>
+      <td>3029250001</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>189565</td>
+      <td>223043</td>
+      <td>08/30/2015</td>
+      <td>21</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Tilia americana</td>
+      <td>American linden</td>
+      <td>...</td>
+      <td>3016500</td>
+      <td>New York</td>
+      <td>40.666778</td>
+      <td>-73.975979</td>
+      <td>990913.775</td>
+      <td>182202.4260</td>
+      <td>39</td>
+      <td>165</td>
+      <td>3025654</td>
+      <td>3010850052</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 45 columns</p>
+</div></div></div>
+</div>
+<section id="series">
+<h3>Series:<a class="headerlink" href="#series" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">tree_id</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    180683
+1    200540
+2    204026
+3    204337
+4    189565
+Name: tree_id, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="columns">
+<h3>Columns:<a class="headerlink" href="#columns" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;tree_id&#39;, &#39;block_id&#39;, &#39;created_at&#39;, &#39;tree_dbh&#39;, &#39;stump_diam&#39;,
+       &#39;curb_loc&#39;, &#39;status&#39;, &#39;health&#39;, &#39;spc_latin&#39;, &#39;spc_common&#39;, &#39;steward&#39;,
+       &#39;guards&#39;, &#39;sidewalk&#39;, &#39;user_type&#39;, &#39;problems&#39;, &#39;root_stone&#39;,
+       &#39;root_grate&#39;, &#39;root_other&#39;, &#39;trunk_wire&#39;, &#39;trnk_light&#39;, &#39;trnk_other&#39;,
+       &#39;brch_light&#39;, &#39;brch_shoe&#39;, &#39;brch_other&#39;, &#39;address&#39;, &#39;postcode&#39;,
+       &#39;zip_city&#39;, &#39;community board&#39;, &#39;borocode&#39;, &#39;borough&#39;, &#39;cncldist&#39;,
+       &#39;st_assem&#39;, &#39;st_senate&#39;, &#39;nta&#39;, &#39;nta_name&#39;, &#39;boro_ct&#39;, &#39;state&#39;,
+       &#39;latitude&#39;, &#39;longitude&#39;, &#39;x_sp&#39;, &#39;y_sp&#39;, &#39;council district&#39;,
+       &#39;census tract&#39;, &#39;bin&#39;, &#39;bbl&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="index">
+<h3>Index:<a class="headerlink" href="#index" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RangeIndex(start=0, stop=5, step=1)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="creating-dataframes">
+<h2>Creating DataFrames<a class="headerlink" href="#creating-dataframes" title="Link to this heading">#</a></h2>
+<p>We can create DataFrames from a variety of sources such as other Python objects, flat files, webscraping, and API requests. Here, we will see just a couple of examples, but be sure to check out <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html">this page</a> in the documentation for a complete list.</p>
+<section id="using-a-flat-file">
+<h3>Using a flat file<a class="headerlink" href="#using-a-flat-file" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/2015_Street_Tree_Census.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Tip: There are many parameters to this function to handle some initial processing while reading in the file – be sure check out the <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html">documentation</a>.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pd.read_csv<span class="o">?</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="inspecting-the-data">
+<h2>Inspecting the data<a class="headerlink" href="#inspecting-the-data" title="Link to this heading">#</a></h2>
+<p>Now that we have some data, we need to perform an initial inspection of it. This gives us information on what the data looks like, how many rows/columns there are, and how much data we have.</p>
+<p>Let’s inspect the <code class="docutils literal notranslate"><span class="pre">tree2015</span></code> data.</p>
+<section id="how-many-rows-and-columns-are-there">
+<h3>How many rows and columns are there?<a class="headerlink" href="#how-many-rows-and-columns-are-there" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(683788, 45)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="what-are-the-column-names">
+<h3>What are the column names?<a class="headerlink" href="#what-are-the-column-names" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;tree_id&#39;, &#39;block_id&#39;, &#39;created_at&#39;, &#39;tree_dbh&#39;, &#39;stump_diam&#39;,
+       &#39;curb_loc&#39;, &#39;status&#39;, &#39;health&#39;, &#39;spc_latin&#39;, &#39;spc_common&#39;, &#39;steward&#39;,
+       &#39;guards&#39;, &#39;sidewalk&#39;, &#39;user_type&#39;, &#39;problems&#39;, &#39;root_stone&#39;,
+       &#39;root_grate&#39;, &#39;root_other&#39;, &#39;trunk_wire&#39;, &#39;trnk_light&#39;, &#39;trnk_other&#39;,
+       &#39;brch_light&#39;, &#39;brch_shoe&#39;, &#39;brch_other&#39;, &#39;address&#39;, &#39;postcode&#39;,
+       &#39;zip_city&#39;, &#39;community board&#39;, &#39;borocode&#39;, &#39;borough&#39;, &#39;cncldist&#39;,
+       &#39;st_assem&#39;, &#39;st_senate&#39;, &#39;nta&#39;, &#39;nta_name&#39;, &#39;boro_ct&#39;, &#39;state&#39;,
+       &#39;latitude&#39;, &#39;longitude&#39;, &#39;x_sp&#39;, &#39;y_sp&#39;, &#39;council district&#39;,
+       &#39;census tract&#39;, &#39;bin&#39;, &#39;bbl&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="what-type-of-data-does-each-column-currently-hold">
+<h3>What type of data does each column currently hold?<a class="headerlink" href="#what-type-of-data-does-each-column-currently-hold" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tree_id               int64
+block_id              int64
+created_at           object
+tree_dbh              int64
+stump_diam            int64
+curb_loc             object
+status               object
+health               object
+spc_latin            object
+spc_common           object
+steward              object
+guards               object
+sidewalk             object
+user_type            object
+problems             object
+root_stone           object
+root_grate           object
+root_other           object
+trunk_wire           object
+trnk_light           object
+trnk_other           object
+brch_light           object
+brch_shoe            object
+brch_other           object
+address              object
+postcode              int64
+zip_city             object
+community board       int64
+borocode              int64
+borough              object
+cncldist              int64
+st_assem              int64
+st_senate             int64
+nta                  object
+nta_name             object
+boro_ct               int64
+state                object
+latitude            float64
+longitude           float64
+x_sp                float64
+y_sp                float64
+council district    float64
+census tract        float64
+bin                 float64
+bbl                 float64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Special note: In pandas: dtype=object means the column holds general Python objects (usually strings, but could be mixed).</p>
+</section>
+<section id="what-does-the-data-look-like">
+<h3>What does the data look like?<a class="headerlink" href="#what-does-the-data-look-like" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tree_id</th>
+      <th>block_id</th>
+      <th>created_at</th>
+      <th>tree_dbh</th>
+      <th>stump_diam</th>
+      <th>curb_loc</th>
+      <th>status</th>
+      <th>health</th>
+      <th>spc_latin</th>
+      <th>spc_common</th>
+      <th>...</th>
+      <th>boro_ct</th>
+      <th>state</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>x_sp</th>
+      <th>y_sp</th>
+      <th>council district</th>
+      <th>census tract</th>
+      <th>bin</th>
+      <th>bbl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>180683</td>
+      <td>348711</td>
+      <td>08/27/2015</td>
+      <td>3</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Fair</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>4073900</td>
+      <td>New York</td>
+      <td>40.723092</td>
+      <td>-73.844215</td>
+      <td>1027431.148</td>
+      <td>202756.7687</td>
+      <td>29.0</td>
+      <td>739.0</td>
+      <td>4052307.0</td>
+      <td>4.022210e+09</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>200540</td>
+      <td>315986</td>
+      <td>09/03/2015</td>
+      <td>21</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Fair</td>
+      <td>Quercus palustris</td>
+      <td>pin oak</td>
+      <td>...</td>
+      <td>4097300</td>
+      <td>New York</td>
+      <td>40.794111</td>
+      <td>-73.818679</td>
+      <td>1034455.701</td>
+      <td>228644.8374</td>
+      <td>19.0</td>
+      <td>973.0</td>
+      <td>4101931.0</td>
+      <td>4.044750e+09</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>204026</td>
+      <td>218365</td>
+      <td>09/05/2015</td>
+      <td>3</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Gleditsia triacanthos var. inermis</td>
+      <td>honeylocust</td>
+      <td>...</td>
+      <td>3044900</td>
+      <td>New York</td>
+      <td>40.717581</td>
+      <td>-73.936608</td>
+      <td>1001822.831</td>
+      <td>200716.8913</td>
+      <td>34.0</td>
+      <td>449.0</td>
+      <td>3338310.0</td>
+      <td>3.028870e+09</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>204337</td>
+      <td>217969</td>
+      <td>09/05/2015</td>
+      <td>10</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Gleditsia triacanthos var. inermis</td>
+      <td>honeylocust</td>
+      <td>...</td>
+      <td>3044900</td>
+      <td>New York</td>
+      <td>40.713537</td>
+      <td>-73.934456</td>
+      <td>1002420.358</td>
+      <td>199244.2531</td>
+      <td>34.0</td>
+      <td>449.0</td>
+      <td>3338342.0</td>
+      <td>3.029250e+09</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>189565</td>
+      <td>223043</td>
+      <td>08/30/2015</td>
+      <td>21</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Tilia americana</td>
+      <td>American linden</td>
+      <td>...</td>
+      <td>3016500</td>
+      <td>New York</td>
+      <td>40.666778</td>
+      <td>-73.975979</td>
+      <td>990913.775</td>
+      <td>182202.4260</td>
+      <td>39.0</td>
+      <td>165.0</td>
+      <td>3025654.0</td>
+      <td>3.010850e+09</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 45 columns</p>
+</div></div></div>
+</div>
+<p>Sometimes there may be extraneous data at the end of the file, so checking the bottom few rows is also important:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tree_id</th>
+      <th>block_id</th>
+      <th>created_at</th>
+      <th>tree_dbh</th>
+      <th>stump_diam</th>
+      <th>curb_loc</th>
+      <th>status</th>
+      <th>health</th>
+      <th>spc_latin</th>
+      <th>spc_common</th>
+      <th>...</th>
+      <th>boro_ct</th>
+      <th>state</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>x_sp</th>
+      <th>y_sp</th>
+      <th>council district</th>
+      <th>census tract</th>
+      <th>bin</th>
+      <th>bbl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>683783</th>
+      <td>155433</td>
+      <td>217978</td>
+      <td>08/18/2015</td>
+      <td>25</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Quercus palustris</td>
+      <td>pin oak</td>
+      <td>...</td>
+      <td>3051900</td>
+      <td>New York</td>
+      <td>40.713211</td>
+      <td>-73.954944</td>
+      <td>9.967407e+05</td>
+      <td>199121.6363</td>
+      <td>34.0</td>
+      <td>519.0</td>
+      <td>3062513.0</td>
+      <td>3.023690e+09</td>
+    </tr>
+    <tr>
+      <th>683784</th>
+      <td>183795</td>
+      <td>348185</td>
+      <td>08/29/2015</td>
+      <td>7</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Cladrastis kentukea</td>
+      <td>Kentucky yellowwood</td>
+      <td>...</td>
+      <td>4070700</td>
+      <td>New York</td>
+      <td>40.715194</td>
+      <td>-73.856650</td>
+      <td>1.023989e+06</td>
+      <td>199873.6475</td>
+      <td>29.0</td>
+      <td>707.0</td>
+      <td>4075448.0</td>
+      <td>4.031810e+09</td>
+    </tr>
+    <tr>
+      <th>683785</th>
+      <td>166161</td>
+      <td>401670</td>
+      <td>08/22/2015</td>
+      <td>12</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5020100</td>
+      <td>New York</td>
+      <td>40.620762</td>
+      <td>-74.136517</td>
+      <td>9.463514e+05</td>
+      <td>165466.0763</td>
+      <td>50.0</td>
+      <td>201.0</td>
+      <td>5011657.0</td>
+      <td>5.004080e+09</td>
+    </tr>
+    <tr>
+      <th>683786</th>
+      <td>184028</td>
+      <td>504204</td>
+      <td>08/29/2015</td>
+      <td>9</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>2023502</td>
+      <td>New York</td>
+      <td>40.850828</td>
+      <td>-73.903115</td>
+      <td>1.011054e+06</td>
+      <td>249271.9507</td>
+      <td>15.0</td>
+      <td>23502.0</td>
+      <td>2007757.0</td>
+      <td>2.028120e+09</td>
+    </tr>
+    <tr>
+      <th>683787</th>
+      <td>200607</td>
+      <td>306527</td>
+      <td>09/03/2015</td>
+      <td>23</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Fair</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>4134100</td>
+      <td>New York</td>
+      <td>40.732165</td>
+      <td>-73.787526</td>
+      <td>1.043136e+06</td>
+      <td>206095.5383</td>
+      <td>24.0</td>
+      <td>1341.0</td>
+      <td>4153657.0</td>
+      <td>4.071360e+09</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 45 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="get-some-information-about-the-dataframe">
+<h3>Get some information about the DataFrame<a class="headerlink" href="#get-some-information-about-the-dataframe" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 683788 entries, 0 to 683787
+Data columns (total 45 columns):
+ #   Column            Non-Null Count   Dtype  
+---  ------            --------------   -----  
+ 0   tree_id           683788 non-null  int64  
+ 1   block_id          683788 non-null  int64  
+ 2   created_at        683788 non-null  object 
+ 3   tree_dbh          683788 non-null  int64  
+ 4   stump_diam        683788 non-null  int64  
+ 5   curb_loc          683788 non-null  object 
+ 6   status            683788 non-null  object 
+ 7   health            652172 non-null  object 
+ 8   spc_latin         652169 non-null  object 
+ 9   spc_common        652169 non-null  object 
+ 10  steward           164350 non-null  object 
+ 11  guards            79866 non-null   object 
+ 12  sidewalk          652172 non-null  object 
+ 13  user_type         683788 non-null  object 
+ 14  problems          225844 non-null  object 
+ 15  root_stone        683788 non-null  object 
+ 16  root_grate        683788 non-null  object 
+ 17  root_other        683788 non-null  object 
+ 18  trunk_wire        683788 non-null  object 
+ 19  trnk_light        683788 non-null  object 
+ 20  trnk_other        683788 non-null  object 
+ 21  brch_light        683788 non-null  object 
+ 22  brch_shoe         683788 non-null  object 
+ 23  brch_other        683788 non-null  object 
+ 24  address           683788 non-null  object 
+ 25  postcode          683788 non-null  int64  
+ 26  zip_city          683788 non-null  object 
+ 27  community board   683788 non-null  int64  
+ 28  borocode          683788 non-null  int64  
+ 29  borough           683788 non-null  object 
+ 30  cncldist          683788 non-null  int64  
+ 31  st_assem          683788 non-null  int64  
+ 32  st_senate         683788 non-null  int64  
+ 33  nta               683788 non-null  object 
+ 34  nta_name          683788 non-null  object 
+ 35  boro_ct           683788 non-null  int64  
+ 36  state             683788 non-null  object 
+ 37  latitude          683788 non-null  float64
+ 38  longitude         683788 non-null  float64
+ 39  x_sp              683788 non-null  float64
+ 40  y_sp              683788 non-null  float64
+ 41  council district  677269 non-null  float64
+ 42  census tract      677269 non-null  float64
+ 43  bin               674229 non-null  float64
+ 44  bbl               674229 non-null  float64
+dtypes: float64(8), int64(11), object(26)
+memory usage: 234.8+ MB
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-1-1">
+<h3><a class="reference internal" href="#./wk5.ipynb#Exercise-1.1"><span class="xref myst">Exercise 1.1</span></a><a class="headerlink" href="#exercise-1-1" title="Link to this heading">#</a></h3>
+<p>Download NYC 2005 tree data from this link: <a class="reference external" href="https://data.cityofnewyork.us/Environment/2005-Street-Tree-Census/29bw-z7pj/about_data">https://data.cityofnewyork.us/Environment/2005-Street-Tree-Census/29bw-z7pj/about_data</a>.
+Examine the first 5 rows.</p>
+</section>
+<section id="exercise-1-2">
+<h3><a class="reference internal" href="#./wk5.ipynb#Exercise-1.2"><span class="xref myst">Exercise 1.2</span></a><a class="headerlink" href="#exercise-1-2" title="Link to this heading">#</a></h3>
+<section id="find-the-dimensions-number-of-rows-and-number-of-columns-in-the-data">
+<h4>Find the dimensions (number of rows and number of columns) in the data.<a class="headerlink" href="#find-the-dimensions-number-of-rows-and-number-of-columns-in-the-data" title="Link to this heading">#</a></h4>
+</section>
+</section>
+</section>
+<section id="extracting-subsets">
+<h2>Extracting subsets<a class="headerlink" href="#extracting-subsets" title="Link to this heading">#</a></h2>
+<p>A crucial part of working with DataFrames is extracting subsets of the data: finding rows that meet a certain set of criteria, isolating columns/rows of interest, etc. After narrowing down our data, we are closer to discovering insights. This section will be the backbone of many analysis tasks.</p>
+<section id="selecting-columns">
+<h3>Selecting columns<a class="headerlink" href="#selecting-columns" title="Link to this heading">#</a></h3>
+<p>We can select columns as attributes if their names would be valid Python variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">tree_id</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0         180683
+1         200540
+2         204026
+3         204337
+4         189565
+           ...  
+683783    155433
+683784    183795
+683785    166161
+683786    184028
+683787    200607
+Name: tree_id, Length: 683788, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can select multiple columns at once this way:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="p">[[</span><span class="s1">&#39;tree_id&#39;</span><span class="p">,</span> <span class="s1">&#39;spc_common&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tree_id</th>
+      <th>spc_common</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>180683</td>
+      <td>red maple</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>200540</td>
+      <td>pin oak</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>204026</td>
+      <td>honeylocust</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>204337</td>
+      <td>honeylocust</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>189565</td>
+      <td>American linden</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>683783</th>
+      <td>155433</td>
+      <td>pin oak</td>
+    </tr>
+    <tr>
+      <th>683784</th>
+      <td>183795</td>
+      <td>Kentucky yellowwood</td>
+    </tr>
+    <tr>
+      <th>683785</th>
+      <td>166161</td>
+      <td>red maple</td>
+    </tr>
+    <tr>
+      <th>683786</th>
+      <td>184028</td>
+      <td>red maple</td>
+    </tr>
+    <tr>
+      <th>683787</th>
+      <td>200607</td>
+      <td>red maple</td>
+    </tr>
+  </tbody>
+</table>
+<p>683788 rows × 2 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="selecting-rows">
+<h3>Selecting rows<a class="headerlink" href="#selecting-rows" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># In pandas, the [] (square bracket) syntax does not accept row and column selectors together like NumPy does.</span>
+<span class="n">tree2015</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">104</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;tree_id&#39;</span><span class="p">,</span><span class="s1">&#39;spc_common&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\core\indexes\base.py:3812,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3811</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">3812</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">casted_key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3813</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+
+<span class="nn">File pandas/_libs/index.pyx:167,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+
+<span class="nn">File pandas/_libs/index.pyx:173,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+
+<span class="ne">TypeError</span>: &#39;(slice(100, 104, None), [&#39;tree_id&#39;, &#39;spc_common&#39;])&#39; is an invalid key
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">InvalidIndexError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">46</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># In pandas, the [] (square bracket) syntax does not accept row and column selectors together like NumPy does.</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">tree2015</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">104</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;tree_id&#39;</span><span class="p">,</span><span class="s1">&#39;spc_common&#39;</span><span class="p">]]</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\core\frame.py:4107,</span> in <span class="ni">DataFrame.__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4105</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">4106</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_multilevel</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">4107</span> <span class="n">indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4108</span> <span class="k">if</span> <span class="n">is_integer</span><span class="p">(</span><span class="n">indexer</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">4109</span>     <span class="n">indexer</span> <span class="o">=</span> <span class="p">[</span><span class="n">indexer</span><span class="p">]</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\core\indexes\base.py:3824,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3819</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
+<span class="g g-Whitespace">   </span><span class="mi">3820</span> <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3821</span>     <span class="c1"># If we have a listlike key, _check_indexing_error will raise</span>
+<span class="g g-Whitespace">   </span><span class="mi">3822</span>     <span class="c1">#  InvalidIndexError. Otherwise we fall through and re-raise</span>
+<span class="g g-Whitespace">   </span><span class="mi">3823</span>     <span class="c1">#  the TypeError.</span>
+<span class="ne">-&gt; </span><span class="mi">3824</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_check_indexing_error</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3825</span>     <span class="k">raise</span>
+
+<span class="nn">File ~\miniforge3\envs\sds\Lib\site-packages\pandas\core\indexes\base.py:6072,</span> in <span class="ni">Index._check_indexing_error</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6068</span> <span class="k">def</span><span class="w"> </span><span class="nf">_check_indexing_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">6069</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">is_scalar</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">6070</span>         <span class="c1"># if key is not a scalar, directly raise an error (the code below</span>
+<span class="g g-Whitespace">   </span><span class="mi">6071</span>         <span class="c1"># would convert to numpy arrays and raise later any way) - GH29926</span>
+<span class="ne">-&gt; </span><span class="mi">6072</span>         <span class="k">raise</span> <span class="n">InvalidIndexError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<span class="ne">InvalidIndexError</span>: (slice(100, 104, None), [&#39;tree_id&#39;, &#39;spc_common&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="indexing">
+<h3>Indexing<a class="headerlink" href="#indexing" title="Link to this heading">#</a></h3>
+<p>Instead using <code class="docutils literal notranslate"><span class="pre">iloc[]</span></code> to select rows and columns by their position:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">104</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tree_id</th>
+      <th>tree_dbh</th>
+      <th>stump_diam</th>
+      <th>status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>100</th>
+      <td>204203</td>
+      <td>11</td>
+      <td>0</td>
+      <td>Alive</td>
+    </tr>
+    <tr>
+      <th>101</th>
+      <td>203385</td>
+      <td>23</td>
+      <td>0</td>
+      <td>Alive</td>
+    </tr>
+    <tr>
+      <th>102</th>
+      <td>196372</td>
+      <td>12</td>
+      <td>0</td>
+      <td>Alive</td>
+    </tr>
+    <tr>
+      <th>103</th>
+      <td>192889</td>
+      <td>27</td>
+      <td>0</td>
+      <td>Alive</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We use <code class="docutils literal notranslate"><span class="pre">loc[]</span></code> to select by name:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">104</span><span class="p">,</span> <span class="s1">&#39;tree_id&#39;</span><span class="p">:</span><span class="s1">&#39;tree_dbh&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tree_id</th>
+      <th>block_id</th>
+      <th>created_at</th>
+      <th>tree_dbh</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>100</th>
+      <td>204203</td>
+      <td>415447</td>
+      <td>09/05/2015</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>101</th>
+      <td>203385</td>
+      <td>347979</td>
+      <td>09/04/2015</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>102</th>
+      <td>196372</td>
+      <td>103300</td>
+      <td>09/02/2015</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>103</th>
+      <td>192889</td>
+      <td>210568</td>
+      <td>08/31/2015</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>203760</td>
+      <td>302373</td>
+      <td>09/05/2015</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">104</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;tree_id&#39;</span><span class="p">,</span> <span class="s1">&#39;tree_dbh&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tree_id</th>
+      <th>tree_dbh</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>100</th>
+      <td>204203</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>101</th>
+      <td>203385</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>102</th>
+      <td>196372</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>103</th>
+      <td>192889</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>203760</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Please notice the difference between iloc and loc.</p>
+</section>
+<section id="filtering-with-boolean-masks">
+<h3>Filtering with Boolean masks<a class="headerlink" href="#filtering-with-boolean-masks" title="Link to this heading">#</a></h3>
+<p>A <strong>Boolean mask</strong> is a array-like structure of Boolean values – it’s a way to specify which rows/columns we want to select (<code class="docutils literal notranslate"><span class="pre">True</span></code>) and which we don’t (<code class="docutils literal notranslate"><span class="pre">False</span></code>).</p>
+<p>Here’s an example of a Boolean mask for a subset of <code class="docutils literal notranslate"><span class="pre">red_maple</span></code> species with <code class="docutils literal notranslate"><span class="pre">tree_dbh</span></code> &gt; 40 inches</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="p">[(</span><span class="n">tree2015</span><span class="p">[</span><span class="s1">&#39;tree_dbh&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">tree2015</span><span class="o">.</span><span class="n">spc_common</span> <span class="o">==</span> <span class="s1">&#39;red maple&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tree_id</th>
+      <th>block_id</th>
+      <th>created_at</th>
+      <th>tree_dbh</th>
+      <th>stump_diam</th>
+      <th>curb_loc</th>
+      <th>status</th>
+      <th>health</th>
+      <th>spc_latin</th>
+      <th>spc_common</th>
+      <th>...</th>
+      <th>boro_ct</th>
+      <th>state</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>x_sp</th>
+      <th>y_sp</th>
+      <th>council district</th>
+      <th>census tract</th>
+      <th>bin</th>
+      <th>bbl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>20379</th>
+      <td>215697</td>
+      <td>415159</td>
+      <td>09/11/2015</td>
+      <td>51</td>
+      <td>0</td>
+      <td>OffsetFromCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5013204</td>
+      <td>New York</td>
+      <td>40.563976</td>
+      <td>-74.127037</td>
+      <td>9.489533e+05</td>
+      <td>144773.8257</td>
+      <td>50.0</td>
+      <td>13204.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>37509</th>
+      <td>245977</td>
+      <td>334366</td>
+      <td>09/22/2015</td>
+      <td>41</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>4056800</td>
+      <td>New York</td>
+      <td>40.719414</td>
+      <td>-73.731788</td>
+      <td>1.058598e+06</td>
+      <td>201492.3129</td>
+      <td>27.0</td>
+      <td>568.0</td>
+      <td>4231341.0</td>
+      <td>4.108110e+09</td>
+    </tr>
+    <tr>
+      <th>56702</th>
+      <td>225461</td>
+      <td>514975</td>
+      <td>09/15/2015</td>
+      <td>41</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>2042800</td>
+      <td>New York</td>
+      <td>40.893187</td>
+      <td>-73.844652</td>
+      <td>1.027200e+06</td>
+      <td>264728.0536</td>
+      <td>12.0</td>
+      <td>428.0</td>
+      <td>2069001.0</td>
+      <td>2.050160e+09</td>
+    </tr>
+    <tr>
+      <th>94481</th>
+      <td>277901</td>
+      <td>511000</td>
+      <td>10/02/2015</td>
+      <td>41</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>2030000</td>
+      <td>New York</td>
+      <td>40.853706</td>
+      <td>-73.828386</td>
+      <td>1.031725e+06</td>
+      <td>250351.9682</td>
+      <td>13.0</td>
+      <td>300.0</td>
+      <td>2047760.0</td>
+      <td>2.042490e+09</td>
+    </tr>
+    <tr>
+      <th>231191</th>
+      <td>430014</td>
+      <td>402102</td>
+      <td>11/05/2015</td>
+      <td>43</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5002100</td>
+      <td>New York</td>
+      <td>40.625125</td>
+      <td>-74.083394</td>
+      <td>9.611006e+05</td>
+      <td>167037.1837</td>
+      <td>49.0</td>
+      <td>21.0</td>
+      <td>5014082.0</td>
+      <td>5.005420e+09</td>
+    </tr>
+    <tr>
+      <th>250198</th>
+      <td>456594</td>
+      <td>406164</td>
+      <td>11/14/2015</td>
+      <td>42</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5011202</td>
+      <td>New York</td>
+      <td>40.575706</td>
+      <td>-74.096047</td>
+      <td>9.575685e+05</td>
+      <td>149036.2430</td>
+      <td>50.0</td>
+      <td>11202.0</td>
+      <td>5054231.0</td>
+      <td>5.037340e+09</td>
+    </tr>
+    <tr>
+      <th>262847</th>
+      <td>481551</td>
+      <td>402603</td>
+      <td>11/24/2015</td>
+      <td>50</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5021300</td>
+      <td>New York</td>
+      <td>40.629782</td>
+      <td>-74.137094</td>
+      <td>9.461964e+05</td>
+      <td>168752.5684</td>
+      <td>49.0</td>
+      <td>213.0</td>
+      <td>5024838.0</td>
+      <td>5.010490e+09</td>
+    </tr>
+    <tr>
+      <th>300944</th>
+      <td>498911</td>
+      <td>407837</td>
+      <td>12/06/2015</td>
+      <td>154</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5029103</td>
+      <td>New York</td>
+      <td>40.600109</td>
+      <td>-74.166549</td>
+      <td>9.380000e+05</td>
+      <td>157956.3377</td>
+      <td>50.0</td>
+      <td>29103.0</td>
+      <td>5035610.0</td>
+      <td>5.021100e+09</td>
+    </tr>
+    <tr>
+      <th>331153</th>
+      <td>550014</td>
+      <td>403735</td>
+      <td>03/09/2016</td>
+      <td>48</td>
+      <td>0</td>
+      <td>OffsetFromCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5000900</td>
+      <td>New York</td>
+      <td>40.643690</td>
+      <td>-74.080369</td>
+      <td>9.619465e+05</td>
+      <td>173800.1351</td>
+      <td>49.0</td>
+      <td>9.0</td>
+      <td>5000324.0</td>
+      <td>5.000210e+09</td>
+    </tr>
+    <tr>
+      <th>331213</th>
+      <td>550016</td>
+      <td>403735</td>
+      <td>03/09/2016</td>
+      <td>64</td>
+      <td>0</td>
+      <td>OffsetFromCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5000900</td>
+      <td>New York</td>
+      <td>40.643542</td>
+      <td>-74.080251</td>
+      <td>9.619791e+05</td>
+      <td>173746.2657</td>
+      <td>49.0</td>
+      <td>9.0</td>
+      <td>5131387.0</td>
+      <td>5.000200e+09</td>
+    </tr>
+    <tr>
+      <th>331892</th>
+      <td>553057</td>
+      <td>407316</td>
+      <td>04/06/2016</td>
+      <td>45</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5007000</td>
+      <td>New York</td>
+      <td>40.595055</td>
+      <td>-74.073374</td>
+      <td>9.638728e+05</td>
+      <td>156079.7023</td>
+      <td>50.0</td>
+      <td>70.0</td>
+      <td>5048185.0</td>
+      <td>5.032760e+09</td>
+    </tr>
+    <tr>
+      <th>340241</th>
+      <td>550010</td>
+      <td>403735</td>
+      <td>03/09/2016</td>
+      <td>41</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5000900</td>
+      <td>New York</td>
+      <td>40.644138</td>
+      <td>-74.081016</td>
+      <td>9.617670e+05</td>
+      <td>173963.4543</td>
+      <td>49.0</td>
+      <td>9.0</td>
+      <td>5000328.0</td>
+      <td>5.000210e+09</td>
+    </tr>
+    <tr>
+      <th>357880</th>
+      <td>563090</td>
+      <td>333465</td>
+      <td>05/20/2016</td>
+      <td>43</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>4051600</td>
+      <td>New York</td>
+      <td>40.705764</td>
+      <td>-73.749526</td>
+      <td>1.053695e+06</td>
+      <td>196504.5762</td>
+      <td>27.0</td>
+      <td>516.0</td>
+      <td>4234925.0</td>
+      <td>4.109650e+09</td>
+    </tr>
+    <tr>
+      <th>358672</th>
+      <td>548874</td>
+      <td>401455</td>
+      <td>03/01/2016</td>
+      <td>41</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5005900</td>
+      <td>New York</td>
+      <td>40.618597</td>
+      <td>-74.103045</td>
+      <td>9.556428e+05</td>
+      <td>164664.8827</td>
+      <td>49.0</td>
+      <td>59.0</td>
+      <td>5006684.0</td>
+      <td>5.002460e+09</td>
+    </tr>
+    <tr>
+      <th>373799</th>
+      <td>587374</td>
+      <td>330743</td>
+      <td>06/15/2016</td>
+      <td>46</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>4066000</td>
+      <td>New York</td>
+      <td>40.657189</td>
+      <td>-73.729599</td>
+      <td>1.059275e+06</td>
+      <td>178824.0013</td>
+      <td>31.0</td>
+      <td>660.0</td>
+      <td>4290313.0</td>
+      <td>4.136630e+09</td>
+    </tr>
+    <tr>
+      <th>441770</th>
+      <td>664936</td>
+      <td>323516</td>
+      <td>08/14/2016</td>
+      <td>45</td>
+      <td>0</td>
+      <td>OffsetFromCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>4109700</td>
+      <td>New York</td>
+      <td>40.770063</td>
+      <td>-73.775231</td>
+      <td>1.046509e+06</td>
+      <td>219911.3637</td>
+      <td>19.0</td>
+      <td>1097.0</td>
+      <td>4135826.0</td>
+      <td>4.061100e+09</td>
+    </tr>
+    <tr>
+      <th>621135</th>
+      <td>137558</td>
+      <td>405876</td>
+      <td>08/12/2015</td>
+      <td>41</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Fair</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5011202</td>
+      <td>New York</td>
+      <td>40.574138</td>
+      <td>-74.092823</td>
+      <td>9.584633e+05</td>
+      <td>148463.8852</td>
+      <td>50.0</td>
+      <td>11202.0</td>
+      <td>5054617.0</td>
+      <td>5.038000e+09</td>
+    </tr>
+    <tr>
+      <th>641816</th>
+      <td>137011</td>
+      <td>323227</td>
+      <td>08/11/2015</td>
+      <td>52</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>4109700</td>
+      <td>New York</td>
+      <td>40.770431</td>
+      <td>-73.777935</td>
+      <td>1.045759e+06</td>
+      <td>220043.4622</td>
+      <td>19.0</td>
+      <td>1097.0</td>
+      <td>4135748.0</td>
+      <td>4.061040e+09</td>
+    </tr>
+  </tbody>
+</table>
+<p>18 rows × 45 columns</p>
+</div></div></div>
+</div>
+<p><strong>Important</strong>: Take note of the syntax here. We surround each condition with parentheses, and we use bitwise operators (<code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">|</span></code>, <code class="docutils literal notranslate"><span class="pre">~</span></code>) instead of logical operators (<code class="docutils literal notranslate"><span class="pre">and</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code>, <code class="docutils literal notranslate"><span class="pre">not</span></code>).</p>
+<p>Use logical operators (and, or, not) → for plain Booleans in conditions/flow control.</p>
+<p>Use bitwise operators (&amp;, |, ^, ~, etc.) → for binary math, masks, or array-wise logic.</p>
+<p>With pandas/NumPy, you must use &amp;, |, ~ for combining conditions, not and/or:</p>
+<p><em>Tip: Boolean masks can be used with <code class="docutils literal notranslate"><span class="pre">loc[]</span></code> and <code class="docutils literal notranslate"><span class="pre">iloc[]</span></code>.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="p">[(</span><span class="n">tree2015</span><span class="p">[</span><span class="s1">&#39;tree_dbh&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">tree2015</span><span class="o">.</span><span class="n">spc_common</span> <span class="o">==</span> <span class="s1">&#39;red maple&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tree_id</th>
+      <th>block_id</th>
+      <th>created_at</th>
+      <th>tree_dbh</th>
+      <th>stump_diam</th>
+      <th>curb_loc</th>
+      <th>status</th>
+      <th>health</th>
+      <th>spc_latin</th>
+      <th>spc_common</th>
+      <th>...</th>
+      <th>boro_ct</th>
+      <th>state</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>x_sp</th>
+      <th>y_sp</th>
+      <th>council district</th>
+      <th>census tract</th>
+      <th>bin</th>
+      <th>bbl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>20379</th>
+      <td>215697</td>
+      <td>415159</td>
+      <td>09/11/2015</td>
+      <td>51</td>
+      <td>0</td>
+      <td>OffsetFromCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5013204</td>
+      <td>New York</td>
+      <td>40.563976</td>
+      <td>-74.127037</td>
+      <td>9.489533e+05</td>
+      <td>144773.8257</td>
+      <td>50.0</td>
+      <td>13204.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>37509</th>
+      <td>245977</td>
+      <td>334366</td>
+      <td>09/22/2015</td>
+      <td>41</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>4056800</td>
+      <td>New York</td>
+      <td>40.719414</td>
+      <td>-73.731788</td>
+      <td>1.058598e+06</td>
+      <td>201492.3129</td>
+      <td>27.0</td>
+      <td>568.0</td>
+      <td>4231341.0</td>
+      <td>4.108110e+09</td>
+    </tr>
+    <tr>
+      <th>56702</th>
+      <td>225461</td>
+      <td>514975</td>
+      <td>09/15/2015</td>
+      <td>41</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>2042800</td>
+      <td>New York</td>
+      <td>40.893187</td>
+      <td>-73.844652</td>
+      <td>1.027200e+06</td>
+      <td>264728.0536</td>
+      <td>12.0</td>
+      <td>428.0</td>
+      <td>2069001.0</td>
+      <td>2.050160e+09</td>
+    </tr>
+    <tr>
+      <th>94481</th>
+      <td>277901</td>
+      <td>511000</td>
+      <td>10/02/2015</td>
+      <td>41</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>2030000</td>
+      <td>New York</td>
+      <td>40.853706</td>
+      <td>-73.828386</td>
+      <td>1.031725e+06</td>
+      <td>250351.9682</td>
+      <td>13.0</td>
+      <td>300.0</td>
+      <td>2047760.0</td>
+      <td>2.042490e+09</td>
+    </tr>
+    <tr>
+      <th>231191</th>
+      <td>430014</td>
+      <td>402102</td>
+      <td>11/05/2015</td>
+      <td>43</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5002100</td>
+      <td>New York</td>
+      <td>40.625125</td>
+      <td>-74.083394</td>
+      <td>9.611006e+05</td>
+      <td>167037.1837</td>
+      <td>49.0</td>
+      <td>21.0</td>
+      <td>5014082.0</td>
+      <td>5.005420e+09</td>
+    </tr>
+    <tr>
+      <th>250198</th>
+      <td>456594</td>
+      <td>406164</td>
+      <td>11/14/2015</td>
+      <td>42</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5011202</td>
+      <td>New York</td>
+      <td>40.575706</td>
+      <td>-74.096047</td>
+      <td>9.575685e+05</td>
+      <td>149036.2430</td>
+      <td>50.0</td>
+      <td>11202.0</td>
+      <td>5054231.0</td>
+      <td>5.037340e+09</td>
+    </tr>
+    <tr>
+      <th>262847</th>
+      <td>481551</td>
+      <td>402603</td>
+      <td>11/24/2015</td>
+      <td>50</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5021300</td>
+      <td>New York</td>
+      <td>40.629782</td>
+      <td>-74.137094</td>
+      <td>9.461964e+05</td>
+      <td>168752.5684</td>
+      <td>49.0</td>
+      <td>213.0</td>
+      <td>5024838.0</td>
+      <td>5.010490e+09</td>
+    </tr>
+    <tr>
+      <th>300944</th>
+      <td>498911</td>
+      <td>407837</td>
+      <td>12/06/2015</td>
+      <td>154</td>
+      <td>0</td>
+      <td>OnCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5029103</td>
+      <td>New York</td>
+      <td>40.600109</td>
+      <td>-74.166549</td>
+      <td>9.380000e+05</td>
+      <td>157956.3377</td>
+      <td>50.0</td>
+      <td>29103.0</td>
+      <td>5035610.0</td>
+      <td>5.021100e+09</td>
+    </tr>
+    <tr>
+      <th>331153</th>
+      <td>550014</td>
+      <td>403735</td>
+      <td>03/09/2016</td>
+      <td>48</td>
+      <td>0</td>
+      <td>OffsetFromCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5000900</td>
+      <td>New York</td>
+      <td>40.643690</td>
+      <td>-74.080369</td>
+      <td>9.619465e+05</td>
+      <td>173800.1351</td>
+      <td>49.0</td>
+      <td>9.0</td>
+      <td>5000324.0</td>
+      <td>5.000210e+09</td>
+    </tr>
+    <tr>
+      <th>331213</th>
+      <td>550016</td>
+      <td>403735</td>
+      <td>03/09/2016</td>
+      <td>64</td>
+      <td>0</td>
+      <td>OffsetFromCurb</td>
+      <td>Alive</td>
+      <td>Good</td>
+      <td>Acer rubrum</td>
+      <td>red maple</td>
+      <td>...</td>
+      <td>5000900</td>
+      <td>New York</td>
+      <td>40.643542</td>
+      <td>-74.080251</td>
+      <td>9.619791e+05</td>
+      <td>173746.2657</td>
+      <td>49.0</td>
+      <td>9.0</td>
+      <td>5131387.0</td>
+      <td>5.000200e+09</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 45 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="calculating-summary-statistics">
+<h2>Calculating summary statistics<a class="headerlink" href="#calculating-summary-statistics" title="Link to this heading">#</a></h2>
+<p>We can extract some interesting insights from the <code class="docutils literal notranslate"><span class="pre">tree2015</span></code> data by calculating summary statistics.</p>
+<section id="what-was-the-mass-of-the-average-tee-dbh">
+<h3>What was the mass of the average tee_dbh<a class="headerlink" href="#what-was-the-mass-of-the-average-tee-dbh" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="p">[</span><span class="s1">&#39;tree_dbh&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(11.27978701000895)
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Important</strong>: The mean isn’t always the best measure of central tendency. If there are outliers in the distribution, the mean will be skewed. Here, the mean is being pulled higher by some very heavy meteorites – the distribution is <a class="reference external" href="https://www.analyticsvidhya.com/blog/2020/07/what-is-skewness-statistics/">right-skewed</a>.</p>
+<p>Taking a look at some quantiles at the extremes of the distribution shows that the mean is between the 95th and 99th percentile of the distribution, so it isn’t a good measure of central tendency here:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="p">[</span><span class="s1">&#39;tree_dbh&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.01     0.0
+0.05     2.0
+0.50     9.0
+0.95    28.0
+0.99    36.0
+Name: tree_dbh, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>A better measure in this case is the median (50th percentile), since it is robust to outliers:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="p">[</span><span class="s1">&#39;tree_dbh&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(9.0)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="what-was-the-largest-tree">
+<h3>What was the largest tree?<a class="headerlink" href="#what-was-the-largest-tree" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="p">[</span><span class="s1">&#39;tree_dbh&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(450)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tree2015</span><span class="p">[</span><span class="s1">&#39;tree_dbh&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tree_id                                                      433258
+block_id                                                     507833
+created_at                                               11/05/2015
+tree_dbh                                                        450
+stump_diam                                                        0
+curb_loc                                             OffsetFromCurb
+status                                                         Dead
+health                                                          NaN
+spc_latin                                                       NaN
+spc_common                                                      NaN
+steward                                                         NaN
+guards                                                          NaN
+sidewalk                                                        NaN
+user_type                                          TreesCount Staff
+problems                                                        NaN
+root_stone                                                       No
+root_grate                                                       No
+root_other                                                       No
+trunk_wire                                                       No
+trnk_light                                                       No
+trnk_other                                                       No
+brch_light                                                       No
+brch_shoe                                                        No
+brch_other                                                       No
+address                                       1950 LAFAYETTE AVENUE
+postcode                                                      10473
+zip_city                                                      Bronx
+community board                                                 209
+borocode                                                          2
+borough                                                       Bronx
+cncldist                                                         18
+st_assem                                                         87
+st_senate                                                        32
+nta                                                            BX09
+nta_name            Soundview-Castle Hill-Clason Point-Harding Park
+boro_ct                                                     2001600
+state                                                      New York
+latitude                                                  40.821953
+longitude                                                -73.857671
+x_sp                                                    1023642.915
+y_sp                                                    238768.6665
+council district                                               18.0
+census tract                                                   16.0
+bin                                                       2022207.0
+bbl                                                    2036060001.0
+Name: 228048, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="how-many-different-types-of-tree-species-are-in-this-dataset-and-what-are-they">
+<h3>How many different types of tree species are in this dataset and what are they?<a class="headerlink" href="#how-many-different-types-of-tree-species-are-in-this-dataset-and-what-are-they" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="p">[</span><span class="s1">&#39;spc_common&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="c1"># How many distinct values?</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>132
+</pre></div>
+</div>
+</div>
+</div>
+<p>Some examples:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="p">[</span><span class="s1">&#39;spc_common&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="c1"># What are the distinct values?</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;red maple&#39;, &#39;pin oak&#39;, &#39;honeylocust&#39;, &#39;American linden&#39;,
+       &#39;London planetree&#39;, &#39;ginkgo&#39;, &#39;willow oak&#39;, &#39;sycamore maple&#39;,
+       &#39;Amur maple&#39;, nan, &#39;hedge maple&#39;, &#39;American elm&#39;, &#39;ash&#39;,
+       &#39;crab apple&#39;, &#39;silver maple&#39;, &#39;Turkish hazelnut&#39;, &#39;black cherry&#39;,
+       &#39;eastern redcedar&#39;, &#39;Norway maple&#39;, &#39;tulip-poplar&#39;, &#39;sawtooth oak&#39;,
+       &#39;swamp white oak&#39;, &#39;Sophora&#39;, &#39;Chinese fringetree&#39;,
+       &#39;southern magnolia&#39;, &#39;sweetgum&#39;, &#39;Callery pear&#39;, &#39;scarlet oak&#39;,
+       &#39;Atlantic white cedar&#39;, &#39;black oak&#39;, &#39;Japanese zelkova&#39;,
+       &#39;white oak&#39;, &#39;Ohio buckeye&#39;, &#39;northern red oak&#39;, &#39;silver linden&#39;,
+       &#39;pignut hickory&#39;, &#39;Kentucky yellowwood&#39;, &#39;mulberry&#39;, &#39;Douglas-fir&#39;,
+       &#39;crepe myrtle&#39;, &#39;sassafras&#39;, &#39;cherry&#39;, &#39;spruce&#39;, &#39;Chinese elm&#39;,
+       &#39;horse chestnut&#39;, &#39;holly&#39;, &#39;littleleaf linden&#39;, &#39;white pine&#39;,
+       &#39;blackgum&#39;, &#39;Japanese tree lilac&#39;, &#39;hardy rubber tree&#39;,
+       &#39;green ash&#39;, &#39;English oak&#39;, &#39;white ash&#39;, &#39;golden raintree&#39;,
+       &quot;Schumard&#39;s oak&quot;, &#39;Siberian elm&#39;, &#39;black walnut&#39;, &#39;weeping willow&#39;,
+       &#39;katsura tree&#39;, &#39;black locust&#39;, &#39;Persian ironwood&#39;,
+       &#39;Cornelian cherry&#39;, &#39;Chinese chestnut&#39;, &#39;southern red oak&#39;,
+       &#39;purple-leaf plum&#39;, &#39;crimson king maple&#39;, &#39;Kentucky coffeetree&#39;,
+       &#39;Japanese snowbell&#39;, &#39;sugar maple&#39;, &#39;arborvitae&#39;,
+       &#39;Oklahoma redbud&#39;, &#39;tree of heaven&#39;, &#39;Chinese tree lilac&#39;,
+       &#39;American hornbeam&#39;, &#39;eastern cottonwood&#39;, &#39;eastern hemlock&#39;,
+       &#39;silver birch&#39;, &#39;Atlas cedar&#39;, &#39;empress tree&#39;, &#39;hawthorn&#39;,
+       &quot;&#39;Schubert&#39; chokecherry&quot;, &#39;catalpa&#39;, &#39;river birch&#39;, &#39;boxelder&#39;,
+       &#39;European beech&#39;, &#39;Norway spruce&#39;, &#39;Himalayan cedar&#39;,
+       &#39;Amur cork tree&#39;, &#39;Japanese maple&#39;, &#39;shingle oak&#39;, &#39;magnolia&#39;,
+       &#39;smoketree&#39;, &#39;paper birch&#39;, &#39;American beech&#39;,
+       &#39;American hophornbeam&#39;, &#39;American larch&#39;, &#39;pond cypress&#39;,
+       &#39;cockspur hawthorn&#39;, &#39;dawn redwood&#39;, &#39;common hackberry&#39;,
+       &#39;flowering dogwood&#39;, &#39;maple&#39;, &#39;kousa dogwood&#39;, &#39;eastern redbud&#39;,
+       &#39;bald cypress&#39;, &#39;cucumber magnolia&#39;, &#39;serviceberry&#39;,
+       &#39;Osage-orange&#39;, &#39;paperbark maple&#39;, &#39;red pine&#39;, &#39;Scots pine&#39;,
+       &#39;tartar maple&#39;, &#39;black maple&#39;, &#39;blue spruce&#39;, &#39;quaking aspen&#39;,
+       &#39;red horse chestnut&#39;, &#39;black pine&#39;, &#39;Shantung maple&#39;,
+       &#39;European alder&#39;, &#39;Amur maackia&#39;, &#39;European hornbeam&#39;, &#39;bur oak&#39;,
+       &#39;bigtooth aspen&#39;, &#39;trident maple&#39;, &#39;Virginia pine&#39;,
+       &#39;two-winged silverbell&#39;, &#39;pagoda dogwood&#39;, &#39;Japanese hornbeam&#39;,
+       &#39;pine&#39;, &#39;false cypress&#39;, &#39;pitch pine&#39;, &#39;mimosa&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="get-some-summary-statistics-on-the-data-itself">
+<h3>Get some summary statistics on the data itself<a class="headerlink" href="#get-some-summary-statistics-on-the-data-itself" title="Link to this heading">#</a></h3>
+<p>We can get common summary statistics for all columns at once. By default, this will only be numeric columns, but here, we will summarize everything together:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree2015</span><span class="p">[</span><span class="s1">&#39;tree_dbh&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    683788.000000
+mean         11.279787
+std           8.723042
+min           0.000000
+25%           4.000000
+50%           9.000000
+75%          16.000000
+max         450.000000
+Name: tree_dbh, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="check-out-the-documentation-for-more-descriptive-statistics">
+<h3>Check out the documentation for more descriptive statistics:<a class="headerlink" href="#check-out-the-documentation-for-more-descriptive-statistics" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pandas.pydata.org/docs/reference/series.html#computations-descriptive-stats">Series</a></p></li>
+<li><p><a class="reference external" href="https://pandas.pydata.org/docs/reference/frame.html#computations-descriptive-stats">DataFrame</a></p></li>
+</ul>
+</section>
+<section id="exercise-1-3">
+<h3><a class="reference internal" href="#./wk5.ipynb#Exercise-1.3"><span class="xref myst">Exercise 1.3</span></a><a class="headerlink" href="#exercise-1-3" title="Link to this heading">#</a></h3>
+<section id="using-the-data-in-the-2005-nyc-tree-data-calculate-summary-statistics-for-tree-dbh-column">
+<h4>Using the data in the 2005 NYC tree data, calculate summary statistics for tree_dbh column.<a class="headerlink" href="#using-the-data-in-the-2005-nyc-tree-data-calculate-summary-statistics-for-tree-dbh-column" title="Link to this heading">#</a></h4>
+</section>
+</section>
+<section id="exercise-1-4">
+<h3><a class="reference internal" href="#./wk5.ipynb#Exercise-1.4"><span class="xref myst">Exercise 1.4</span></a><a class="headerlink" href="#exercise-1-4" title="Link to this heading">#</a></h3>
+<section id="find-out-how-many-tree-species-and-what-they-are-in-the-2005-tree-dataset">
+<h4>Find out how many tree species and what they are in the 2005 tree dataset<a class="headerlink" href="#find-out-how-many-tree-species-and-what-they-are-in-the-2005-tree-dataset" title="Link to this heading">#</a></h4>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series">1. Pandas Series</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series-formats">1.2. Pandas Series formats</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-pandas-series-object">1.3. Constructing a pandas series object</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-indexing-and-selection">1.4. Data Indexing and Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#series-as-dictionary-like-a-dictionary-the-series-object-provides-a-mapping-from-a-collection-of-keys-to-a-collection-of-values">Series as dictionary - Like a dictionary, the Series object provides a mapping from a collection of keys to a collection of values:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#series-as-one-dimensional-array">Series as one-dimensional array</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#indexers-loc-and-iloc">Indexers: loc and iloc</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anatomy-of-a-dataframe">Anatomy-of-a-DataFrame</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#series">Series:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#columns">Columns:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#index">Index:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-dataframes">Creating DataFrames</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-a-flat-file">Using a flat file</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspecting-the-data">Inspecting the data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-many-rows-and-columns-are-there">How many rows and columns are there?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-the-column-names">What are the column names?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-type-of-data-does-each-column-currently-hold">What type of data does each column currently hold?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-does-the-data-look-like">What does the data look like?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-some-information-about-the-dataframe">Get some information about the DataFrame</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-1"><span class="xref myst">Exercise 1.1</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-2"><span class="xref myst">Exercise 1.2</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-dimensions-number-of-rows-and-number-of-columns-in-the-data">Find the dimensions (number of rows and number of columns) in the data.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-subsets">Extracting subsets</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-columns">Selecting columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-rows">Selecting rows</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">Indexing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-with-boolean-masks">Filtering with Boolean masks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-summary-statistics">Calculating summary statistics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-was-the-mass-of-the-average-tee-dbh">What was the mass of the average tee_dbh</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-was-the-largest-tree">What was the largest tree?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-many-different-types-of-tree-species-are-in-this-dataset-and-what-are-they">How many different types of tree species are in this dataset and what are they?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-some-summary-statistics-on-the-data-itself">Get some summary statistics on the data itself</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-out-the-documentation-for-more-descriptive-statistics">Check out the documentation for more descriptive statistics:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-3"><span class="xref myst">Exercise 1.3</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-data-in-the-2005-nyc-tree-data-calculate-summary-statistics-for-tree-dbh-column">Using the data in the 2005 NYC tree data, calculate summary statistics for tree_dbh column.</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-4"><span class="xref myst">Exercise 1.4</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#find-out-how-many-tree-species-and-what-they-are-in-the-2005-tree-dataset">Find out how many tree species and what they are in the 2005 tree dataset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
