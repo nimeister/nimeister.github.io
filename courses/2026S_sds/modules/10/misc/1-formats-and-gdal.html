@@ -1,0 +1,953 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Raster formats and libraries &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/10/misc/1-formats-and-gdal';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../01/01_intro.html">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../02/02_basicPy1.html">02 - Basic Python - 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03/03_basicPy2.html">03 - Basic Python - 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04/04_Numpy_Pandas1.html">04 - Numpy and Pandas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05/05_Numpy_Pandas2.html">05 - Numpy and Pandas 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06/06_visualization.html">06 - Data Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07/07_Midterm_Exam.html">07 - Midterm Exam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09/09_geopandas.html">08 - Geopandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10_raster1.html">10 - Raster Data Analysis I</a></li>
+
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/10/misc/1-formats-and-gdal.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/modules/10/misc/1-formats-and-gdal.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Raster formats and libraries</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#raster-data-format">Raster Data Format</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geotiff">Geotiff</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-resources-on-the-tif-format">More Resources on the  <code class="docutils literal notranslate"><span class="pre">.tif</span></code> format</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#external-metadata">External metadata</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#processing-levels">Processing levels</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#important">Important</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geospatial-data-abstraction-library-gdal">Geospatial Data Abstraction Library (GDAL)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gdal-command-line-utilities">GDAL command line utilities</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-formats">Converting formats</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reprojection">Reprojection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-and-computation">Visualization and computation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#raster-tiles">Raster Tiles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-points">key points</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="raster-formats-and-libraries">
+<h1>Raster formats and libraries<a class="headerlink" href="#raster-formats-and-libraries" title="Link to this heading">#</a></h1>
+<p>This notebook based on content from previous geohackweek raster tutorials <a class="github reference external" href="https://github.com/geohackweek/raster">geohackweek/raster</a></p>
+<div class="alert-info">
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>teaching:</strong> 15 minutes</p></li>
+<li><p><strong>exercises:</strong> 0</p></li>
+<li><p><strong>questions:</strong></p>
+<ul>
+<li><p>What file formats are available for representing raster datasets?</p></li>
+</ul>
+</li>
+<li><p><strong>objectives:</strong></p>
+<ul>
+<li><p>Understand the high-level data interchange formats for raster datasets.</p></li>
+</ul>
+</li>
+</ul>
+</div></section>
+<section id="table-of-contents">
+<h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#Raster-Data-Format"><span class="xref myst"><strong>Raster Data Format</strong></span></a></p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#About-Raster-Data"><span class="xref myst">Geotiffs</span></a></p></li>
+<li><p><a class="reference internal" href="#Metadata"><span class="xref myst">External metadata</span></a></p></li>
+<li><p><a class="reference internal" href="#Processing-levels"><span class="xref myst">Processing levels</span></a></p></li>
+</ol>
+</li>
+<li><p><a class="reference internal" href="#Geospatial-Data-Abstraction-Library-(GDAL)"><span class="xref myst"><strong>Geospatial Data Abstraction Library (GDAL)</strong></span></a></p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#Converting-formats"><span class="xref myst">Converting formats</span></a></p></li>
+<li><p><a class="reference internal" href="#Reprojection"><span class="xref myst">Reprojection</span></a></p></li>
+<li><p><a class="reference internal" href="#Visualization-and-computation"><span class="xref myst">Visualization and computation</span></a></p></li>
+</ol>
+</li>
+<li><p><a class="reference internal" href="#Raster-Tiles"><span class="xref myst"><strong>Raster Tiles</strong></span></a></p></li>
+</ol>
+</section>
+<section id="raster-data-format">
+<h2>Raster Data Format<a class="headerlink" href="#raster-data-format" title="Link to this heading">#</a></h2>
+<p>Raster data can come in an astounding variety of <a class="reference external" href="https://gdal.org/drivers/raster/index.html">different formats</a>! At a minimum, these formats include the following metadata:</p>
+<ol class="arabic simple">
+<li><p>Geotransform (defines extent, resolution)</p></li>
+<li><p>Coordinate Reference System (CRS)</p></li>
+<li><p>Values that represent missing data (<code class="docutils literal notranslate"><span class="pre">NoDataValue</span></code>)</p></li>
+</ol>
+</section>
+<section id="geotiff">
+<h2>Geotiff<a class="headerlink" href="#geotiff" title="Link to this heading">#</a></h2>
+<p>One of the most common raster formats is the <code class="docutils literal notranslate"><span class="pre">GeoTIFF</span></code> which has the extension <code class="docutils literal notranslate"><span class="pre">.tif</span></code>. A GeoTiff consists of a standard <code class="docutils literal notranslate"><span class="pre">.tif</span></code> image file with an embedded header containing metadata and attributes (<code class="docutils literal notranslate"><span class="pre">tif</span> <span class="pre">tags</span></code>).</p>
+<p>Your digital camera stores EXIF tags that describe the make and model of the camera, the date the photo was taken, etc. A GeoTIFF can also contain this information, but it also contains additional fields for spatial (georeferencing) information.</p>
+<p>Spatially-aware applications such as <a class="reference external" href="https://qgis.org">QGIS</a> interpret this metadata.  If we aren’t careful (or are using a raster-editing application that ignores spatial information), we can accidentally strip this spatial metadata.  Photoshop, for example, can edit GeoTiffs, but we’ll lose the embedded CRS and geotransform if we save to the same file!</p>
+<div class="alert-warning">
+<section id="more-resources-on-the-tif-format">
+<h3>More Resources on the  <code class="docutils literal notranslate"><span class="pre">.tif</span></code> format<a class="headerlink" href="#more-resources-on-the-tif-format" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/GeoTIFF">GeoTIFF on Wikipedia</a></p></li>
+<li><p><a class="reference external" href="https://www.cogeo.org">Cloud-optimized Geotiffs (COGs)</a></p></li>
+</ul>
+</div></section>
+</section>
+<section id="external-metadata">
+<h2>External metadata<a class="headerlink" href="#external-metadata" title="Link to this heading">#</a></h2>
+<p>In addition to tags it’s very common to have external metadata files that explain many other critical ancilliary details. For example, what software and version was used to generate the image? What time was the image acquired? As with Raster data formats there are also myriad metadata formats. NASA has undertaken an effort to consolidate and standardize metadata across decades of observations from hundreds of sensors. This is an extremely important effort and a complicated undertaking that you can read more about here - <a class="reference external" href="https://earthdata.nasa.gov/eosdis/science-system-description/eosdis-components/cmr">NASA’s Common Metadata Repository</a></p>
+<p>Most scientists and users of raster data need not concern themselves with the details of CMR. Users of raster data need to search, filter, and ensure the quality of satellite images. <a class="reference external" href="https://stacspec.org/">SpatioTemporal Asset Catalogs</a> are a user-facing sidecar metadata file that is meant to facilitate exactly those needs.</p>
+</section>
+<section id="processing-levels">
+<h2>Processing levels<a class="headerlink" href="#processing-levels" title="Link to this heading">#</a></h2>
+<p>Geospatial rasters are also oftern referred to by their “processing level”. These are usually standard across space agencies, but there can be subtle difference between for example <a class="reference external" href="https://science.nasa.gov/earth-science/earth-science-data/data-processing-levels-for-eosdis-data-products">NASA</a> and <a class="reference external" href="https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/processing-levels">ESA</a>. <code class="docutils literal notranslate"><span class="pre">Level</span> <span class="pre">0</span></code>, as you might expect, is the lowest-level information collected at the sensor (for example voltage counts). <code class="docutils literal notranslate"><span class="pre">Level</span> <span class="pre">1</span></code> is derived from Level 0 and could consist of an image with non-physical units and minimal metadata. <code class="docutils literal notranslate"><span class="pre">Level</span> <span class="pre">2</span></code> is typically an image where sensor counts are scaled to measure some physical unit (for example, pixel units have a value of temperature). <code class="docutils literal notranslate"><span class="pre">Level</span> <span class="pre">3</span></code> might be re-gridded and reprojected to CRS. <code class="docutils literal notranslate"><span class="pre">Level</span> <span class="pre">4</span></code> is further processed information, for example a timeseries derived from multiple stacked images.</p>
+<div class="alert-warning">
+<section id="important">
+<h3>Important<a class="headerlink" href="#important" title="Link to this heading">#</a></h3>
+<p>As you can imagine, given all the steps and options for processing data, it’s not sufficient to say “we’ll use the landsat-8 image over Seattle on a specific date”. <a class="reference external" href="https://www.usgs.gov/land-resources/nli/landsat/product-information">Which processing level of data are we going to use</a>?</p>
+</div></section>
+</section>
+<section id="geospatial-data-abstraction-library-gdal">
+<h2>Geospatial Data Abstraction Library (GDAL)<a class="headerlink" href="#geospatial-data-abstraction-library-gdal" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="http://gdal.org">GDAL</a> is the de facto standard library for
+interaction and manipulation of geospatial raster data.  The primary purpose of GDAL is to read, write and transform geospatial datasets in a way that makes sense in the context of its spatial metadata.  GDAL also includes a set of <a class="reference external" href="http://www.gdal.org/gdal_utilities.html">command-line utilities</a> (e.g., <code class="docutils literal notranslate"><span class="pre">gdalinfo</span></code>, <code class="docutils literal notranslate"><span class="pre">gdal_translate</span></code>, <code class="docutils literal notranslate"><span class="pre">gdalwarp</span></code>) for convenient inspection and manipulation of raster data.</p>
+<p>GDAL is a powerful and mature library for reading, writing and warping raster datasets, written in C++ with bindings to provide convenient APIs for other languages (e.g., Python, R).</p>
+</section>
+<section id="gdal-command-line-utilities">
+<h2>GDAL command line utilities<a class="headerlink" href="#gdal-command-line-utilities" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Learn these: <a class="reference external" href="https://www.gdal.org/gdal_utilities.html">https://www.gdal.org/gdal_utilities.html</a></p>
+<ul>
+<li><p>gdalinfo</p></li>
+<li><p>gdal_translate</p></li>
+<li><p>gdalwarp</p></li>
+<li><p>gdaladdo</p></li>
+</ul>
+</li>
+<li><p>A few tips:</p>
+<ul>
+<li><p>Use standard creation options (co)</p>
+<ul>
+<li><p>TILED=YES</p></li>
+<li><p>COMPRESS=LZW</p></li>
+<li><p>BIGTIFF=IF_SAFER</p></li>
+</ul>
+</li>
+<li><p>Choose your resampling algorithm carefully</p>
+<ul>
+<li><p>Default is nearest neightbor, fast but can lead to artifacts (best to limit use for categorical raster)</p></li>
+<li><p>Bilinear or bicubic resampling is usually a better choice for continuous rasters</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><a class="reference external" href="https://medium.com/planet-stories/a-gentle-introduction-to-gdal-part-4-working-with-satellite-data-d3835b5e2971">https://medium.com/planet-stories/a-gentle-introduction-to-gdal-part-4-working-with-satellite-data-d3835b5e2971</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ! runs a terminal command</span>
+<span class="o">!</span>gdalinfo<span class="w"> </span>--version
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GDAL 3.10.3, released 2025/04/01
+</pre></div>
+</div>
+</div>
+</div>
+<p>GDAL’s support for different raster file formats depends on the format drivers that have been implemented, and the libraries that are available at compile time. To find the available formats for your current install of GDAL:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Output cropped to 5 lines</span>
+<span class="o">!</span>gdalinfo<span class="w"> </span>--formats
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Supported Formats: (ro:read-only, rw:read-write, +:update, v:virtual-I/O s:subdatasets)
+  VRT -raster,multidimensional raster- (rw+v): Virtual Raster (*.vrt)
+  DERIVED -raster- (ro): Derived datasets using VRT pixel functions
+  GTI -raster- (rov): GDAL Raster Tile Index (*.gti.gpkg, *.gti.fgb, *.gti)
+  SNAP_TIFF -raster- (rov): Sentinel Application Processing GeoTIFF
+  GTiff -raster- (rw+vs): GeoTIFF (*.tif, *.tiff)
+  COG -raster- (wv): Cloud optimized GeoTIFF generator (*.tif, *.tiff)
+  NITF -raster- (rw+vs): National Imagery Transmission Format (*.ntf)
+  RPFTOC -raster- (rovs): Raster Product Format TOC format (*.toc)
+  ECRGTOC -raster- (rovs): ECRG TOC format (*.xml)
+  HFA -raster- (rw+v): Erdas Imagine Images (.img) (*.img)
+  SAR_CEOS -raster- (rov): CEOS SAR Image
+  CEOS -raster- (rov): CEOS Image
+  JAXAPALSAR -raster- (rov): JAXA PALSAR Product Reader (Level 1.1/1.5)
+  GFF -raster- (rov): Ground-based SAR Applications Testbed File Format (.gff) (*.gff)
+  ELAS -raster- (rw+v): ELAS
+  ESRIC -raster- (rov): Esri Compact Cache (*.json, *.tpkx)
+  AIG -raster- (rov): Arc/Info Binary Grid
+  AAIGrid -raster- (rwv): Arc/Info ASCII Grid (*.asc)
+  GRASSASCIIGrid -raster- (rov): GRASS ASCII Grid
+  ISG -raster- (rov): International Service for the Geoid (*.isg)
+  SDTS -raster- (rov): SDTS Raster (*.ddf)
+  DTED -raster- (rwv): DTED Elevation Raster (*.dt0, *.dt1, *.dt2)
+  PNG -raster- (rwv): Portable Network Graphics (*.png)
+  JPEG -raster- (rwv): JPEG JFIF (*.jpg, *.jpeg)
+  MEM -raster,multidimensional raster- (rw+): In Memory Raster
+  JDEM -raster- (rov): Japanese DEM (.mem) (*.mem)
+  GIF -raster- (rwv): Graphics Interchange Format (.gif) (*.gif)
+  BIGGIF -raster- (rov): Graphics Interchange Format (.gif) (*.gif)
+  ESAT -raster- (rov): Envisat Image Format (*.n1)
+  BSB -raster- (rov): Maptech BSB Nautical Charts (*.kap)
+  XPM -raster- (rwv): X11 PixMap Format (*.xpm)
+  BMP -raster- (rw+v): MS Windows Device Independent Bitmap (*.bmp)
+  DIMAP -raster- (rovs): SPOT DIMAP
+  AirSAR -raster- (rov): AirSAR Polarimetric Image
+  RS2 -raster- (rovs): RadarSat 2 XML Product
+  SAFE -raster- (rov): Sentinel-1 SAR SAFE Product
+  PCIDSK -raster,vector- (rw+v): PCIDSK Database File (*.pix)
+  PCRaster -raster- (rw+): PCRaster Raster File (*.map)
+  ILWIS -raster- (rw+v): ILWIS Raster Map (*.mpr, *.mpl)
+  SGI -raster- (rw+v): SGI Image File Format 1.0 (*.rgb)
+  SRTMHGT -raster- (rwv): SRTMHGT File Format (*.hgt)
+  Leveller -raster- (rw+v): Leveller heightfield (*.ter)
+  Terragen -raster- (rw+v): Terragen heightfield (*.ter)
+  netCDF -raster,multidimensional raster,vector- (rw+s): Network Common Data Format (*.nc)
+  HDF4 -raster,multidimensional raster- (ros): Hierarchical Data Format Release 4 (*.hdf)
+  HDF4Image -raster- (rw+): HDF4 Dataset
+  ISIS3 -raster- (rw+v): USGS Astrogeology ISIS cube (Version 3) (*.lbl, *.cub)
+  ISIS2 -raster- (rw+v): USGS Astrogeology ISIS cube (Version 2)
+  PDS -raster- (rov): NASA Planetary Data System
+  PDS4 -raster,vector- (rw+vs): NASA Planetary Data System 4 (*.xml)
+  VICAR -raster,vector- (rw+v): MIPL VICAR file
+  TIL -raster- (rov): EarthWatch .TIL
+  ERS -raster- (rw+v): ERMapper .ers Labelled (*.ers)
+  JP2OpenJPEG -raster,vector- (rwv): JPEG-2000 driver based on JP2OpenJPEG library (*.jp2, *.j2k)
+  L1B -raster- (rovs): NOAA Polar Orbiter Level 1b Data Set
+  FIT -raster- (rwv): FIT Image
+  RMF -raster- (rw+v): Raster Matrix Format (*.rsw)
+  WCS -raster- (rovs): OGC Web Coverage Service
+  WMS -raster- (rwvs): OGC Web Map Service
+  MSGN -raster- (rov): EUMETSAT Archive native (.nat) (*.nat)
+  RST -raster- (rw+v): Idrisi Raster A.1 (*.rst)
+  GSAG -raster- (rwv): Golden Software ASCII Grid (.grd) (*.grd)
+  GSBG -raster- (rw+v): Golden Software Binary Grid (.grd) (*.grd)
+  GS7BG -raster- (rw+v): Golden Software 7 Binary Grid (.grd) (*.grd)
+  COSAR -raster- (rov): COSAR Annotated Binary Matrix (TerraSAR-X)
+  TSX -raster- (rov): TerraSAR-X Product
+  COASP -raster- (ro): DRDC COASP SAR Processor Raster (*.hdr)
+  R -raster- (rwv): R Object Data Store (*.rda)
+  MAP -raster- (rov): OziExplorer .MAP
+  KMLSUPEROVERLAY -raster- (rwv): Kml Super Overlay (*.kml, *.kmz)
+  WEBP -raster- (rwv): WEBP (*.webp)
+  Rasterlite -raster- (rwvs): Rasterlite (*.sqlite)
+  MBTiles -raster,vector- (rw+v): MBTiles (*.mbtiles)
+  PLMOSAIC -raster- (ro): Planet Labs Mosaics API
+  CALS -raster- (rwv): CALS (Type 1) (*.cal, *.ct1)
+  WMTS -raster- (rwv): OGC Web Map Tile Service
+  SENTINEL2 -raster- (rovs): Sentinel 2
+  MRF -raster- (rw+v): Meta Raster Format (*.mrf)
+  PNM -raster- (rw+v): Portable Pixmap Format (netpbm) (*.pgm, *.ppm, *.pnm)
+  DOQ1 -raster- (rov): USGS DOQ (Old Style)
+  DOQ2 -raster- (rov): USGS DOQ (New Style)
+  PAux -raster- (rw+v): PCI .aux Labelled
+  MFF -raster- (rw+v): Vexcel MFF Raster (*.hdr)
+  MFF2 -raster- (rw+): Vexcel MFF2 (HKV) Raster
+  GSC -raster- (rov): GSC Geogrid
+  FAST -raster- (rov): EOSAT FAST Format
+  BT -raster- (rw+v): VTP .bt (Binary Terrain) 1.3 Format (*.bt)
+  LAN -raster- (rw+v): Erdas .LAN/.GIS
+  CPG -raster- (rov): Convair PolGASP
+  NDF -raster- (rov): NLAPS Data Format
+  EIR -raster- (rov): Erdas Imagine Raw
+  DIPEx -raster- (rov): DIPEx
+  LCP -raster- (rwv): FARSITE v.4 Landscape File (.lcp) (*.lcp)
+  GTX -raster- (rw+v): NOAA Vertical Datum .GTX (*.gtx)
+  LOSLAS -raster- (rov): NADCON .los/.las Datum Grid Shift
+  NTv2 -raster- (rw+vs): NTv2 Datum Grid Shift (*.gsb, *.gvb)
+  CTable2 -raster- (rw+v): CTable2 Datum Grid Shift
+  ACE2 -raster- (rov): ACE2 (*.ACE2)
+  SNODAS -raster- (rov): Snow Data Assimilation System (*.hdr)
+  KRO -raster- (rw+v): KOLOR Raw (*.kro)
+  ROI_PAC -raster- (rw+v): ROI_PAC raster
+  RRASTER -raster- (rw+v): R Raster (*.grd)
+  BYN -raster- (rw+v): Natural Resources Canada&#39;s Geoid (*.byn, *.err)
+  NOAA_B -raster- (rov): NOAA GEOCON/NADCON5 .b format (*.b)
+  RIK -raster- (rov): Swedish Grid RIK (.rik) (*.rik)
+  USGSDEM -raster- (rwv): USGS Optional ASCII DEM (and CDED) (*.dem)
+  GXF -raster- (rov): GeoSoft Grid Exchange Format (*.gxf)
+  BAG -raster,multidimensional raster,vector- (rw+v): Bathymetry Attributed Grid (*.bag)
+  S102 -raster,multidimensional raster- (rovs): S-102 Bathymetric Surface Product (*.h5)
+  S104 -raster,multidimensional raster- (rov): S-104 Water Level Information for Surface Navigation Product (*.h5)
+  S111 -raster,multidimensional raster- (rov): Surface Currents Product (*.h5)
+  HDF5 -raster,multidimensional raster- (rovs): Hierarchical Data Format Release 5 (*.h5, *.hdf5)
+  HDF5Image -raster- (rov): HDF5 Dataset
+  NWT_GRD -raster- (rw+v): Northwood Numeric Grid Format .grd/.tab (*.grd)
+  NWT_GRC -raster- (rov): Northwood Classified Grid Format .grc/.tab (*.grc)
+  ADRG -raster- (rw+vs): ARC Digitized Raster Graphics (*.gen)
+  SRP -raster- (rovs): Standard Raster Product (ASRP/USRP) (*.img)
+  BLX -raster- (rwv): Magellan topo (.blx) (*.blx)
+  SAGA -raster- (rw+v): SAGA GIS Binary Grid (.sdat, .sg-grd-z) (*.sdat, *.sg-grd-z)
+  XYZ -raster- (rwv): ASCII Gridded XYZ (*.xyz)
+  HF2 -raster- (rwv): HF2/HFZ heightfield raster (*.hf2)
+  OZI -raster- (rov): OziExplorer Image File
+  CTG -raster- (rov): USGS LULC Composite Theme Grid
+  ZMap -raster- (rwv): ZMap Plus Grid (*.dat)
+  NGSGEOID -raster- (rov): NOAA NGS Geoid Height Grids (*.bin)
+  IRIS -raster- (rov): IRIS data (.PPI, .CAPPi etc) (*.ppi)
+  PRF -raster- (rov): Racurs PHOTOMOD PRF (*.prf)
+  EEDAI -raster- (ros): Earth Engine Data API Image
+  DAAS -raster- (ro): Airbus DS Intelligence Data As A Service driver
+  SIGDEM -raster- (rwv): Scaled Integer Gridded DEM .sigdem (*.sigdem)
+  TGA -raster- (rov): TGA/TARGA Image File Format (*.tga)
+  OGCAPI -raster,vector- (rov): OGCAPI
+  STACTA -raster- (rovs): Spatio-Temporal Asset Catalog Tiled Assets (*.json)
+  STACIT -raster- (rovs): Spatio-Temporal Asset Catalog Items
+  NSIDCbin -raster- (rov): NSIDC Sea Ice Concentrations binary (.bin) (*.bin)
+  GPKG -raster,vector- (rw+vs): GeoPackage (*.gpkg, *.gpkg.zip)
+  OpenFileGDB -raster,vector- (rw+v): ESRI FileGDB (*.gdb)
+  CAD -raster,vector- (rovs): AutoCAD Driver (*.dwg)
+  PLSCENES -raster,vector- (ro): Planet Labs Scenes API
+  NGW -raster,vector- (rw+s): NextGIS Web
+  GenBin -raster- (rov): Generic Binary (.hdr Labelled)
+  ENVI -raster- (rw+v): ENVI .hdr Labelled
+  EHdr -raster- (rw+v): ESRI .hdr Labelled (*.bil)
+  ISCE -raster- (rw+v): ISCE raster
+  Zarr -raster,multidimensional raster- (rw+vs): Zarr
+  HTTP -raster,vector- (ro): HTTP Fetching Wrapper
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># GDAL can operate on local files or even read files stored on a server:</span>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s1">&#39;http://landsat-pds.s3.amazonaws.com/c1/L8/042/034/LC08_L1TP_042034_20170616_20170629_01_T1&#39;</span>
+<span class="n">IMAGE</span> <span class="o">=</span> <span class="s1">&#39;LC08_L1TP_042034_20170616_20170629_01_T1_B4.TIF&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># NOTE we are expanding python variables defined above with {}</span>
+<span class="o">!</span>gdalinfo<span class="w"> </span>/vsicurl/<span class="o">{</span>HOST<span class="o">}</span>/<span class="o">{</span>IMAGE<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR 11: HTTP response code: 403
+gdalinfo failed - unable to open &#39;/vsicurl/http://landsat-pds.s3.amazonaws.com/c1/L8/042/034/LC08_L1TP_042034_20170616_20170629_01_T1/LC08_L1TP_042034_20170616_20170629_01_T1_B4.TIF&#39;.
+</pre></div>
+</div>
+</div>
+</div>
+<section id="converting-formats">
+<h3>Converting formats<a class="headerlink" href="#converting-formats" title="Link to this heading">#</a></h3>
+<p>Often you want files in a specific format. GDAL is great for format conversions. One of the most powerful and useful formats is the <code class="docutils literal notranslate"><span class="pre">virtual</span> <span class="pre">raster</span></code> <a class="reference external" href="https://www.gdal.org/gdal_vrttut.html">VRT format</a>. It is essentially an XML file that fully describes a raster, but does not duplicate the binary data. For example, you can save a reference to a remote file to your local disk without downloading the entire file!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+# Alternatively you can run a short bash script with %%bash
+HOST=&#39;http://landsat-pds.s3.amazonaws.com/c1/L8/042/034/LC08_L1TP_042034_20170616_20170629_01_T1&#39;
+IMAGE=&#39;LC08_L1TP_042034_20170616_20170629_01_T1_B4.TIF&#39;
+gdal_translate -of VRT /vsicurl/$HOST/$IMAGE LC08_L1TP_042034_20170616_20170629_01_T1_B4.vrt
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Couldn&#39;t find program: &#39;bash&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now you can forget about the strange &#39;/vsicurl/&#39; syntax and just work directly with the local file. </span>
+<span class="c1"># The command below should give you the same print-out as earlier.</span>
+<span class="o">!</span>gdalinfo<span class="w"> </span>LC08_L1TP_042034_20170616_20170629_01_T1_B4.vrt<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>PROJCS
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;grep&#39; is not recognized as an internal or external command,
+operable program or batch file.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="reprojection">
+<h3>Reprojection<a class="headerlink" href="#reprojection" title="Link to this heading">#</a></h3>
+<p>Another common task is warping an image to a different coordinate system. Note from above that the file we are working with has a CRS of UTM 11N. <a class="reference external" href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">Universal Transverse Mercator</a> is a very common raster format for small bounding boxes because the x and y dimensions are in units of meters.</p>
+<p>Whenever you want to convert from one CRS to another, it is extremely useful to use <a class="reference external" href="https://spatialreference.org/ref/epsg/">EPSG Codes</a>. These codes are essentially a  shorthand and internationally agreed upon database of all the CRS’s out there. Two of the most common ones that are worth memorizing are <code class="docutils literal notranslate"><span class="pre">4326</span></code> which is unprojected WGS84 Lat/Lon, and <code class="docutils literal notranslate"><span class="pre">3857</span></code> which is Google Mercator, used extensively for maps on the web.</p>
+<p>The example command below warps the image from UTM Coordinates to WGS84 lat/lon coordinates:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gdalwarp<span class="w"> </span>-t_srs<span class="w"> </span>EPSG:4326<span class="w"> </span>-of<span class="w"> </span>VRT<span class="w"> </span>/vsicurl/<span class="o">{</span>HOST<span class="o">}</span>/<span class="o">{</span>IMAGE<span class="o">}</span><span class="w"> </span>LC08_L1TP_042034_20170616_20170629_01_T1_B4-wgs84.vrt
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR 11: HTTP response code: 403
+ERROR 4: Failed to open source file /vsicurl/http://landsat-pds.s3.amazonaws.com/c1/L8/042/034/LC08_L1TP_042034_20170616_20170629_01_T1/LC08_L1TP_042034_20170616_20170629_01_T1_B4.TIF
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Confirm reprojection by looking at the new coordinates</span>
+<span class="c1"># Note the pixel size and corner coordinates are now in units of degrees</span>
+<span class="o">!</span>gdalinfo<span class="w"> </span>LC08_L1TP_042034_20170616_20170629_01_T1_B4-wgs84.vrt
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR 4: LC08_L1TP_042034_20170616_20170629_01_T1_B4-wgs84.vrt: No such file or directory
+gdalinfo failed - unable to open &#39;LC08_L1TP_042034_20170616_20170629_01_T1_B4-wgs84.vrt&#39;.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="visualization-and-computation">
+<h2>Visualization and computation<a class="headerlink" href="#visualization-and-computation" title="Link to this heading">#</a></h2>
+<p>This just scratches the surface of what GDAL is capable of. Next you might want to look into sampling raster values with <a class="reference external" href="https://gdal.org/programs/gdal_calc.html"><code class="docutils literal notranslate"><span class="pre">gdallocationinfo</span></code></a> or performing computations with <a class="reference external" href="https://gdal.org/programs/gdal_calc.html"><code class="docutils literal notranslate"><span class="pre">gdal_calc</span></code></a>. GDAL itself does not handle graphics for visualizing raster data, but it underpins many graphical GIS programs, such as <a class="reference external" href="https://qgis.org">QGIS</a>. We’ll look at visualization with Python libraries in subsequent notebooks.</p>
+</section>
+<section id="raster-tiles">
+<h2>Raster Tiles<a class="headerlink" href="#raster-tiles" title="Link to this heading">#</a></h2>
+<p>When rasters cover very large areas, or are very high resolution, it is convenient to chop them up into discrete tiles that can be reassembled into the full image. This is especially true for interactive web maps where we want to visualize a raster at a resolution appropriate for a given zoom level. If you are looking at the entire globe, there is no reason to render an image at 30m resolution because our eyes can’t discern the detail. Conversly if we are zoomed into a city, we want the full resolution data displayed. This schematic illustrates tiling:</p>
+<img src="../assets/ArcGIS-raster-tiles.png" width="300"/>
+*Source: http://desktop.arcgis.com.*
+<p>It is important to note that the bounding boxes of tiles, as well as the pixel averaging scheme affects how the raster appears at a given zoom level. There are common standard tiling schemes for web maps - check out the <a class="reference external" href="https://github.com/mapbox/mercantile">mercantile library</a>. GDAL also offers utilities to easily generate tiles from any raster. For example, see <a class="reference external" href="https://gdal.org/programs/gdal2tiles.html"><code class="docutils literal notranslate"><span class="pre">gdal2tiles.py</span></code></a>  or the <a class="reference external" href="https://gdal.org/drivers/raster/mbtiles.html"><code class="docutils literal notranslate"><span class="pre">MBTiles</span></code> format</a>.</p>
+<div class="alert-info">
+</section>
+<section id="key-points">
+<h2>key points<a class="headerlink" href="#key-points" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>There are myriad formats for storing geospatial metadata and accompanying metadata (for example Geotiff)</p></li>
+<li><p>Cloud-optimized Geotiff (COG) and Spatio-Temporal Asset Catalogs (STAC) are important modern formats</p></li>
+<li><p>The Geospatial Data Abstraction Library (GDAL) is very useful for reading, writing and transforming rasters</p></li>
+<li><p>GDAL is not a visualization tool, but underpins full-featured GIS software like QGIS</p></li>
+<li><p>Tiled rasters are increasingly common for high-resolution rasters and web-based visualization</p></li>
+</ul>
+</div></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\10\misc"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#raster-data-format">Raster Data Format</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geotiff">Geotiff</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-resources-on-the-tif-format">More Resources on the  <code class="docutils literal notranslate"><span class="pre">.tif</span></code> format</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#external-metadata">External metadata</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#processing-levels">Processing levels</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#important">Important</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geospatial-data-abstraction-library-gdal">Geospatial Data Abstraction Library (GDAL)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gdal-command-line-utilities">GDAL command line utilities</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-formats">Converting formats</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reprojection">Reprojection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-and-computation">Visualization and computation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#raster-tiles">Raster Tiles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-points">key points</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

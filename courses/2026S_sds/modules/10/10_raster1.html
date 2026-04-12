@@ -1,0 +1,706 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>10 - Raster Data Analysis I &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/10/10_raster1';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="08 - Geopandas" href="../09/09_geopandas.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01/01_intro.html">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02/02_basicPy1.html">02 - Basic Python - 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03_basicPy2.html">03 - Basic Python - 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04_Numpy_Pandas1.html">04 - Numpy and Pandas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05/05_Numpy_Pandas2.html">05 - Numpy and Pandas 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06/06_visualization.html">06 - Data Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07/07_Midterm_Exam.html">07 - Midterm Exam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09/09_geopandas.html">08 - Geopandas</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">10 - Raster Data Analysis I</a></li>
+
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/10/10_raster1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/modules/10/10_raster1.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>10 - Raster Data Analysis I</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">10 - Raster Data Analysis I</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-i-this-week">Part I (this week)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-ii-next-week">Part II (next week)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-raster-data">1. What is raster data?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-for-processing-raster-data">Tools for processing raster data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gdal">GDAL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rasterio">Rasterio</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#geospatial-tool-installation">Geospatial tool Installation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#download-the-data">Download the data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">Homework</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References:</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="raster-data-analysis-i">
+<h1>10 - Raster Data Analysis I<a class="headerlink" href="#raster-data-analysis-i" title="Link to this heading">#</a></h1>
+</section>
+<section id="table-of-contents">
+<h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">#</a></h1>
+<section id="part-i-this-week">
+<h2>Part I (this week)<a class="headerlink" href="#part-i-this-week" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>What is raster data</p></li>
+<li><p>Tools for processing raster data - I</p>
+<ul class="simple">
+<li><p>GDAL</p></li>
+<li><p>Rasterio</p></li>
+</ul>
+</li>
+<li><p>Geospatial tool Installation</p></li>
+<li><p>Exercises</p></li>
+</ol>
+</section>
+<section id="part-ii-next-week">
+<h2>Part II (next week)<a class="headerlink" href="#part-ii-next-week" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Multispectral Data</p></li>
+<li><p>Tools for processing raster data - II</p>
+<ul class="simple">
+<li><p>Rioxarray</p></li>
+<li><p>Earthpy</p></li>
+</ul>
+</li>
+<li><p>Fire mapping using multispectral remote sensing data</p></li>
+</ol>
+</section>
+</section>
+<section id="what-is-raster-data">
+<h1>1. What is raster data?<a class="headerlink" href="#what-is-raster-data" title="Link to this heading">#</a></h1>
+<p>Raster data is any gridded data where each pixel is associated with a specific geographical location. Raster data is stored as a grid of values, which are rendered on a map as pixels (also known as cells) where each pixel (or cell) represents a value of the Earth surface.</p>
+<p><img alt="what is raster?" src="../../_images/raster_concept.png" /></p>
+<!--
+<p align="center">
+  <img src="img/raster_concept.png" alt="Landsat raster example" width="600">
+  <br>
+  <em>Figure 1. Raster concept extracted from NEON site </em>
+</p>
+-->
+<p>Examples of raster data are satellite images or aerial photographs.</p>
+<p><img alt="what is raster?" src="../../_images/landsat_art_lena_lrg.jpg" /></p>
+<!--
+<p align="center">
+  <img src="img/landsat_art_lena_lrg.jpg" alt="Landsat raster example" width="600">
+  <br>
+  <em>Figure 2. Landsat raster image of the Lena River, one of the largest rivers in the world acquired by Landsat 7’s Enhanced Thematic Mapper plus (ETM+) sensor on July 27, 2000.
+The Lena Delta Reserve is the most extensive protected wilderness area in Russia. It is an important refuge and breeding ground for many species of Siberian wildlife. This image is part of the Landsat [Earth as Art](https://www.usgs.gov/centers/eros/earth-art) series.
+.</em>
+</p
+-->
+<p>Landsat raster image of the Lena River, one of the largest rivers in the world acquired by Landsat 7’s Enhanced Thematic Mapper plus (ETM+) sensor on July 27, 2000.
+The Lena Delta Reserve is the most extensive protected wilderness area in Russia. It is an important refuge and breeding ground for many species of Siberian wildlife. This image is part of the Landsat <a class="reference external" href="https://www.usgs.gov/centers/eros/earth-art">Earth as Art</a> series.</p>
+<p>The value of a pixel can be continuous, such as satellite images and elevation maps or categorical, such as land use and land cover maps.</p>
+<p><img alt="what is raster?" src="../../_images/topo_SF.jpg" /></p>
+<!--
+<p align="center">
+  <img src="img/topo_SF.jpg" alt="Landsat raster example" width="600">
+  <br>
+  <em>Figure 3. 30 m global topography map produced using ASTER satellite data by NASA (https://www.earthdata.nasa.gov/news/new-version-aster-gdem) 
+.</em>
+</p
+-->
+<p>30 m global topography map produced using ASTER satellite data by <a class="reference external" href="https://www.earthdata.nasa.gov/news/new-version-aster-gdem">NASA</a>.</p>
+<p><img alt="what is raster?" src="../../_images/NLCD.png" /></p>
+<!--
+<p align="center">
+  <img src="img/NLCD.png" alt="Landsat raster example" width="600">
+  <br>
+  <em>Figure 4. National Land Use and Land Cover maps (https://www.usgs.gov/centers/eros/science/annual-national-land-cover-database) produced by USGS. The map above shows the contiguous United States with land cover as categorical data. Each color is a different landcover category.  
+.</em>
+</p
+-->
+<p>National Land Use and Land Cover maps (<a class="reference external" href="https://www.usgs.gov/centers/eros/science/annual-national-land-cover-database">https://www.usgs.gov/centers/eros/science/annual-national-land-cover-database</a>) produced by USGS. The map above shows the contiguous United States with land cover as categorical data. Each color is a different landcover category.</p>
+<p>Raster data has some important advantages:</p>
+<ul class="simple">
+<li><p>representation of continuous surfaces</p></li>
+<li><p>potentially very high levels of detail</p></li>
+<li><p>data is ‘unweighted’ across its extent - the geometry doesn’t implicitly highlight features
+cell-by-cell calculations can be very fast and efficient</p></li>
+</ul>
+<p>The downside of raster data os:</p>
+<ul class="simple">
+<li><p>very large file sizes as cell size gets smaller</p></li>
+</ul>
+</section>
+<section id="tools-for-processing-raster-data">
+<h1>Tools for processing raster data<a class="headerlink" href="#tools-for-processing-raster-data" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://makepath.com/open-source-spatial-analysis-tools-a-quick-guide/">Essential geospatial python libraries</a></p>
+<section id="gdal">
+<h2>GDAL<a class="headerlink" href="#gdal" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://gdal.org/">https://gdal.org/</a>
+GDAL is the Geospatial Data Abstraction Library, which contains input, output, and analysis functions for over 200 geospatial data formats and a translator library for raster and vector geospatial data formats that is released under an X/MIT style Open Source License by the Open Source Geospatial Foundation. As a library, it presents a single raster abstract data model and a single vector abstract data model to the calling application for all supported formats. It also comes with a variety of useful command-line interface (CLI) utilities for quick raster processing tasks (resampling, type conversion, etc.).</p>
+<p>Many of the libraries which are described here rely on GDAL, which is the cornerstone for reading, writing and manipulating raster and vector data in many software packages. However, the GDAL Python bindings (GDAL is originally written in C) are not as intuitive as expected from standard Python.</p>
+</section>
+<section id="rasterio">
+<h2>Rasterio<a class="headerlink" href="#rasterio" title="Link to this heading">#</a></h2>
+<p>Rasterio is a highly useful module for raster processing, which you can use for reading and writing several different raster formats in Python. Rasterio is based on GDAL and Python automatically registers all known GDAL drivers for reading supported formats when importing the module. Most common file formats include TIFF and GeoTIFF, ASCII Grid and Erdas Imagine and ENVI.img-files.</p>
+</section>
+</section>
+<section id="geospatial-tool-installation">
+<h1>Geospatial tool Installation<a class="headerlink" href="#geospatial-tool-installation" title="Link to this heading">#</a></h1>
+<p>If you are using the miniforge environment, use the following commands to install:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">rioxarray</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">earthpy</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">dask</span></code></p></li>
+</ul>
+<p>If you are using Anaconda/miniconda, then you need to use the following commands to install:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">conda-forge::rioxarray</span></code></p></li>
+<li><p>`conda install conda-forge::earthpy’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">conda-forge::dask</span></code></p></li>
+</ul>
+<p>Do not use <code class="docutils literal notranslate"><span class="pre">pip</span></code> to install geospatial packages.</p>
+</section>
+<section id="download-the-data">
+<h1>Download the data<a class="headerlink" href="#download-the-data" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>New York aerial photos from this link: <a class="reference external" href="https://gis.ny.gov/orthoimagery-download-county">https://gis.ny.gov/orthoimagery-download-county</a>, click <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">York</span> <span class="pre">City</span></code> tab, then choose the year of data you want to download (e.g. 2024), then click <code class="docutils literal notranslate"><span class="pre">Manhattan.Borough</span> <span class="pre">of</span></code>, it will automatically download the orthoimageries for NYC.</p></li>
+<li><p>Download the NYC satellite image from this link: <a class="reference external" href="https://www.dropbox.com/scl/fi/btwtwl275nvcmfahl2ecz/NYC_IKONOS.7z?rlkey=7m0srd0xqgpv36vh4blth5pxm&amp;amp;st=5m25lg2t&amp;amp;dl=0">https://www.dropbox.com/scl/fi/btwtwl275nvcmfahl2ecz/NYC_IKONOS.7z?rlkey=7m0srd0xqgpv36vh4blth5pxm&amp;st=5m25lg2t&amp;dl=0</a>, then unzip it to your directory</p></li>
+</ul>
+</section>
+<section id="exercises">
+<h1>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="01_ortho.html"><span class="std std-doc">Rasterio Notebook #1</span></a></p></li>
+<li><p><a class="reference internal" href="02_ikonos.html"><span class="std std-doc">Rasterio Notebook #2</span></a></p></li>
+</ol>
+</section>
+<section id="homework">
+<h1>Homework<a class="headerlink" href="#homework" title="Link to this heading">#</a></h1>
+<p>Choose a region from the NYS aerial photo website site, download aerial photo data, then</p>
+<ol class="arabic simple">
+<li><p>Using rasterio to read the multispectral aerial image and make a false color composite image (band 4, 3,2 in RGB)</p></li>
+<li><p>Create a NDVI image</p></li>
+</ol>
+</section>
+<section id="references">
+<h1>References:<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="https://rasterio.readthedocs.io/en/latest/intro.html">https://rasterio.readthedocs.io/en/latest/intro.html</a></p></li>
+<li><p><a class="reference external" href="https://medium.com/&#64;mommermiscience/dealing-with-geospatial-raster-data-in-python-with-rasterio-775e5ba0c9f5">https://medium.com/&#64;mommermiscience/dealing-with-geospatial-raster-data-in-python-with-rasterio-775e5ba0c9f5</a></p></li>
+<li><p><a class="reference external" href="https://carpentries-incubator.github.io/geospatial-python/">https://carpentries-incubator.github.io/geospatial-python/</a></p></li>
+<li><p><a class="reference external" href="https://geohackweek.github.io/raster/04-workingwithrasters/">https://geohackweek.github.io/raster/04-workingwithrasters/</a></p></li>
+<li><p><a class="reference external" href="https://dida.do/blog/didas-remote-sensing-stack">https://dida.do/blog/didas-remote-sensing-stack</a></p></li>
+<li><p><a class="reference external" href="https://datacarpentry.org/organization-geospatial/01-intro-raster-data.html">https://datacarpentry.org/organization-geospatial/01-intro-raster-data.html</a></p></li>
+<li><p><a class="reference external" href="https://www.earthdatascience.org/courses/use-data-open-source-python/intro-raster-data-python/">https://www.earthdatascience.org/courses/use-data-open-source-python/intro-raster-data-python/</a></p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\10"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../09/09_geopandas.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">08 - Geopandas</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">10 - Raster Data Analysis I</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-i-this-week">Part I (this week)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-ii-next-week">Part II (next week)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-raster-data">1. What is raster data?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-for-processing-raster-data">Tools for processing raster data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gdal">GDAL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rasterio">Rasterio</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#geospatial-tool-installation">Geospatial tool Installation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#download-the-data">Download the data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">Homework</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References:</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

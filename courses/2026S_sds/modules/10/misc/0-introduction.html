@@ -1,0 +1,754 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introduction to Raster Data &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/10/misc/0-introduction';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../01/01_intro.html">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../02/02_basicPy1.html">02 - Basic Python - 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03/03_basicPy2.html">03 - Basic Python - 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04/04_Numpy_Pandas1.html">04 - Numpy and Pandas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05/05_Numpy_Pandas2.html">05 - Numpy and Pandas 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06/06_visualization.html">06 - Data Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07/07_Midterm_Exam.html">07 - Midterm Exam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09/09_geopandas.html">08 - Geopandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10_raster1.html">10 - Raster Data Analysis I</a></li>
+
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/10/misc/0-introduction.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/modules/10/misc/0-introduction.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Raster Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-structures-raster-and-vector">Data Structures: Raster and Vector</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#raster-basics">Raster Basics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-properties-of-any-raster">Common properties of any raster:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-continuous-rasters">Examples of continuous rasters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-categorical-rasters">Examples of categorical rasters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#raster-advantages-and-disadvantages">Raster Advantages and Disadvantages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-makes-a-raster-geospatial">What makes a raster geospatial?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-reference-system-or-crs">Coordinate Reference System or “CRS”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geotransformation">Geotransformation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#extent-bbox">Extent / BBOX</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#resolution-posting">Resolution / Posting</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#more-resources">More resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-band-raster-data">Multi-band Raster Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-band-raster-data-might-also-contain">Multi-band raster data might also contain</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional Resources</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-points">key points</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-raster-data">
+<h1>Introduction to Raster Data<a class="headerlink" href="#introduction-to-raster-data" title="Link to this heading">#</a></h1>
+<p>This notebook based on content from previous geohackweek raster tutorials <a class="github reference external" href="https://github.com/geohackweek/raster">geohackweek/raster</a></p>
+<div class="alert-info">
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>teaching:</strong> 15 minutes</p></li>
+<li><p><strong>exercises:</strong> 0</p></li>
+<li><p><strong>questions:</strong></p>
+<ul>
+<li><p>What is a raster?</p></li>
+<li><p>What are the main attributes of raster data?</p></li>
+</ul>
+</li>
+<li><p><strong>objectives:</strong></p>
+<ul>
+<li><p>Understand the raster data model</p></li>
+<li><p>Describe the strengths and weaknesses of storing data in raster format</p></li>
+</ul>
+</li>
+</ul>
+</div></section>
+<section id="table-of-contents">
+<h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#Data-Structures:-Raster-and-Vector"><span class="xref myst"><strong>Data Structures: Raster and Vector</strong></span></a></p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#About-Raster-Data"><span class="xref myst">About Raster Data</span></a></p></li>
+<li><p><a class="reference internal" href="#Examples-of-continuous-rasters"><span class="xref myst">Examples of continuous rasters</span></a></p></li>
+<li><p><a class="reference internal" href="#Examples-of-categorical-rasters"><span class="xref myst">Examples of categorical rasters</span></a></p></li>
+</ol>
+</li>
+<li><p><a class="reference internal" href="#Advantages-and-Disadvantages"><span class="xref myst"><strong>Advantages and Disadvantages</strong></span></a></p></li>
+<li><p><a class="reference internal" href="#What-makes-a-raster-geospatial?"><span class="xref myst"><strong>What makes a raster geospatial?</strong></span></a></p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#Coordinate-Reference-System-or-%22CRS%22"><span class="xref myst">Coordinate Reference System or “CRS”</span></a></p></li>
+<li><p><a class="reference internal" href="#Affine-Geotransformation"><span class="xref myst">Affine Geotransformation</span></a></p></li>
+</ol>
+</li>
+<li><p><a class="reference internal" href="#Multi-band-Raster-Data"><span class="xref myst"><strong>Multi-band Raster Data</strong></span></a></p></li>
+<li><p><a class="reference internal" href="#Additional-Resources"><span class="xref myst"><strong>Additional-Resources</strong></span></a></p></li>
+</ol>
+</section>
+<section id="data-structures-raster-and-vector">
+<h2>Data Structures: Raster and Vector<a class="headerlink" href="#data-structures-raster-and-vector" title="Link to this heading">#</a></h2>
+<p>The two primary types of geospatial data are raster and vector data:</p>
+<ul class="simple">
+<li><p>Vector data structures represent specific features on the Earth’s surface, and assign attributes to those features.</p></li>
+<li><p>Raster data is stored as a grid of values which are rendered on a map as pixels. Each pixel value represents an area on the Earth’s surface.</p></li>
+</ul>
+<p>In the 1950’s raster graphics were noted as a faster and cheaper (but lower-resolution) alternative to vector graphics.</p>
+<section id="raster-basics">
+<h3>Raster Basics<a class="headerlink" href="#raster-basics" title="Link to this heading">#</a></h3>
+<p>A raster is a rectangular grid of pixels with values that can continuous (e.g. elevation) or categorical (e.g. land use).  This data structure is very common - jpg images on the web, photos from your digital camera, and the jupyterhub icon are all rasters.</p>
+<img src="../assets/raster_concept.png" width="500" height="500" />
+*Source: National Ecological Observatory Network (NEON)*
+</section>
+<section id="common-properties-of-any-raster">
+<h3>Common properties of any raster:<a class="headerlink" href="#common-properties-of-any-raster" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>number of rows and columns (sometimes referred to as lines and samples)</p></li>
+<li><p>data type (dtype, or bit depth) - e.g., 8-bit (2^8 possible values, 0-255)</p></li>
+<li><p>some kind of resolution information, often dots per inch (dpi) with raster graphics</p></li>
+</ul>
+<p>A geospatial raster is only different from a digital photo in that it is accompanied by metadata that connects the grid to a particular location.</p>
+</section>
+<section id="examples-of-continuous-rasters">
+<h3>Examples of continuous rasters<a class="headerlink" href="#examples-of-continuous-rasters" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Satellite imagery such as those acquired by <a class="reference external" href="https://landsat.usgs.gov">Landsat</a> or <a class="reference external" href="https://modis.gsfc.nasa.gov">MODIS</a></p></li>
+<li><p>Digital Elevation Models (DEMs) such as <a class="reference external" href="https://asterweb.jpl.nasa.gov/gdem.asp">ASTER GDEM</a></p></li>
+<li><p>Maps of canopy height derived from LiDAR data.</p></li>
+</ol>
+<p>A map of elevation for Harvard Forest derived from the <a class="reference external" href="http://www.neonscience.org/data-collection/airborne-remote-sensing">NEON AOP LiDAR sensor</a>
+is below. Elevation is represented as continuous numeric variable in this map. The legend
+shows the continuous range of values in the data from around 300 to 420 meters.</p>
+<img src="../assets/rmd-01-elevation-map-1.png" width="500" height="500" /></section>
+<section id="examples-of-categorical-rasters">
+<h3>Examples of categorical rasters<a class="headerlink" href="#examples-of-categorical-rasters" title="Link to this heading">#</a></h3>
+<p>Some rasters contain categorical data where each pixel represents a discrete class such as a landcover type (e.g., “coniferous forest” or “grassland”) rather than a continuous value such as elevation or temperature. Some examples of classified
+maps include:</p>
+<ol class="arabic simple">
+<li><p>Landcover / land-use maps.</p></li>
+<li><p>Snowcover masks (binary snow or no snow)</p></li>
+</ol>
+<p>The following map shows elevation data for the NEON Harvard Forest field site. In this map, the elevation data (a continuous variable) has been divided up into categories to yield a categorical raster.</p>
+<img src="../assets/rmd-01-classified-elevation-map-1.png" width="500" height="500" /></section>
+</section>
+<section id="raster-advantages-and-disadvantages">
+<h2>Raster Advantages and Disadvantages<a class="headerlink" href="#raster-advantages-and-disadvantages" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Advantages</p></th>
+<th class="head"><p>Disadvantages</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>efficient representation of continuous surfaces</p></td>
+<td><p>very large file sizes as cell size gets smaller</p></td>
+</tr>
+<tr class="row-odd"><td><p>potentially very high levels of detail</p></td>
+<td><p>can be difficult to represent complex information</p></td>
+</tr>
+<tr class="row-even"><td><p>data is ‘unweighted’ across its extent</p></td>
+<td><p>Measurements are spatially arranged in a regular grid, which may not be an accurate representation of real-world phenomena.</p></td>
+</tr>
+<tr class="row-odd"><td><p>cell-by-cell calculations can be very fast and efficient</p></td>
+<td><p>Space-filling model assumes that all pixels have value</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>Changes in resolution can drastically change the meaning of values in a dataset</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="what-makes-a-raster-geospatial">
+<h2>What makes a raster geospatial?<a class="headerlink" href="#what-makes-a-raster-geospatial" title="Link to this heading">#</a></h2>
+<p>A raster is just an image in local pixel coordinates until we specify what part of the earth the image covers.  This is done through two fundamental pieces of metadata that accompany the pixel values of the image:</p>
+<section id="coordinate-reference-system-or-crs">
+<h3>Coordinate Reference System or “CRS”<a class="headerlink" href="#coordinate-reference-system-or-crs" title="Link to this heading">#</a></h3>
+<p>This specifies the datum, projection, and additional parameters needed to place the raster in geographic space. For a dedicated lesson on CRSs, see:
+<a class="reference external" href="https://datacarpentry.org/organization-geospatial/03-crs/index.html">https://datacarpentry.org/organization-geospatial/03-crs/index.html</a></p>
+<img src="../assets/us_crs.jpg" width="500" height="500" />
+</section>
+<section id="geotransformation">
+<h3>Geotransformation<a class="headerlink" href="#geotransformation" title="Link to this heading">#</a></h3>
+<p>This is the essential matrix that relates the raster pixel coordinates (rows, columns) to the geographic coordiantes (x and y defined by the CRS). This is typically a 6-parameter transformation that defines the origin, pixel size and rotation of the raster in the geographic coordinate system:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">Xgeo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>GT<span class="o">(</span><span class="m">0</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span>Xpixel*GT<span class="o">(</span><span class="m">1</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span>Yline*GT<span class="o">(</span><span class="m">2</span><span class="o">)</span>
+<span class="nv">Ygeo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>GT<span class="o">(</span><span class="m">3</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span>Xpixel*GT<span class="o">(</span><span class="m">4</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span>Yline*GT<span class="o">(</span><span class="m">5</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Defining this for the whole image allows the image’s pixels to be referenced by a local array index rather than global coordinates, and answers questions such as:</p>
+<ul class="simple">
+<li><p>How much area does a given pixel cover?</p></li>
+<li><p>Given the CRS, what is the origin?</p></li>
+<li><p>In what direction does the raster “grow” as pixel indices increase?</p></li>
+</ul>
+<section id="extent-bbox">
+<h4>Extent / BBOX<a class="headerlink" href="#extent-bbox" title="Link to this heading">#</a></h4>
+<p>The affine transformation specifies an “extent” or “bounding box”, which is defined by the minimum and maximum x and y coordinates of the data.</p>
+</section>
+<section id="resolution-posting">
+<h4>Resolution / Posting<a class="headerlink" href="#resolution-posting" title="Link to this heading">#</a></h4>
+<p>The affine transformation specifies a pixel size of the area on the ground that each pixel of the raster covers. This is often refered to as “resolution”, but because images are often resampled to different resolutions it is also refered to as “posting” or “ground sample distance (gsd)”. Ultimately, “resolution” refers to a sensors ability to distinguish different objects on the ground. The image below illustrates the effect of changes in resolution:</p>
+<img src="../assets/raster_resolution.png" width="500" height="500" />
+<p><em>Source: National Ecological Observatory Network (NEON)</em></p>
+</section>
+<section id="more-resources">
+<h4>More resources<a class="headerlink" href="#more-resources" title="Link to this heading">#</a></h4>
+<p><a class="reference external" href="https://gdal.org/user/raster_data_model.html">https://gdal.org/user/raster_data_model.html</a><br />
+<a class="reference external" href="https://rasterio.readthedocs.io/en/stable/topics/migrating-to-v1.html">https://rasterio.readthedocs.io/en/stable/topics/migrating-to-v1.html</a></p>
+</section>
+</section>
+</section>
+<section id="multi-band-raster-data">
+<h2>Multi-band Raster Data<a class="headerlink" href="#multi-band-raster-data" title="Link to this heading">#</a></h2>
+<p>A raster can contain one or more bands. In a multi-band dataset, the rasters will always have the same extent,
+resolution, and CRS. Each band represents light reflected (or emmitted) from the different portions of the electromagnetic spectrum. The pixel brightness for each band, when composited creates the colors that we see in an image.</p>
+<img src="../assets/ETM+vOLI-TIRS-web_Feb20131_sm.jpg" width="700"/>
+<p><em>Source: L.Rocchio &amp; J.Barsi</em></p>
+<p>One type of multi-band raster dataset that is familiar to many of us is a color image. A basic color image consists of three bands: red, green, and blue.</p>
+<img src="../assets/RGBSTack_1.jpg" width="700"/>
+*Source: National Ecological Observatory Network (NEON).*
+<div class="alert-warning">
+<section id="multi-band-raster-data-might-also-contain">
+<h3>Multi-band raster data might also contain<a class="headerlink" href="#multi-band-raster-data-might-also-contain" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Time series: the same variable, over the same area, over time</p></li>
+<li><p>Multi or hyperspectral imagery: image rasters that have 4 or more (multi-spectral) or more than 10-15 (hyperspectral) bands</p></li>
+</ol>
+</div></section>
+</section>
+<section id="additional-resources">
+<h2>Additional Resources<a class="headerlink" href="#additional-resources" title="Link to this heading">#</a></h2>
+<p>There is a lot of material out there describing rasters!</p>
+<p>Here is another tutorial put together by datacarpenty: <a class="reference external" href="https://datacarpentry.org/organization-geospatial/01-intro-raster-data/index.html">https://datacarpentry.org/organization-geospatial/01-intro-raster-data/index.html</a></p>
+<div class="alert-info">
+<section id="key-points">
+<h3>key points<a class="headerlink" href="#key-points" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Raster data is pixelated data stored as a matrix</p></li>
+<li><p>Raster images are often packaged as multidimensional arrays - containing for example RGB and other spectral bands</p></li>
+<li><p>Geospatial raster data always has a coordinate reference system (CRS) and geotransform that maps image coordinates to locations on Earth’s surface</p></li>
+<li><p>People often refer to “resolution” as the ground pixel size of a raster, but more specifically it refers to the sensor’s ability to disabiguate adjacent objects on the ground</p></li>
+</ul>
+</div></section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\10\misc"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-structures-raster-and-vector">Data Structures: Raster and Vector</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#raster-basics">Raster Basics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-properties-of-any-raster">Common properties of any raster:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-continuous-rasters">Examples of continuous rasters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-categorical-rasters">Examples of categorical rasters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#raster-advantages-and-disadvantages">Raster Advantages and Disadvantages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-makes-a-raster-geospatial">What makes a raster geospatial?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-reference-system-or-crs">Coordinate Reference System or “CRS”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geotransformation">Geotransformation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#extent-bbox">Extent / BBOX</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#resolution-posting">Resolution / Posting</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#more-resources">More resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-band-raster-data">Multi-band Raster Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-band-raster-data-might-also-contain">Multi-band raster data might also contain</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional Resources</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-points">key points</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -26,10 +26,10 @@ The course is organized into several week-long modules. Each module contains bac
 5. [Pandas and numpy 2](modules/05/05_numpy_pandas2.md)
 6. [Data Visualization](modules/06/06_visualization.md)
 7. [Midterm](modules/07/07_midterm.md)
-8. [Geopandas](modules/08/08_geopandas)
-9. [Leaflet](modules/09/09_leaflet)
-10. [Rasterio](modules/10/10_raster1)
-11. [Rioxarray](modules/11/11_raster2)
+8. [Geopandas](modules/09/09_geopandas)
+9. [Rasterio](modules/10/10_raster1)
+10. [Rioxarray](modules/11/11_raster2)
+11. [Leafmap](modules/12/12_leafmap)
 12. [From notebooks to packages](modules/12/12_N2P) 
 
 ## Course details
