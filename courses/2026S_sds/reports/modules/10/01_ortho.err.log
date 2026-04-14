@@ -30,30 +30,27 @@ Traceback (most recent call last):
     await self.async_execute_cell(
         cell, index, execution_count=self.code_cells_executed + 1
     )
-  File "C:\Users\Wenge\miniforge3\envs\sds\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
-    await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "C:\Users\Wenge\miniforge3\envs\sds\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-# open and read the shape file of the NYC orthoimagy file
-# Find the path where you store your data, replace the following path by your path
-os.chdir(r'C:\Users\Wenge\Dropbox (Hunter College)\Teaching\GTECH\331&731\2025F_331&731\data\ortho\boro_manhattan_sp24')
-nyc_sh = gpd.read_file('24_b_manhattan_l06_4bd.shp')
-#nyc_sh.explore(column='Image')
-nyc_sh.explore()
-#nyc_sh
-------------------
+  File "C:\Users\Wenge\miniforge3\envs\sds\Lib\site-packages\nbclient\client.py", line 1005, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Wenge\miniforge3\envs\sds\Lib\site-packages\nbclient\client.py", line 806, in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Wenge\miniforge3\envs\sds\Lib\site-packages\nbclient\client.py", line 856, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+        "Cell execution timed out", timeout, cell
+    )
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+import os
+import geopandas as gpd
+import rasterio as rio
+from rasterio.plot import show
+import matplotlib.pyplot as plt
+%matplotlib inline
+import numpy as np
 
-
-[31m---------------------------------------------------------------------------[39m
-[31mFileNotFoundError[39m                         Traceback (most recent call last)
-[36mCell[39m[36m [39m[32mIn[2][39m[32m, line 3[39m
-[32m      1[39m [38;5;66;03m# open and read the shape file of the NYC orthoimagy file[39;00m
-[32m      2[39m [38;5;66;03m# Find the path where you store your data, replace the following path by your path[39;00m
-[32m----> [39m[32m3[39m [43mos[49m[43m.[49m[43mchdir[49m[43m([49m[33;43mr[39;49m[33;43m'[39;49m[33;43mC:[39;49m[33;43m\[39;49m[33;43mUsers[39;49m[33;43m\[39;49m[33;43mWenge[39;49m[33;43m\[39;49m[33;43mDropbox (Hunter College)[39;49m[33;43m\[39;49m[33;43mTeaching[39;49m[33;43m\[39;49m[33;43mGTECH[39;49m[33;43m\[39;49m[33;43m331&731[39;49m[33;43m\[39;49m[33;43m2025F_331&731[39;49m[33;43m\[39;49m[33;43mdata[39;49m[33;43m\[39;49m[33;43mortho[39;49m[33;43m\[39;49m[33;43mboro_manhattan_sp24[39;49m[33;43m'[39;49m[43m)[49m
-[32m      4[39m nyc_sh = gpd.read_file([33m'[39m[33m24_b_manhattan_l06_4bd.shp[39m[33m'[39m)
-[32m      5[39m [38;5;66;03m#nyc_sh.explore(column='Image')[39;00m
-
-[31mFileNotFoundError[39m: [WinError 3] The system cannot find the path specified: 'C:\\Users\\Wenge\\Dropbox (Hunter College)\\Teaching\\GTECH\\331&731\\2025F_331&731\\data\\ortho\\boro_manhattan_sp24'
+-------------------
 

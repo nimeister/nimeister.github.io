@@ -1,0 +1,890 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Data Ingestion - Geospatial-Specific Tooling &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/11/misc/1.0_Data_Ingestion-Geospatial';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../01/01_intro.html">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../02/02_basicPy1.html">02 - Basic Python - 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03/03_basicPy2.html">03 - Basic Python - 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04/04_Numpy_Pandas1.html">04 - Numpy and Pandas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05/05_Numpy_Pandas2.html">05 - Numpy and Pandas 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06/06_visualization.html">06 - Data Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07/07_Midterm_Exam.html">07 - Midterm Exam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09/09_geopandas.html">09 - Geopandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10/10_raster1.html">10 - Raster Data Analysis I</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../11_raster2.html">11 - Raster Data Analysis II</a></li>
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/11/misc/1.0_Data_Ingestion-Geospatial.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/modules/11/misc/1.0_Data_Ingestion-Geospatial.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data Ingestion - Geospatial-Specific Tooling</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data Ingestion - Geospatial-Specific Tooling</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#open-and-read-the-root-of-the-stac-catalog">Open and read the root of the STAC catalog</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#search-for-landsat-data">Search for Landsat Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preview-results-and-select-a-dataset">Preview Results and Select a Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#access-the-data">Access the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-the-data">Visualize the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retain-attributes">Retain Attributes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-the-crs-attribute">Set the <code class="docutils literal notranslate"><span class="pre">crs</span></code> attribute</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources-and-references">Resources and References</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="data-ingestion-geospatial-specific-tooling">
+<h1>Data Ingestion - Geospatial-Specific Tooling<a class="headerlink" href="#data-ingestion-geospatial-specific-tooling" title="Link to this heading">#</a></h1>
+<p><img alt="PySTAC" src="modules/11/misc/images/pystac.png" /></p>
+<hr class="docutils" />
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>In this notebook, you will ingest Landsat data for use in machine learning. Machine learning tasks often involve a lot of data, and in Python, data is typically stored in memory as simple <a class="reference external" href="https://foundations.projectpythia.org/core/numpy">NumPy</a> arrays. However, higher-level containers built on top of NumPy arrays provide more functionality for multidimensional gridded data (<a class="reference external" href="http://xarray.pydata.org">xarray</a>) or out-of-core and distributed data (<a class="reference external" href="http://dask.pydata.org">Dask</a>). Our goal for data ingestion will be to load specific Landsat data of interest into one of these higher-level containers.</p>
+<p><a class="reference external" href="https://planetarycomputer.microsoft.com/docs/overview/about">Microsoft Plantery Computer</a> is one of several providers of <a class="reference external" href="https://planetarycomputer.microsoft.com/dataset/group/landsat">Landsat Data</a>. We are using it together with <a class="reference external" href="https://pystac-client.readthedocs.io/en/stable/index.html">pystac-client</a> and <a class="reference external" href="https://odc-stac.readthedocs.io/en/latest/index.html">odc-stac</a> because together they provide a nice Python API for searching and loading with specific criteria such as spatial area, datetime, Landsat mission, and cloud coverage.</p>
+<p>Earth science datasets are often stored on remote servers that may be too large to download locally. Therefore, in this cookbook, we will focus primarily on ingestion approaches that load small portions of data from a remote source, as needed. However, the approach for your own work will depend not only on data size and location but also the intended analysis, so in a follow up notebook, you will see an alternative approache for generalized data access and management.</p>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Concepts</p></th>
+<th class="head"><p>Importance</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="0.0_Intro_Landsat.html"><span class="std std-doc">Intro to Landsat</span></a></p></td>
+<td><p>Necessary</p></td>
+<td><p>Background</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://planetarycomputer.microsoft.com/docs/overview/about">About the Microsoft Planetary Computer</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>Background</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://pystac-client.readthedocs.io/en/stable/usage.html">pystac-client Usage</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>Consult as needed</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://odc-stac.readthedocs.io/en/latest/_api/odc.stac.load.html">odc.stac.load Reference</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>Consult as needed</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://foundations.projectpythia.org/core/xarray">xarray</a></p></td>
+<td><p>Necessary</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://docs.dask.org/en/stable/array.html">Intro to Dask Array</a></p></td>
+<td><p>Helpful</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://panel.holoviz.org/getting_started/build_app.html">Panel Getting Started Guide</a></p></td>
+<td><p>Helpful</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p><strong>Time to learn</strong>: 10 minutes</p></li>
+</ul>
+</section>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">odc.stac</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">planetary_computer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pystac_client</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pystac.extensions.eo</span><span class="w"> </span><span class="kn">import</span> <span class="n">EOExtension</span> <span class="k">as</span> <span class="n">eo</span>
+
+<span class="c1"># Viz</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hvplot.xarray</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">panel</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pn</span>
+
+<span class="n">pn</span><span class="o">.</span><span class="n">extension</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">odc.stac</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span><span class="w"> </span><span class="nn">planetary_computer</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;odc&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="open-and-read-the-root-of-the-stac-catalog">
+<h2>Open and read the root of the STAC catalog<a class="headerlink" href="#open-and-read-the-root-of-the-stac-catalog" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">catalog</span> <span class="o">=</span> <span class="n">pystac_client</span><span class="o">.</span><span class="n">Client</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+    <span class="s2">&quot;https://planetarycomputer.microsoft.com/api/stac/v1&quot;</span><span class="p">,</span>
+    <span class="n">modifier</span><span class="o">=</span><span class="n">planetary_computer</span><span class="o">.</span><span class="n">sign_inplace</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">title</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Microsoft Planetary Computer has a public STAC metadata but the actual data assets are in private Azure Blob Storage containers and require authentication. <code class="docutils literal notranslate"><span class="pre">pystac-client</span></code> provides a <code class="docutils literal notranslate"><span class="pre">modifier</span></code> keyword that we can use to manually sign the item. Otherwise, we’d get an error when trying to access the asset.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="search-for-landsat-data">
+<h1>Search for Landsat Data<a class="headerlink" href="#search-for-landsat-data" title="Link to this heading">#</a></h1>
+<p>Let’s say that an analysis we want to run requires landsat data over a specific region and from a specific time period. We can use our catalog to search for assets that fit our search criteria.</p>
+<p>First, let’s find the name of the landsat dataset. <a class="reference external" href="https://planetarycomputer.microsoft.com/catalog">This page</a> is a nice resource for browsing the available collections, but we can also just search the catalog for ‘landsat’:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_collections</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_collections</span><span class="p">()]</span>
+<span class="n">landsat_collections</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">collection</span> <span class="k">for</span> <span class="n">collection</span> <span class="ow">in</span> <span class="n">all_collections</span> <span class="k">if</span> <span class="s2">&quot;landsat&quot;</span> <span class="ow">in</span> <span class="n">collection</span>
+<span class="p">]</span>
+<span class="n">landsat_collections</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll use the <code class="docutils literal notranslate"><span class="pre">landsat-c2-l2</span></code> dataset, which stands for Collection 2 Level-2. It contains data from several landsat missions and has better data quality than Level 1 (<code class="docutils literal notranslate"><span class="pre">landsat-c2-l1</span></code>). Microsoft Planetary Computer has descriptions of <a class="reference external" href="https://planetarycomputer.microsoft.com/dataset/landsat-c2-l1">Level 1</a> and <a class="reference external" href="https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2">Level 2</a>, but a direct and succinct comparison can be found in <a class="reference external" href="https://gis.stackexchange.com/questions/439767/landsat-collections">this community post</a>, and the information can be verified with <a class="reference external" href="https://www.usgs.gov/landsat-missions/landsat-collection-2">USGS</a>.</p>
+<p>Now, let’s set our search parameters. You may already know the bounding box (region/area of interest) coordinates, but if you don’t, there are many useful tools like <a class="reference external" href="http://bboxfinder.com/">bboxfinder.com</a> that can help.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bbox</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">118.89</span><span class="p">,</span> <span class="mf">38.54</span><span class="p">,</span> <span class="o">-</span><span class="mf">118.57</span><span class="p">,</span> <span class="mf">38.84</span><span class="p">]</span>  <span class="c1"># Region over a lake in Nevada, USA</span>
+<span class="n">datetime</span> <span class="o">=</span> <span class="s2">&quot;2017-06-01/2017-09-30&quot;</span>  <span class="c1"># Summer months of 2017</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="s2">&quot;landsat-c2-l2&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also specify other parameters in the query, such as a specific landsat mission and the max percent of cloud cover:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">platform</span> <span class="o">=</span> <span class="s2">&quot;landsat-8&quot;</span>
+<span class="n">cloudy_less_than</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># percent</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we run the search and list the results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">search</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="n">collections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;landsat-c2-l2&quot;</span><span class="p">],</span>
+    <span class="n">bbox</span><span class="o">=</span><span class="n">bbox</span><span class="p">,</span>
+    <span class="n">datetime</span><span class="o">=</span><span class="n">datetime</span><span class="p">,</span>
+    <span class="n">query</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;eo:cloud_cover&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;lt&quot;</span><span class="p">:</span> <span class="n">cloudy_less_than</span><span class="p">},</span> <span class="s2">&quot;platform&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;in&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">platform</span><span class="p">]}},</span>
+<span class="p">)</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">item_collection</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Returned </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span><span class="si">}</span><span class="s2"> Items:&quot;</span><span class="p">)</span>
+<span class="n">item_id</span> <span class="o">=</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">):</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">items</span><span class="p">)}</span>
+<span class="n">item_id</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It looks like there were three image stacks taken by Landsat 8 over this spatial region during the summer months of 2017 that has less than 1 percent cloud cover.</p>
+<section id="preview-results-and-select-a-dataset">
+<h2>Preview Results and Select a Dataset<a class="headerlink" href="#preview-results-and-select-a-dataset" title="Link to this heading">#</a></h2>
+<p>Before loading one of the available image stacks, it would be useful to get a visual check of the results. Many datasets have a rendered preview or thumbnail image that can be accessed without having to load the full resolution data.</p>
+<p>We can create a simple interactive application using the <a class="reference external" href="https://panel.holoviz.org/index.html">Panel</a> library to access and display rendered PNG previews of the our search results. Note that these pre-rendered images are of large tiles that span beyond our bounding box of interest. In the next steps, we will only be loading in a small area around the lake.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">item_sel</span> <span class="o">=</span> <span class="n">pn</span><span class="o">.</span><span class="n">widgets</span><span class="o">.</span><span class="n">Select</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">item_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;item&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_preview</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">pn</span><span class="o">.</span><span class="n">panel</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">assets</span><span class="p">[</span><span class="s2">&quot;rendered_preview&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">href</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+
+
+<span class="n">pn</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="n">item_sel</span><span class="p">,</span> <span class="n">pn</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">get_preview</span><span class="p">,</span> <span class="n">item_sel</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected_item</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">selected_item</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="access-the-data">
+<h2>Access the Data<a class="headerlink" href="#access-the-data" title="Link to this heading">#</a></h2>
+<p>Now that we have selected a dataset from our catalog, we can procede to access the data. We want to be very selective about the data that we read and when we read it because the amount of downloaded data can quickly get out of hand. Therefore, let’s select only a subset of images.</p>
+<p>First, we’ll preview the different image assets (or <a class="reference external" href="https://github.com/stac-extensions/eo">Bands</a>) available in the Landsat item.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">assets</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">selected_item</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">assets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset</span><span class="o">.</span><span class="n">extra_fields</span><span class="p">[</span><span class="s2">&quot;eo:bands&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="n">cols_ordered</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;common_name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;center_wavelength&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;full_width_half_max&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">bands</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">assets</span><span class="p">)[</span><span class="n">cols_ordered</span><span class="p">]</span>
+<span class="n">bands</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we will select a few bands (images) of interest:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bands_of_interest</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we lazily load the selected data. We will use the package called <code class="docutils literal notranslate"><span class="pre">odc</span></code> which allows us to load only a specific region of interest (bounding box or ‘bbox’) and specific bands (images) of interest. We will also use the <code class="docutils literal notranslate"><span class="pre">chunks</span></code> argument to load the data as dask arrays; this will load the metadata now and delay the loading until we actually use the data, or until we force the data to be loaded by using <code class="docutils literal notranslate"><span class="pre">.compute()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">odc</span><span class="o">.</span><span class="n">stac</span><span class="o">.</span><span class="n">stac_load</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">selected_item</span><span class="p">],</span>
+    <span class="n">bands</span><span class="o">=</span><span class="n">bands_of_interest</span><span class="p">,</span>
+    <span class="n">bbox</span><span class="o">=</span><span class="n">bbox</span><span class="p">,</span>
+    <span class="n">chunks</span><span class="o">=</span><span class="p">{},</span>  <span class="c1"># &lt;-- use Dask</span>
+<span class="p">)</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ds</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s combine the bands of the dataset into a single DataArray that has the band names as coordinates of a new ‘band’ dimension, and also call <code class="docutils literal notranslate"><span class="pre">.compute()</span></code> to finally load the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">to_array</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;band&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<span class="n">da</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualize-the-data">
+<h2>Visualize the data<a class="headerlink" href="#visualize-the-data" title="Link to this heading">#</a></h2>
+<p>Often, data ingestion involves quickly visualizing your raw data to get a sense that things are proceeding accordingly. As we have created an array with red, blue, and green bands, we can quickly display a natural color image of the lake using the <code class="docutils literal notranslate"><span class="pre">.plot.imshow()</span></code> function of <code class="docutils literal notranslate"><span class="pre">xarray</span></code>. We’ll use the <code class="docutils literal notranslate"><span class="pre">robust=True</span></code> argument because the data values are outside the range of typical RGB images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">robust</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s use <code class="docutils literal notranslate"><span class="pre">hvplot</span></code> to provide an interactive visualization of the inividual bands in our array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span><span class="o">.</span><span class="n">hvplot</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s plot the bands as seperate columns by specifying a dimension to expand with <code class="docutils literal notranslate"><span class="pre">col='band'</span></code>. We can also set <code class="docutils literal notranslate"><span class="pre">rasterize=True</span></code> to use <a class="reference external" href="https://datashader.org/">Datashader</a> (another HoloViz tool) to render large data into a 2D histogram, where every array cell counts the data points falling into that pixel, as set by the resolution of your screen. This is especially important for large and high resolution images that would otherwise cause issues when attempting to render in a browser.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span><span class="o">.</span><span class="n">hvplot</span><span class="o">.</span><span class="n">image</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;band&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">xaxis</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">yaxis</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rasterize</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Select the zoom tool and zoom in on of the plots to see that all the images are all automatically linked!</p>
+</section>
+<section id="retain-attributes">
+<h2>Retain Attributes<a class="headerlink" href="#retain-attributes" title="Link to this heading">#</a></h2>
+<p>When working with many image arrays, it’s critical to retain the data properties as xarray attributes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">selected_item</span><span class="o">.</span><span class="n">properties</span>
+<span class="n">da</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that you can now expand the <code class="docutils literal notranslate"><span class="pre">Attributes:</span> </code> dropdown to see the properties of this data.</p>
+</section>
+<section id="set-the-crs-attribute">
+<h2>Set the <code class="docutils literal notranslate"><span class="pre">crs</span></code> attribute<a class="headerlink" href="#set-the-crs-attribute" title="Link to this heading">#</a></h2>
+<p>As the data is in ‘meter’ units from a reference point, we can plot in commonly used longitude, latitude coordinates with <code class="docutils literal notranslate"><span class="pre">.hvplot(geo=True)</span></code> if our array has a valid coordinate reference system (CRS) attribute. This value is provided from Microsoft Planetary Computer as the <code class="docutils literal notranslate"><span class="pre">proj:epsg</span></code> property, so we just need to copy it to a new attribute <code class="docutils literal notranslate"><span class="pre">crs</span></code> so that hvPlot can automatically find it, without us having to further specify anything in our plotting code</p>
+<p>Note, this CRS is referenced by an EPSG code that can be accessed from the metadata of our selected catalog search result. We can see more about this dataset’s specific code at <a class="reference external" href="https://epsg.io/32611">EPSG.io/32611</a>. You can also read more about EPSG codes in general in this <a class="reference external" href="https://pygis.io/docs/d_understand_crs_codes.html#epsg-codes">Coordinate Reference Systems: EPSG codes</a> online book chapter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;crs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;epsg:</span><span class="si">{</span><span class="n">selected_item</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;proj:epsg&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;crs&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can use <code class="docutils literal notranslate"><span class="pre">.hvplot(geo=True)</span></code> to plot in longitude and latitude coordinates. Informing <code class="docutils literal notranslate"><span class="pre">hvPlot</span></code> that this is geographic data also allows us to overlay data on aligned geographic tiles using the <code class="docutils literal notranslate"><span class="pre">tiles</span></code> parameter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span><span class="o">.</span><span class="n">hvplot</span><span class="o">.</span><span class="n">image</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">geo</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.9</span><span class="p">,</span> <span class="n">tiles</span><span class="o">=</span><span class="s2">&quot;ESRI&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Latitude&quot;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>The data access approach should adapt to features of the data and your intended analysis. As Landsat data is large and multidimensional, a good approach is to use <a class="reference external" href="https://planetarycomputer.microsoft.com/docs/overview/about">Microsoft Plantery Computer</a>, <a class="reference external" href="https://pystac-client.readthedocs.io/en/stable/index.html">pystac-client</a>, and <a class="reference external" href="https://odc-stac.readthedocs.io/en/latest/index.html">odc-stac</a> together for searching the metadata catalog and lazily loading specific data chunks. Once you have accessed data, visualize it with hvPlot to ensure that it matches your expectations.</p>
+<section id="what-s-next">
+<h3>What’s next?<a class="headerlink" href="#what-s-next" title="Link to this heading">#</a></h3>
+<p>Before we proceed to workflow examples, we can explore an alternate way of accessing data using generalized tooling.</p>
+</section>
+</section>
+<section id="resources-and-references">
+<h2>Resources and References<a class="headerlink" href="#resources-and-references" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Authored by Demetris Roumis circa Jan, 2023</p></li>
+<li><p>Guidance for parts of this notebook was provided by Microsoft in <a class="reference external" href="https://planetarycomputer.microsoft.com/docs/quickstarts/reading-stac/">‘Reading Data from the STAC API’</a></p></li>
+<li><p>The image used in the banner is from an announcement about PySTAC from Azavea</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\11\misc"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data Ingestion - Geospatial-Specific Tooling</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#open-and-read-the-root-of-the-stac-catalog">Open and read the root of the STAC catalog</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#search-for-landsat-data">Search for Landsat Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preview-results-and-select-a-dataset">Preview Results and Select a Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#access-the-data">Access the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-the-data">Visualize the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retain-attributes">Retain Attributes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-the-crs-attribute">Set the <code class="docutils literal notranslate"><span class="pre">crs</span></code> attribute</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources-and-references">Resources and References</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

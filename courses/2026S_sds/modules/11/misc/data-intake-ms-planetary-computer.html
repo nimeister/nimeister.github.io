@@ -1,0 +1,941 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Interactive dashboard for Sentinel-2 satellite imagery &#8212; GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/11/misc/data-intake-ms-planetary-computer';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/GES_Banner_Final_2019.png" class="logo__image only-light" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>
+    <script>document.write(`<img src="../../../_static/GES_Banner_Final_2019.png" class="logo__image only-dark" alt="GTECH331/731 Geocomputation l and Spatial Data Science - Spring 2026 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    GTECH331/731 Spatial Data Science and GeoComputation 1 - Srping 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../01/01_intro.html">01 - Data Science &amp; Jupyter Notebook</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../02/02_basicPy1.html">02 - Basic Python - 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03/03_basicPy2.html">03 - Basic Python - 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04/04_Numpy_Pandas1.html">04 - Numpy and Pandas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05/05_Numpy_Pandas2.html">05 - Numpy and Pandas 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06/06_visualization.html">06 - Data Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07/07_Midterm_Exam.html">07 - Midterm Exam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09/09_geopandas.html">09 - Geopandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10/10_raster1.html">10 - Raster Data Analysis I</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../11_raster2.html">11 - Raster Data Analysis II</a></li>
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/11/misc/data-intake-ms-planetary-computer.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/modules/11/misc/data-intake-ms-planetary-computer.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Interactive dashboard for Sentinel-2 satellite imagery</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Interactive dashboard for Sentinel-2 satellite imagery</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#open-the-catalog">Open the catalog</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#query-filter-and-load-the-collection">Query, Filter and Load the collection</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-data-for-visualization">Prepare the data for visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources-and-references">Resources and references</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="interactive-dashboard-for-sentinel-2-satellite-imagery">
+<h1>Interactive dashboard for Sentinel-2 satellite imagery<a class="headerlink" href="#interactive-dashboard-for-sentinel-2-satellite-imagery" title="Link to this heading">#</a></h1>
+<hr class="docutils" />
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>In this notebook, we will take a look at how to retrieve Sentinel-2 L2A satellite imagery from the <a class="reference external" href="https://planetarycomputer.microsoft.com/catalog">Microsoft Planetary Computer Data Catalog (MSPC)</a>. We will go over how to interact with the Data Catalog, which exposes a <a class="reference external" href="https://stacspec.org/en">SpatioTemporal Asset Catalog (STAC)</a> interface for querying, searching and retrieving data. We will use the <a class="reference external" href="https://odc-stac.readthedocs.io/en/latest/">odc-stac</a> package to load the data lazily, which means data is not <em>actually</em> read unless required (say, for plotting). Once loaded, we will process the data and make a simple interactive dashboard to look at the satellite imagery over a location for different seasons. We will use the <a class="reference external" href="https://holoviz.org/background.html">HoloViz ecosystem</a> for the interactive dashboard.</p>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Concepts</p></th>
+<th class="head"><p>Importance</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://foundations.projectpythia.org/core/xarray">Xarray</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>Background</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://foundations.projectpythia.org/core/xarray/dask-arrays-xarray">Dask + Xarray</a></p></td>
+<td><p>Necessary</p></td>
+<td><p>Background</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://planetarycomputer.microsoft.com/docs/overview/about/">About the Microsoft Planetary Computer (MSPC)</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>Background</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://pystac-client.readthedocs.io/en/stable/">Documentation of pystac-client</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>Consult as needed</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://projectpythia.org/landsat-ml-cookbook">Landsat ML Cookbook</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>Similar cookbook, illustrates accessing Landsat data from MSPC</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://holoviz.org/background.html">About the HoloViz ecosystem</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>How different HoloViz packages work with each other</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/processing-levels/level-2">Sentinel-2 L2A User Guide</a></p></td>
+<td><p>Necessary</p></td>
+<td><p>Background about the satellite data</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://sentinel.esa.int/documents/247904/685211/Sen2-Cor-L2A-Input-Output-Data-Definition-Document.pdf/e2dd6f01-c9c7-494d-a7f2-cd3be9ad891a?t=1506524754000">Sentinel-2 L2A data definitions</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>Section 2.3.10 has some useful information about the data we access in this cookbook</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p><strong>Time to learn</strong>: 15 minutes</p></li>
+</ul>
+</section>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pystac_client</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">planetary_computer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">panel</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">panel.widgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pnw</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hvplot.xarray</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">holoviews</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">geoviews</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pystac.extensions.eo</span><span class="w"> </span><span class="kn">import</span> <span class="n">EOExtension</span> <span class="k">as</span> <span class="n">eo</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cartopy</span><span class="w"> </span><span class="kn">import</span> <span class="n">crs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dask.distributed</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">LocalCluster</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">odc.stac</span>
+
+<span class="n">xr</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">keep_attrs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">hv</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="s1">&#39;bokeh&#39;</span><span class="p">)</span>
+<span class="n">gv</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="s1">&#39;bokeh&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pystac_client</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">import</span><span class="w"> </span><span class="nn">planetary_computer</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">import</span><span class="w"> </span><span class="nn">panel</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pn</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">import</span><span class="w"> </span><span class="nn">panel.widgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pnw</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;planetary_computer&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since we will use dask to distribute our computation, we can create a dask cluster and connect to it via a dask client. For this recipe, we will create a <a class="reference external" href="https://docs.dask.org/en/stable/deploying-python.html#localcluster"><code class="docutils literal notranslate"><span class="pre">LocalCluster</span></code></a> with default values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cluster</span> <span class="o">=</span> <span class="n">LocalCluster</span><span class="p">()</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">client</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="open-the-catalog">
+<h1>Open the catalog<a class="headerlink" href="#open-the-catalog" title="Link to this heading">#</a></h1>
+<p>The root of Microsoft Planetary Computer’s STAC API endpoint is located at <a class="reference external" href="https://planetarycomputer.microsoft.com/api/stac/v1">https://planetarycomputer.microsoft.com/api/stac/v1</a>. We will load in the catalog using the <code class="docutils literal notranslate"><span class="pre">pystac_client.Client.open</span></code> method. Even though the STAC metadata in MSPC is publicly accessible, authentication is required to access the actual data. The <code class="docutils literal notranslate"><span class="pre">modifier</span></code> keyword can be used to explicitly “sign” an item, which basically means we can access the privately stored data (more information <a class="reference external" href="https://planetarycomputer.microsoft.com/docs/quickstarts/reading-stac/">here</a>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stac_root</span> <span class="o">=</span> <span class="s1">&#39;https://planetarycomputer.microsoft.com/api/stac/v1&#39;</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">pystac_client</span><span class="o">.</span><span class="n">Client</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+    <span class="n">stac_root</span><span class="p">,</span>
+    <span class="n">modifier</span><span class="o">=</span><span class="n">planetary_computer</span><span class="o">.</span><span class="n">sign_inplace</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">catalog</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">catalog</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s search for any collections that have the substring “sentinel-2” in it to discover the sentinel-2 data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sentinel2_collections</span> <span class="o">=</span> <span class="p">[</span><span class="n">collection</span> <span class="k">for</span> <span class="n">collection</span> <span class="ow">in</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_collections</span><span class="p">()</span> <span class="k">if</span> <span class="s2">&quot;sentinel-2&quot;</span> <span class="ow">in</span> <span class="n">collection</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+<span class="n">sentinel2_collections</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looks like there is only one collection (<code class="docutils literal notranslate"><span class="pre">sentinel-2-l2a</span></code>) available in the catalog - which is the dataset we want to use.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="query-filter-and-load-the-collection">
+<h1>Query, Filter and Load the collection<a class="headerlink" href="#query-filter-and-load-the-collection" title="Link to this heading">#</a></h1>
+<p>Now that we have the ID of the collection of interest, we can specify certain filters to narrow down to exactly the data we want to look at. The final visualization in the recipe will look at how the NCAR Mesa Lab, Boulder CO looks like throughout the year as seen from space. To narrow down our search, we will use the following criteria -</p>
+<ul class="simple">
+<li><p>Bounding box: We will limit our spatial extent to the bounding box of the NCAR Mesa Lab region.</p></li>
+<li><p>Date range: We will look at the year 2022</p></li>
+<li><p>Collection: <code class="docutils literal notranslate"><span class="pre">sentinel-2-l2a</span></code> (from previous cell)</p></li>
+<li><p>Cloud threshold: Since cloud can block the satellite from making an observation of the ground, we will limit our search to satellite images where the cloud cover is less than a certain threshold, 40% in this case.</p></li>
+</ul>
+<p>Feel free to change these filtering paramters to suit your needs when running in an interactive session.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bbox</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">105.283263</span><span class="p">,</span><span class="mf">39.972809</span><span class="p">,</span><span class="o">-</span><span class="mf">105.266569</span><span class="p">,</span><span class="mf">39.987640</span><span class="p">]</span> <span class="c1"># NCAR, boulder, CO. bbox from http://bboxfinder.com/</span>
+<span class="n">date_range</span> <span class="o">=</span> <span class="s2">&quot;2022-01-01/2022-12-31&quot;</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="s2">&quot;sentinel-2-l2a&quot;</span>                        <span class="c1"># full id of collection</span>
+<span class="n">cloud_thresh</span> <span class="o">=</span> <span class="mi">30</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">search</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="n">collections</span> <span class="o">=</span> <span class="n">sentinel2_collections</span><span class="p">,</span>
+    <span class="n">bbox</span> <span class="o">=</span> <span class="n">bbox</span><span class="p">,</span>
+    <span class="n">datetime</span> <span class="o">=</span> <span class="n">date_range</span><span class="p">,</span>
+    <span class="n">query</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;eo:cloud_cover&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;lt&quot;</span><span class="p">:</span> <span class="n">cloud_thresh</span><span class="p">}}</span>
+<span class="p">)</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">item_collection</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span><span class="si">}</span><span class="s2"> items in the </span><span class="si">{</span><span class="n">collection</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We now have an ItemCollection with the data that we need. Let’s look at one of the items in the collection and explore what assets it has.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_item</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">all_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">first_item</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Assets available:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">all_bands</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;, &#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Seems like there are a lot of assets associated with the item - you can read about them <a class="reference external" href="https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/processing-levels/level-2">here</a>. We are interested in the assets that start with a ‘B’, which are the bands associated with the different spectral bands in which the <a class="reference external" href="https://sentinels.copernicus.eu/web/sentinel/technical-guides/sentinel-2-msi/msi-instrument">MultiSpectral Instrument (MSI)</a> of the satellite captures observations. Specifically, the RGB – or Red, Green and Blue - bands that we need to create a “True color” image are as follows:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>band</p></th>
+<th class="head"><p>corresponds to</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>B04</p></td>
+<td><p>Red</p></td>
+</tr>
+<tr class="row-odd"><td><p>B03</p></td>
+<td><p>Green</p></td>
+</tr>
+<tr class="row-even"><td><p>B02</p></td>
+<td><p>Blue</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We will use the <code class="docutils literal notranslate"><span class="pre">odc.stac.stac_load</span></code> function to load in the assets that start with the alphabet ‘B’. This function will return a lazily-loaded <code class="docutils literal notranslate"><span class="pre">xr.DataSet</span></code> (using dask). For plotting purposes it is better if we have the data as a <code class="docutils literal notranslate"><span class="pre">xr.DataArray</span></code> instead with the bands as a dimension. We can do that using <code class="docutils literal notranslate"><span class="pre">.to_array(dim=&lt;dim_name&gt;)</span></code> method of a dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bands_of_interest</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">all_bands</span> <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">)]</span>
+
+<span class="n">da</span> <span class="o">=</span> <span class="n">odc</span><span class="o">.</span><span class="n">stac</span><span class="o">.</span><span class="n">stac_load</span><span class="p">(</span>
+    <span class="n">items</span><span class="p">,</span>
+    <span class="n">bands</span><span class="o">=</span><span class="n">bands_of_interest</span><span class="p">,</span>
+    <span class="n">bbox</span><span class="o">=</span><span class="n">bbox</span><span class="p">,</span>
+    <span class="n">chunks</span><span class="o">=</span><span class="p">{},</span>  <span class="c1"># &lt;-- use Dask</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to_array</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s1">&#39;band&#39;</span><span class="p">)</span>
+<span class="n">da</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="prepare-the-data-for-visualization">
+<h2>Prepare the data for visualization<a class="headerlink" href="#prepare-the-data-for-visualization" title="Link to this heading">#</a></h2>
+<p>On January 25th, 2022, the European Space Agency (data provider for Sentinel-2 satellite) made a change in their processing pipeline to address some issues that you can read about <a class="reference external" href="https://sentinels.copernicus.eu/web/sentinel/-/copernicus-sentinel-2-major-products-upgrade-upcoming">here</a> if interested. For the purpose of this notebook, we will process the newer dataset such that it is harmonized with the old processing pipeline - in simple words, we will make sure that the data has the same statistical properties so that we can visualize them seamlessly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># from https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a#Baseline-Change</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">harmonize_to_old</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>  
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Harmonize new Sentinel-2 data to the old baseline.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data: xarray.DataArray</span>
+<span class="sd">        A DataArray with four dimensions: time, band, y, x</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    harmonized: xarray.DataArray</span>
+<span class="sd">        A DataArray with all values harmonized to the old</span>
+<span class="sd">        processing baseline.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cutoff</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">bands</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;B01&quot;</span><span class="p">,</span><span class="s2">&quot;B02&quot;</span><span class="p">,</span><span class="s2">&quot;B03&quot;</span><span class="p">,</span><span class="s2">&quot;B04&quot;</span><span class="p">,</span><span class="s2">&quot;B05&quot;</span><span class="p">,</span><span class="s2">&quot;B06&quot;</span><span class="p">,</span><span class="s2">&quot;B07&quot;</span><span class="p">,</span><span class="s2">&quot;B08&quot;</span><span class="p">,</span><span class="s2">&quot;B8A&quot;</span><span class="p">,</span><span class="s2">&quot;B09&quot;</span><span class="p">,</span><span class="s2">&quot;B10&quot;</span><span class="p">,</span><span class="s2">&quot;B11&quot;</span><span class="p">,</span><span class="s2">&quot;B12&quot;</span><span class="p">]</span>
+
+    <span class="n">old</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="n">cutoff</span><span class="p">))</span>
+
+    <span class="n">to_process</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">bands</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">band</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
+    <span class="n">new</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span><span class="o">.</span><span class="n">drop_sel</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="n">to_process</span><span class="p">)</span>
+
+    <span class="n">new_harmonized</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">band</span><span class="o">=</span><span class="n">to_process</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+    <span class="n">new_harmonized</span> <span class="o">-=</span> <span class="n">offset</span>
+
+    <span class="n">new</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">new</span><span class="p">,</span> <span class="n">new_harmonized</span><span class="p">],</span> <span class="s2">&quot;band&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">band</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+
+<span class="n">da</span> <span class="o">=</span> <span class="n">harmonize_to_old</span><span class="p">(</span><span class="n">da</span><span class="p">)</span>
+<span class="n">da</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have a harmonized dataset, we still need to process the data as follows:</p>
+<ul class="simple">
+<li><p>Sentinel-2 L2A provides the Surface Reflectance (SR) data, which usually ranges from 0 (no reflection) to 1.0 (complete reflection). However, the actual values in the loaded dataset ranges from 0 to ~10,000. These data values need to be scaled to 0.0-1.0 by dividing the data by 10,000. More details can be found in <a class="reference external" href="https://sentinel.esa.int/documents/247904/685211/Sen2-Cor-L2A-Input-Output-Data-Definition-Document.pdf/e2dd6f01-c9c7-494d-a7f2-cd3be9ad891a?t=1506524754000">section 2.3.10 of this document</a>.</p></li>
+</ul>
+<p>We will then explicitly trigger the dask computation using the <code class="docutils literal notranslate"><span class="pre">compute()</span></code> method and load the result into memory. This is to reduce repeated calls to retrieve data from MSPC. By loading the processed  This wouldn’t have been possible if the dataset was large.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span> <span class="o">=</span> <span class="n">da</span> <span class="o">/</span> <span class="mf">1e4</span>   <span class="c1"># Scale data values from 0:10000 to 0:1.0</span>
+<span class="n">da</span> <span class="o">=</span> <span class="n">da</span> <span class="o">/</span> <span class="n">da</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s1">&#39;band&#39;</span><span class="p">)</span>  <span class="c1"># additionally scale from 0-max -&gt; 0-1 for visual quality</span>
+<span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have now processed the data so that we can visualize it!</p>
+<p>Let’s look at the Blue, Green and Red bands.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_band</span><span class="p">(</span><span class="n">band</span><span class="p">,</span> <span class="n">cmap</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="n">band</span><span class="p">)</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">hvplot</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">data_aspect</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+        <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">geo</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tiles</span><span class="o">=</span><span class="s1">&#39;ESRI&#39;</span><span class="p">,</span> 
+        <span class="n">crs</span><span class="o">=</span><span class="n">crs</span><span class="o">.</span><span class="n">epsg</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;proj:epsg&#39;</span><span class="p">]),</span> <span class="n">rasterize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;band: </span><span class="si">{</span><span class="n">band</span><span class="si">}</span><span class="s2">, cmap: </span><span class="si">{</span><span class="n">cmap</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;surface reflectance [0.0-1.0]&#39;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">opts</span><span class="p">(</span>
+        <span class="n">frame_width</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+        <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;longitude&#39;</span><span class="p">,</span>
+        <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span>
+        
+    <span class="p">)</span>
+
+<span class="p">(</span><span class="n">plot_band</span><span class="p">(</span><span class="s1">&#39;B04&#39;</span><span class="p">,</span> <span class="s1">&#39;Blues&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">plot_band</span><span class="p">(</span><span class="s1">&#39;B03&#39;</span><span class="p">,</span> <span class="s1">&#39;Greens&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">plot_band</span><span class="p">(</span><span class="s1">&#39;B02&#39;</span><span class="p">,</span> <span class="s1">&#39;Reds&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">cols</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let us make a dashboard composed of 4 different interactive plots showing the RGB view of the satellite observation for four different seasons.
+We need a function that will take a <code class="docutils literal notranslate"><span class="pre">time</span></code> input and does the following tasks:</p>
+<ol class="arabic simple">
+<li><p>plot an interactive RGB image of the data and overlay it on a map of the world.</p></li>
+<li><p>provide a <a class="reference external" href="https://panel.holoviz.org/reference/widgets/DateSlider.html">date slider widget</a> which can be used to interact with the plot.</p></li>
+<li><p>only set the default value of the date slider to the <code class="docutils literal notranslate"><span class="pre">time</span></code>, but allow the user to slide through the length of the entire dataset.</p></li>
+</ol>
+<p>Using this function, we will be able to compose the dashboard.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">rgb_during</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+    <span class="n">season_names</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Winter&#39;</span><span class="p">,</span>
+        <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Spring&#39;</span><span class="p">,</span>
+        <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;Summer&#39;</span><span class="p">,</span>
+        <span class="mi">4</span><span class="p">:</span> <span class="s1">&#39;Fall&#39;</span>
+    <span class="p">}</span>
+    <span class="n">da_rgb</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;B04&#39;</span><span class="p">,</span> <span class="s1">&#39;B03&#39;</span><span class="p">,</span> <span class="s1">&#39;B02&#39;</span><span class="p">])</span>
+    <span class="n">start_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">da_rgb</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">to_pydatetime</span><span class="p">()</span>
+    <span class="n">end_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">da_rgb</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">to_pydatetime</span><span class="p">()</span>
+    <span class="n">closest_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">da_rgb</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">to_pydatetime</span><span class="p">()</span>
+    <span class="n">dt_slider</span> <span class="o">=</span> <span class="n">pnw</span><span class="o">.</span><span class="n">DateSlider</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">closest_date</span><span class="p">)</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_obs_on</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+        <span class="n">season_key</span> <span class="o">=</span> <span class="p">[</span><span class="n">month</span><span class="o">%</span><span class="k">12</span> // 3 + 1 for month in range(1, 13)][t.month-1]
+        <span class="n">season</span> <span class="o">=</span> <span class="n">season_names</span><span class="p">[</span><span class="n">season_key</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;B04&#39;</span><span class="p">,</span> <span class="s1">&#39;B03&#39;</span><span class="p">,</span> <span class="s1">&#39;B02&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;band&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">hvplot</span><span class="o">.</span><span class="n">rgb</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">bands</span><span class="o">=</span><span class="s1">&#39;band&#39;</span><span class="p">,</span> 
+            <span class="n">geo</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tiles</span><span class="o">=</span><span class="s1">&#39;ESRI&#39;</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">crs</span><span class="o">.</span><span class="n">epsg</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;proj:epsg&#39;</span><span class="p">]),</span> 
+            <span class="n">rasterize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">season</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">opts</span><span class="p">(</span>
+            <span class="n">frame_width</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+            <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;longitude&#39;</span><span class="p">,</span>
+            <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        
+    
+    <span class="k">return</span> <span class="n">pn</span><span class="o">.</span><span class="n">panel</span><span class="p">(</span><span class="n">pn</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span>
+                <span class="n">pn</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">get_obs_on</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">dt_slider</span><span class="p">),</span> 
+                <span class="n">pn</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span>
+                    <span class="n">pn</span><span class="o">.</span><span class="n">Spacer</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">60</span><span class="p">),</span>
+                    <span class="n">dt_slider</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rgb_during</span><span class="p">(</span><span class="s1">&#39;2022-02-01&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s now compose a dashboard using <code class="docutils literal notranslate"><span class="pre">panel</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">winter</span> <span class="o">=</span> <span class="s1">&#39;2022-01-15&#39;</span>
+<span class="n">spring</span> <span class="o">=</span> <span class="s1">&#39;2022-04-30&#39;</span>
+<span class="n">summer</span> <span class="o">=</span> <span class="s1">&#39;2022-08-01&#39;</span>
+<span class="n">fall</span> <span class="o">=</span> <span class="s1">&#39;2022-09-15&#39;</span>
+
+<span class="n">winter_plot</span> <span class="o">=</span> <span class="n">rgb_during</span><span class="p">(</span><span class="n">winter</span><span class="p">)</span>
+<span class="n">spring_plot</span> <span class="o">=</span> <span class="n">rgb_during</span><span class="p">(</span><span class="n">spring</span><span class="p">)</span>
+<span class="n">summer_plot</span> <span class="o">=</span> <span class="n">rgb_during</span><span class="p">(</span><span class="n">summer</span><span class="p">)</span>
+<span class="n">fall_plot</span> <span class="o">=</span> <span class="n">rgb_during</span><span class="p">(</span><span class="n">fall</span><span class="p">)</span>
+
+<span class="n">pn</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span>
+    <span class="n">pn</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="n">winter_plot</span><span class="p">,</span> <span class="n">spring_plot</span><span class="p">),</span>
+    <span class="n">pn</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="n">summer_plot</span><span class="p">,</span> <span class="n">fall_plot</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>In this recipe, we looked at how to access Sentinel-2 satellite data over a region of interest and create an interactive dashboard to visualize the data.</p>
+<section id="what-s-next">
+<h3>What’s next?<a class="headerlink" href="#what-s-next" title="Link to this heading">#</a></h3>
+<p>We plotted the RGB or True color image of our region of interest using a subset of all the bands available. We can further calculate useful indices, such as the <a class="reference external" href="https://nsidc.org/data/user-resources/help-center/what-ndsi-snow-cover-and-how-does-it-compare-fsc">Normalized Difference Snow Index (NDSI)</a> or the <a class="reference external" href="https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index">Normalized Difference Vegetation Index</a>.</p>
+</section>
+</section>
+<section id="resources-and-references">
+<h2>Resources and references<a class="headerlink" href="#resources-and-references" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Authored by Pritam Das (<a class="reference external" href="https://github.com/pritamd47">&#64;pritamd47</a>), June 2023 during Project Pythia cookoff 2023.</p></li>
+<li><p>This notebook takes a lot of inspiration from the <a class="reference external" href="https://github.com/ProjectPythia/landsat-ml-cookbook/">Landsat ML Cookbook</a> by Demetris Roumis.</p></li>
+<li><p>This notebook uses concepts and code illustrated in the <a class="reference external" href="https://planetarycomputer.microsoft.com/docs/quickstarts/reading-stac/">Reading Data from the STAC API</a>.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modules\11\misc"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Interactive dashboard for Sentinel-2 satellite imagery</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#open-the-catalog">Open the catalog</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#query-filter-and-load-the-collection">Query, Filter and Load the collection</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-data-for-visualization">Prepare the data for visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources-and-references">Resources and references</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wenge Ni-Meister
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -96,11 +96,6 @@ If you are using the miniforge environment, use the following commands to instal
 - `conda install rioxarray`
 - `conda install earthpy`
 - `conda install dask`
-  
-If you are using Anaconda/miniconda, then you need to use the following commands to install:
-- `conda install conda-forge::rioxarray`
-- `conda install conda-forge::earthpy'
-- `conda install conda-forge::dask`
 
 Do not use `pip` to install geospatial packages. 
 

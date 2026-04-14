@@ -188,9 +188,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../05/05_Numpy_Pandas2.html">05 - Numpy and Pandas 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../06/06_visualization.html">06 - Data Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../07/07_Midterm_Exam.html">07 - Midterm Exam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../09/09_geopandas.html">08 - Geopandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09/09_geopandas.html">09 - Geopandas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="10_raster1.html">10 - Raster Data Analysis I</a></li>
 
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../11/11_raster2.html">11 - Raster Data Analysis II</a></li>
 
 
 
@@ -434,9 +442,6 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">rasterio.plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">show</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">rasterio.plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_hist</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">rioxarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rxr</span>
-
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
@@ -450,20 +455,14 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># unzip your data and get the data directory path   </span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Wenge\Hunter College Dropbox\Wenge Ni-Meister\Teaching\GTECH\331&amp;731\2025F_331&amp;731\data\IKONOS&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Wenge\Hunter College Dropbox\Wenge Ni-Meister\Teaching\GTECH\data\NYC_IKONOS&#39;</span><span class="p">)</span>
+<span class="c1">#os.chdir(r&#39;C:\Users\Wenge\Hunter College Dropbox\Wenge Ni-Meister\Teaching\GTECH\331&amp;731\2025F_331&amp;731\data\module10\IKONOS&#39;)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># unzip your data and get the data directory path   </span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Wenge\Hunter College Dropbox\Wenge Ni-Meister\Teaching\GTECH\331&amp;731\2025F_331&amp;731\data\IKONOS&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-
-<span class="ne">FileNotFoundError</span>: [WinError 2] The system cannot find the file specified: &#39;C:\\Users\\Wenge\\Hunter College Dropbox\\Wenge Ni-Meister\\Teaching\\GTECH\\331&amp;731\\2025F_331&amp;731\\data\\IKONOS&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;C:\\Users\\Wenge\\Hunter College Dropbox\\Wenge Ni-Meister\\Teaching\\GTECH\\data\\NYC_IKONOS&#39;
 </pre></div>
 </div>
 </div>
@@ -665,7 +664,7 @@ document.write(`
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers). Got range [0..2047].
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1cd62c660d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x2839c38fed0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/f74d5396191d217bb447e5a8b34dff6aa1c2839a0d7eb883a0cd55d1f6b21b07.png" src="../../_images/f74d5396191d217bb447e5a8b34dff6aa1c2839a0d7eb883a0cd55d1f6b21b07.png" />
@@ -713,7 +712,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1cd62a3c410&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x28396cf1a90&gt;
 </pre></div>
 </div>
 <img alt="../../_images/3b19b99f9fc45fd725d31679a9323113a930d12cf2df24697c15080d3ec72a27.png" src="../../_images/3b19b99f9fc45fd725d31679a9323113a930d12cf2df24697c15080d3ec72a27.png" />
@@ -735,7 +734,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x29e92fdb890&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x28396d807d0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/860af8b943f3d915df6e87d543bdfa14becf85df607fa85007e88a3d03b6f85e.png" src="../../_images/860af8b943f3d915df6e87d543bdfa14becf85df607fa85007e88a3d03b6f85e.png" />
@@ -759,11 +758,11 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Wenge\AppData\Local\Temp\ipykernel_48944\946463204.py:6: RuntimeWarning: invalid value encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Wenge\AppData\Local\Temp\ipykernel_42420\946463204.py:6: RuntimeWarning: invalid value encountered in divide
   ndvi = (nir-red)/(nir+red)
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x1cd5b37fa10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x28390e20590&gt;
 </pre></div>
 </div>
 <img alt="../../_images/e0b74e2e7bd43e5694ccbdb0e0fd57da826908dff4505fbb71ba650039ec0f16.png" src="../../_images/e0b74e2e7bd43e5694ccbdb0e0fd57da826908dff4505fbb71ba650039ec0f16.png" />
@@ -777,22 +776,22 @@ document.write(`
 <span class="n">blu</span> <span class="o">=</span> <span class="n">nyc</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span>
 
 <span class="n">ndvi</span> <span class="o">=</span> <span class="p">(</span><span class="n">nir</span><span class="o">-</span><span class="n">red</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">nir</span><span class="o">+</span><span class="n">red</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ndvi</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greens&#39;</span><span class="p">)</span>
-<span class="c1">#plt.imshow(ndvi,cmap=&#39;BrBG&#39;)</span>
+<span class="c1">#plt.imshow(ndvi,cmap=&#39;Greens&#39;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ndvi</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;BrBG&#39;</span><span class="p">)</span>
 <span class="c1">#plt.imshow(ndvi,cmap=&#39;winter&#39;)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Wenge\AppData\Local\Temp\ipykernel_48944\2714772475.py:6: RuntimeWarning: invalid value encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Wenge\AppData\Local\Temp\ipykernel_42420\2399934437.py:6: RuntimeWarning: invalid value encountered in divide
   ndvi = (nir-red)/(nir+red)
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x1cd60a13750&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x2839982c550&gt;
 </pre></div>
 </div>
-<img alt="../../_images/b9f4159991a67f77a6f811811755daa887e02201aae838d675aba15073d86736.png" src="../../_images/b9f4159991a67f77a6f811811755daa887e02201aae838d675aba15073d86736.png" />
+<img alt="../../_images/02f7c21ce6dfde717022fda0a14d4c55ebda0cd2fc97e4cf913be9a0d7c75312.png" src="../../_images/02f7c21ce6dfde717022fda0a14d4c55ebda0cd2fc97e4cf913be9a0d7c75312.png" />
 </div>
 </div>
 <div class="cell docutils container">
