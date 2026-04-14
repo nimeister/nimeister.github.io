@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Midterm Exam &#8212; GTECH322/713 Advanced Image Processing and Lidar Remote Sensing - Spring 2026</title>
+    <title>Change Detection 2 and Earth Engine Apps &#8212; GTECH322/713 Advanced Image Processing and Lidar Remote Sensing - Spring 2026</title>
   
   
   
@@ -57,11 +57,10 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/06/06_intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/10/10_intro';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Land Cover Classification - 1" href="../07/07_intro.html" />
-    <link rel="prev" title="Time Series Trend Analysis" href="../05/05_intro.html" />
+    <link rel="prev" title="Change Detection - 1" href="../09/09_intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -185,11 +184,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../03/03_intro.html">GEE Objects and Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../04/04_intro.html">Time Series Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../05/05_intro.html">Time Series Trend Analysis</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Midterm Exam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06/06_intro.html">Midterm Exam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../07/07_intro.html">Land Cover Classification - 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../08/08_intro.html">Land Cover Classification - 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../09/09_intro.html">Change  Detection - 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../10/10_intro.html">Change  Detection 2 and Earth Engine Apps</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Change  Detection 2 and Earth Engine Apps</a></li>
 </ul>
 
     </div>
@@ -261,7 +260,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/06/06_intro.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/10/10_intro.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -291,7 +290,7 @@
       
       
       
-      <li><a href="../../_sources/modules/06/06_intro.md" target="_blank"
+      <li><a href="../../_sources/modules/10/10_intro.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -375,7 +374,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Midterm Exam</h1>
+    <h1>Change  Detection 2 and Earth Engine Apps</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -385,13 +384,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instruction">Instruction:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datasets">1. Datasets</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#satellite-surface-temperature-data">Satellite Surface temperature data:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#air-temperature-data">Air temperature data</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-research-questions">2. Example research questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ccdc">CCDC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-ccdc-references">Two CCDC references</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#earth-engine-apps">Earth Engine Apps</a></li>
 </ul>
             </nav>
         </div>
@@ -403,48 +398,40 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="midterm-exam">
-<h1>Midterm Exam<a class="headerlink" href="#midterm-exam" title="Link to this heading">#</a></h1>
-<p>Can we use satellite surface temperature to monitor heatwaves?</p>
-<section id="instruction">
-<h2>Instruction:<a class="headerlink" href="#instruction" title="Link to this heading">#</a></h2>
-<p>The midterm exam is like a mini-project. It is an open-book exam.
-You will need to come up a research question using satellite surface temperature and air temperature. You will implement it in GEE (satellite data processing) and Python (R) for data analysis.</p>
-<p>Below, I provide the datasets and example research questions:</p>
-<p>Research Procedure:</p>
-<ol class="arabic simple">
-<li><p>Conduct a literature review to find papers dealing with research questions using
-surface temperature and air temperature data in the US.</p></li>
-<li><p>You come up a research question for your own study site</p></li>
-<li><p>Extract the surface temperature from both Landsat and MODIS data on Terra and Aqua satellites</p></li>
-<li><p>Extract the air temperature for your site</p></li>
-</ol>
+  <section class="tex2jax_ignore mathjax_ignore" id="change-detection-2-and-earth-engine-apps">
+<h1>Change  Detection 2 and Earth Engine Apps<a class="headerlink" href="#change-detection-2-and-earth-engine-apps" title="Link to this heading">#</a></h1>
+<p>For the first week, we will foucs on the CCDC method:</p>
+<ul class="simple">
+<li><p>Continuous change detection and classification (CCDC)</p></li>
+</ul>
+<section id="ccdc">
+<h2>CCDC<a class="headerlink" href="#ccdc" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Intro to CCDC: <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0034425714000248">Zhu and Woodcock 2014</a>,
+<a class="reference external" href="https://www.frontiersin.org/articles/10.3389/fclim.2020.576740/full">Arevalo et al. 2020</a>,
+and <a class="reference external" href="https://www-sciencedirect-com/science/article/pii/S0034425719301002">Zhu et al., 2020</a>.</p></li>
+<li></li>
+<li><p>Visualization of pixel time series: <a class="reference external" href="https://code.earthengine.google.com/?scriptPath=users%2Fparevalo_bu%2Fgee-ccdc-tools%3AAPPS%2Ftstools_advanced">GEE code</a> and <a class="reference external" href="https://www.youtube.com/watch?v=1moyd9qWwcw&amp;amp;ab_channel=OpenMRV">video</a>. This <a class="reference external" href="https://parevalo-bu.users.earthengine.app/view/visualize-ccdc">link</a> provides more options.</p></li>
+<li><p>Classification of time series segments: <a class="reference external" href="https://code.earthengine.google.com/?scriptPath=users%2Fparevalo_bu%2Fgee-ccdc-tools%3AAPPS%2Fclassify_app">GEE code</a> and <a class="reference external" href="https://www.youtube.com/watch?v=CnLqENvBnvE&amp;amp;ab_channel=OpenMRV">video</a></p></li>
+<li><p>Visualization of CCDC coefficients and spectral changes: <a class="reference external" href="https://code.earthengine.google.com/?scriptPath=users%2Fparevalo_bu%2Fgee-ccdc-tools%3AAPPS%2Fvisualize_ccdc">GEE code</a> and <a class="reference external" href="https://www.youtube.com/watch?v=xAkrE8b6sZ0&amp;amp;ab_channel=OpenMRV">video</a></p></li>
+<li><p>Classification of CCDC: <a class="reference external" href="https://code.earthengine.google.com/?scriptPath=users%2Fparevalo_bu%2Fgee-ccdc-tools%3AAPPS%2Fclassify_app">GEE code</a> and <a class="reference external" href="https://www.youtube.com/watch?v=y1h7SMDP8zc&amp;amp;ab_channel=OpenMRV">video</a></p></li>
+<li></li>
+</ul>
 </section>
-<section id="datasets">
-<h2>1. Datasets<a class="headerlink" href="#datasets" title="Link to this heading">#</a></h2>
-<section id="satellite-surface-temperature-data">
-<h3>Satellite Surface temperature data:<a class="headerlink" href="#satellite-surface-temperature-data" title="Link to this heading">#</a></h3>
-<p>Landsdat, MODIS from Terra and Aqua (two separate MODIS datasets) from GEE</p>
+<section id="two-ccdc-references">
+<h2>Two CCDC references<a class="headerlink" href="#two-ccdc-references" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://gee-ccdc-tools.readthedocs.io/en/latest/">geepccdc site</a></p></li>
+<li><p>[MRV site](<a class="reference external" href="https://www.openmrv.org/web/guest/w/modules/mrv/modules_2/">https://www.openmrv.org/web/guest/w/modules/mrv/modules_2/</a>
+continuous-change-detection-and-classification-ccdc#1-background)</p></li>
+<li><p><a class="reference external" href="https://github.com/shijuanchen/forest_degradation_georgia">CCDX_SMA</a></p></li>
+<li><p><a class="reference external" href="https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_GLOBAL_CCDC_V1">Global Landsat-based CCDC Segments (1999-2019)</a></p></li>
+<li><p><a class="reference external" href="https://developers.google.com/earth-engine/apidocs/ee-algorithms-temporalsegmentation-ccdc">A GEE function on CCDC</a></p></li>
+</ul>
 </section>
-<section id="air-temperature-data">
-<h3>Air temperature data<a class="headerlink" href="#air-temperature-data" title="Link to this heading">#</a></h3>
-<ol class="arabic simple">
-<li><p>National scale
-Daily temperature data from weather stations, including max, min, and average temperature data can be obtained from
-NOAA’s National Centers for Environmental Information <a class="reference external" href="https://www.ncei.noaa.gov/">(NCEI)</a>
-You can search for the station’s daily min, max and average temperature data from this link:
-<a class="reference external" href="https://www.ncdc.noaa.gov/cdo-web/search">https://www.ncdc.noaa.gov/cdo-web/search</a></p></li>
-<li><p>New York State
-New York State Mesonet provides excellent weather <a class="reference external" href="https://www.nysmesonet.org/">data</a>. You need to submit request to get the data.</p></li>
-</ol>
-</section>
-</section>
-<section id="example-research-questions">
-<h2>2. Example research questions<a class="headerlink" href="#example-research-questions" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p>How do they compare? Are they the same or not? If not how and when they are different?</p></li>
-<li><p>Can we use the long-term MODIS data to monitor heatwaves and their frequency?</p></li>
-</ol>
+<section id="earth-engine-apps">
+<h2>Earth Engine Apps<a class="headerlink" href="#earth-engine-apps" title="Link to this heading">#</a></h2>
+<p>*<a class="reference external" href="https://developers.google.com/earth-engine/guides/apps">Guides</a></p>
 </section>
 </section>
 
@@ -461,7 +448,7 @@ New York State Mesonet provides excellent weather <a class="reference external" 
         },
         kernelOptions: {
             name: "python3",
-            path: "./modules\06"
+            path: "./modules\10"
         },
         predefinedOutput: true
     }
@@ -479,22 +466,13 @@ New York State Mesonet provides excellent weather <a class="reference external" 
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../05/05_intro.html"
+       href="../09/09_intro.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Time Series Trend Analysis</p>
+        <p class="prev-next-title">Change  Detection - 1</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="../07/07_intro.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Land Cover Classification - 1</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -512,13 +490,9 @@ New York State Mesonet provides excellent weather <a class="reference external" 
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instruction">Instruction:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datasets">1. Datasets</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#satellite-surface-temperature-data">Satellite Surface temperature data:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#air-temperature-data">Air temperature data</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-research-questions">2. Example research questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ccdc">CCDC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-ccdc-references">Two CCDC references</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#earth-engine-apps">Earth Engine Apps</a></li>
 </ul>
   </nav></div>
 
