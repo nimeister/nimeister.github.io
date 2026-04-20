@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -188,6 +188,24 @@
 <li class="toctree-l1"><a class="reference internal" href="../05/05_Numpy_Pandas2.html">05 - Numpy and Pandas 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_visualization.html">06 - Data Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../07/07_Midterm_Exam.html">07 - Midterm Exam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09/09_geopandas.html">09 - Geopandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10/10_raster1.html">10 - Raster Data Analysis I</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../11/11_raster2.html">11 - Raster Data Analysis II</a></li>
+
+
+
+
+
+
+
 </ul>
 
     </div>
@@ -456,7 +474,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x228f31a7b10&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1d377d87b10&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/d412c0dceb536d8b9f67d7378e6667cb3b91dd88f0e5c96429ecf6b8a771c4d4.png" src="../../_images/d412c0dceb536d8b9f67d7378e6667cb3b91dd88f0e5c96429ecf6b8a771c4d4.png" />
@@ -488,7 +506,7 @@ Explicitly create figures and axes, and call methods on them</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x228efb60980&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1d3747c4980&gt;
 </pre></div>
 </div>
 <img alt="../../_images/a4843198b389cc9ffaa1c1b008af9cec326b29b66fd870589b93afe02c1c7a02.png" src="../../_images/a4843198b389cc9ffaa1c1b008af9cec326b29b66fd870589b93afe02c1c7a02.png" />
@@ -529,7 +547,7 @@ Explicitly create figures and axes, and call methods on them</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x228f356c690&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1d37814c690&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/4af8e1e4e85dd8378f2880766984b3cfbc971be6949e6b41750a07853c540b67.png" src="../../_images/4af8e1e4e85dd8378f2880766984b3cfbc971be6949e6b41750a07853c540b67.png" />
@@ -553,7 +571,7 @@ Explicitly create figures and axes, and call methods on them</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x228f359fc50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1d37817fc50&gt;
 </pre></div>
 </div>
 <img alt="../../_images/9db55ac5d8a257ba451b917261940dc2ce8e38afc3eb18480d605a258ebbaf8a.png" src="../../_images/9db55ac5d8a257ba451b917261940dc2ce8e38afc3eb18480d605a258ebbaf8a.png" />
@@ -651,7 +669,7 @@ Explicitly create figures and axes, and call methods on them</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Wenge\AppData\Local\Temp\ipykernel_34700\1412221731.py:7: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Wenge\AppData\Local\Temp\ipykernel_34592\1412221731.py:7: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
   ax[1,1].legend(loc=0)
 </pre></div>
 </div>
@@ -673,10 +691,10 @@ Explicitly create figures and axes, and call methods on them</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x228f4a5f890&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1d37964f890&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/8187c9cb0c0b4037f03d8c2651f89d29988710d12e6eb0a090061a7dcb8fa201.png" src="../../_images/8187c9cb0c0b4037f03d8c2651f89d29988710d12e6eb0a090061a7dcb8fa201.png" />
+<img alt="../../_images/e8a8b3f82046fd60d93ae8fae6ce02064f3e77930269ed940d966a771f752b08.png" src="../../_images/e8a8b3f82046fd60d93ae8fae6ce02064f3e77930269ed940d966a771f752b08.png" />
 </div>
 </div>
 </section>
@@ -705,10 +723,10 @@ ytick.labelsize : 16</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x228f4af25d0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1d3796e0f50&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/655fa5d044bd40e981119ad8c21b7eb868dc0642f7495c484a0c59ef1c8741cd.png" src="../../_images/655fa5d044bd40e981119ad8c21b7eb868dc0642f7495c484a0c59ef1c8741cd.png" />
+<img alt="../../_images/170fa0e52e9c2911cab442436189b3ccd96e2052949c4309b4fc493acc6cc803.png" src="../../_images/170fa0e52e9c2911cab442436189b3ccd96e2052949c4309b4fc493acc6cc803.png" />
 </div>
 </div>
 </section>

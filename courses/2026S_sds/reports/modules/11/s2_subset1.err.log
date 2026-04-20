@@ -67,7 +67,7 @@ bands_10m
 [32m---> [39m[32m56[39m     value = [38;5;28;43mself[39;49m[43m.[49m[43m_cache[49m[43m[[49m[43mkey[49m[43m][49m
 [32m     57[39m     [38;5;28mself[39m._cache.move_to_end(key)
 
-[31mKeyError[39m: [<function open at 0x0000024157238D60>, ('C:\\Users\\Wenge\\Dropbox (Hunter College)\\data\\EDS2022F\\NYCimg\\Sentinel-2\\IMG_DATA\\T18TWL_20210912T154911_B02.jp2',), 'r', (('sharing', False),), 'cdcce5a4-aa8a-48c5-b713-3497e2dfa9ad']
+[31mKeyError[39m: [<function open at 0x000001FE08D18D60>, ('C:\\Users\\Wenge\\Dropbox (Hunter College)\\data\\EDS2022F\\NYCimg\\Sentinel-2\\IMG_DATA\\T18TWL_20210912T154911_B02.jp2',), 'r', (('sharing', False),), 'f43abea9-4eac-45de-9f7d-7ddd38327eee']
 
 During handling of the above exception, another exception occurred:
 
