@@ -100,8 +100,7 @@ If you are using Anaconda/miniconda, then you need to use the following commands
 Assessment of the Impact of the Jones Road Wildfire in NJ in Spring 2025
 - Read the [NYC article](https://www.nytimes.com/2025/04/22/nyregion/wildfire-new-jersey-ocean-county.html)
 - Find out the [Fire location](https://6abc.com/post/nj-wildfire-maps-show-location-ocean-county-new-jersey-blaze-current-road-closures/16230917/)
-- Download the boundary (shape file or geojson files) of Barnegat Township in Ocean County, New Jersey or the whole Ocean County. [This](om NJ state governement site or any other site.)
-[This](https://planning.co.ocean.nj.us/frmDMGeographic) maybe  a site you can download.
+- Download the boundary (shape file or geojson files) of Barnegat Township in Ocean County, New Jersey or the whole Ocean County. [This](https://planning.co.ocean.nj.us/frmDMGeographic) maybe  a site you can download.
 - Download the Landsat 8 or 9 imageries one in summer 2025 and one in 2024 from this link: [Earth Explorer](https://earthexplorer.usgs.gov/), unzip them into a directory 
 - Use rioxarray  to open and read these two landsat imates, climp them for the Ocean County 
 - Calculate and compare NDVI images for 2024 and 2025 summer
