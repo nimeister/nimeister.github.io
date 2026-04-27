@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Change Detection - 1 &#8212; GTECH322/713 Advanced Image Processing and Lidar Remote Sensing - Spring 2026</title>
+    <title>Lidar Remote Sensing - 1 &#8212; GTECH322/713 Advanced Image Processing and Lidar Remote Sensing - Spring 2026</title>
   
   
   
@@ -57,11 +57,10 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/09/09_intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/11/11_intro';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Change Detection 2 and Earth Engine Apps" href="../10/10_intro.html" />
-    <link rel="prev" title="Land Cover Classification - 2" href="../08/08_intro.html" />
+    <link rel="prev" title="Change Detection 2 and Earth Engine Apps" href="../10/10_intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -188,9 +187,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../06/06_intro.html">Midterm Exam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../07/07_intro.html">Land Cover Classification - 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../08/08_intro.html">Land Cover Classification - 2</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Change  Detection - 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09/09_intro.html">Change  Detection - 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../10/10_intro.html">Change  Detection 2 and Earth Engine Apps</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../11/11_intro.html">Lidar Remote Sensing - 1</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lidar Remote Sensing - 1</a></li>
 </ul>
 
     </div>
@@ -262,7 +261,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/09/09_intro.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmodules/11/11_intro.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -292,7 +291,7 @@
       
       
       
-      <li><a href="../../_sources/modules/09/09_intro.md" target="_blank"
+      <li><a href="../../_sources/modules/11/11_intro.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -376,7 +375,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Change  Detection - 1</h1>
+    <h1>Lidar Remote Sensing - 1</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -386,10 +385,22 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#landtrendr">LandTrendr</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ccdc">CCDC</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-9-map-vegetation-loss-for-your-selected-sites-and-selected-period">Lab 9 - Map vegetation loss for your selected sites and selected period.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-references">Additional references</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intro-to-lidar-remote-sensing">Intro to lidar remote sensing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lidar-data-processing-tools">Lidar data processing tools</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cloudcompare">CloudCompare</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lastools">Lastools</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-can-do-with-lastools">What can do with LASTools?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-get-started-with-the-lastools">How to get started with the LASTools?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-lastools-in-command-prompt">Run LASTools in command prompt:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#install-lastools">Install LASTools</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-dos-command-line">Basic Dos command line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-lastools-in-arcgis">Run Lastools in ArcGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lastools-in-qgis">Lastools in QGIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab11">Lab11</a></li>
 </ul>
             </nav>
         </div>
@@ -401,40 +412,110 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="change-detection-1">
-<h1>Change  Detection - 1<a class="headerlink" href="#change-detection-1" title="Link to this heading">#</a></h1>
-<p>For the first week, we will cover the following methods to detech land cover changes:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="lidar-remote-sensing-1">
+<h1>Lidar Remote Sensing - 1<a class="headerlink" href="#lidar-remote-sensing-1" title="Link to this heading">#</a></h1>
+<p>Starting from this week, we will learn lidar remote sensing. This unit includes four modules:</p>
 <ul class="simple">
-<li><p>LandTrendr analysis</p></li>
-<li><p>Continuous change detection and classification (CCDC)</p></li>
+<li><p>Intro to lidar remote sensing</p></li>
+<li><p>lidar processing tools - LASTools and FUSION</p></li>
+<li><p>Lidar applications in vegetation - GEDI</p></li>
+<li><p>ICESat-2 mission</p></li>
 </ul>
-<section id="landtrendr">
-<h2>LandTrendr<a class="headerlink" href="#landtrendr" title="Link to this heading">#</a></h2>
+<section id="intro-to-lidar-remote-sensing">
+<h2><a class="reference external" href="http://www.geography.hunter.cuny.edu/~wenge/GT322713_22S/lidar/lidar1_intro.pdf">Intro to lidar remote sensing</a><a class="headerlink" href="#intro-to-lidar-remote-sensing" title="Link to this heading">#</a></h2>
+</section>
+<section id="lidar-data-processing-tools">
+<h2>Lidar data processing tools<a class="headerlink" href="#lidar-data-processing-tools" title="Link to this heading">#</a></h2>
+<section id="cloudcompare">
+<h3><a class="reference external" href="https://www.cloudcompare.org/">CloudCompare</a><a class="headerlink" href="#cloudcompare" title="Link to this heading">#</a></h3>
+</section>
+<section id="lastools">
+<h3><a class="reference external" href="https://rapidlasso.com/lastools/">Lastools</a><a class="headerlink" href="#lastools" title="Link to this heading">#</a></h3>
+</section>
+<section id="what-can-do-with-lastools">
+<h3><a class="reference external" href="http://www.geography.hunter.cuny.edu/~wenge/GT322713_22S/lidar/LAStools1.pdf">What can do with LASTools?</a><a class="headerlink" href="#what-can-do-with-lastools" title="Link to this heading">#</a></h3>
+<p>There is a complete listing of the tools in the bin folder and a _README.TXT file with each of the tools. Here’s a few examples:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://emapr.github.io/LT-GEE/introduction.html">Intro to LandTrendr</a></p></li>
-<li><p><a class="reference external" href="https://emapr.github.io/LT-GEE/index.html">LandTrendr in GEE </a></p></li>
-<li><p>To access the applications, visit <a class="reference external" href="https://code.earthengine.google.com/?accept_repo=users/emaprlab/public">this URL</a>.
-It will add the users/emaprlab/public repository to your GEE account. Once added, the repository
-can be found within the Reader permission group of your GEE scripts library.</p></li>
-<li><p><a class="reference external" href="https://emaprlab.users.earthengine.app/view/lt-gee-change-mapper">LandTrendr EE Apps</a></p></li>
+<li><p>Project LAS files</p></li>
+<li><p>Set the projection in the LAS/LAZ file header</p></li>
+<li><p>Convert LAS files to a variety of formats including: Shapefiles and ASCII files</p></li>
+<li><p>Filter points based on a variety of properties including: Classification,  Return, Scan Angle, and Bounding Box</p></li>
+<li><p>Generate DEMs from LAS Files using any of the filtering options</p></li>
+<li><p>Generate Rasters where the cell values represent the number of points that fall within the cell.</p></li>
+<li><p>Export a LAS file to an X,Y,Z file TXT file that can be read into CAD systems</p></li>
+<li><p>Generate a shapefile that represents the boundary of data within a LAS file</p></li>
+<li><p>Compress LAS files up to 10 times turning a 400 megabyte LAS file into a 40 megabyte LAZ file</p></li>
 </ul>
 </section>
-<section id="ccdc">
-<h2>CCDC<a class="headerlink" href="#ccdc" title="Link to this heading">#</a></h2>
+<section id="how-to-get-started-with-the-lastools">
+<h3><a class="reference external" href="http://www.geography.hunter.cuny.edu/~wenge/GT322713_22S/lidar/NotefromMartinIsenburg.pdf">How to get started with the LASTools</a>?<a class="headerlink" href="#how-to-get-started-with-the-lastools" title="Link to this heading">#</a></h3>
+</section>
+<section id="run-lastools-in-command-prompt">
+<h3>Run LASTools in command prompt:<a class="headerlink" href="#run-lastools-in-command-prompt" title="Link to this heading">#</a></h3>
+<section id="install-lastools">
+<h4>Install LASTools<a class="headerlink" href="#install-lastools" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p>Intro to CCDC: <a class="reference external" href="https://www-sciencedirect-com.proxy.wexler.hunter.cuny.edu/science/article/pii/S0034425714000248?via%3Dihub">Zhu and Woodcock 2014</a>,
-<a class="reference external" href="https://www.frontiersin.org/articles/10.3389/fclim.2020.576740/full">Arevalo et al. 2020</a>,
-and <a class="reference external" href="https://www-sciencedirect-com.proxy.wexler.hunter.cuny.edu/science/article/pii/S0034425719301002">Zhu et al., 2020</a>.</p></li>
-<li><p><a class="reference external" href="https://gee-ccdc-tools.readthedocs.io/en/latest/">CCDC-GEE tutorials</a></p></li>
+<li><p>Download LAStools.zip from this <a class="reference external" href="https://rapidlasso.com/lastools/">link</a>.</p></li>
+<li><p>Unzip LASTOOLS to your C:\ drive and don’t put in a folder that has a space in the name.
+Simply taking the default and unzipping to the C:\ folder will result in a folder named “C:\LASTOOLS”
+and make sure you retain the folders that are included in the zip file.
+Unzipping will create a number of folders in this directory.
+All of the executable programs are stored in a folder named “c:\lastools\bin”.</p></li>
+<li><p>It’s helpful to add the BIN folder to your system PATH environment variable (c:\lastools\bin).
+In the system search window, for example, for Window 10, go to Settings, then  search “env”,
+select “Edit environmental variables for your account”,
+in the “Environment Variables” window, click “Path”, then “Edit”. In the “Edit environmental variable”,
+click “New”, add “C:\LASTools” or the path you store LASTools, click “OK’. Now start the cmd tool window,
+type “lasview”</p></li>
+<li><p><a class="reference external" href="https://medium.com/&#64;somegreg/installing-lastools-52204486831b">A easy way to run lastools</a></p></li>
 </ul>
 </section>
-<section id="lab-9-map-vegetation-loss-for-your-selected-sites-and-selected-period">
-<h2>Lab 9 - Map vegetation loss for your selected sites and selected period.<a class="headerlink" href="#lab-9-map-vegetation-loss-for-your-selected-sites-and-selected-period" title="Link to this heading">#</a></h2>
 </section>
-<section id="additional-references">
-<h2>Additional references<a class="headerlink" href="#additional-references" title="Link to this heading">#</a></h2>
-<p><a class="reference external" href="https://earthoutreachonair.withgoogle.com/events/geoforgood21">GEO for Good 2021 - Various applications using GEE</a>
-<a class="reference external" href="https://earthoutreachonair.withgoogle.com/events/geoforgood21/watch?talk=forest-solutions">CCD presentation in GEOforGood2021</a></p>
+<section id="basic-dos-command-line">
+<h3>Basic Dos command line<a class="headerlink" href="#basic-dos-command-line" title="Link to this heading">#</a></h3>
+<p>Check out this <a class="reference external" href="https://www.computerhope.com/issues/chusedos.htm">link</a></p>
+<p>Open a Windows command line window by following the steps below:
+Click Start, In the Search or Run line, type cmd (short for command), and press Enter.  The Windows command line should be shown. Typically, Windows starts you at your user directory.
+Key tips</p>
+<ul class="simple">
+<li><p>MS-DOS and the Windows command line are not case sensitive.</p></li>
+<li><p>The files and directories shown in Windows are also found in the command line.</p></li>
+<li><p>When working with a file or directory with a space, surround it in quotes. For example, the directory My Documents would be “My Documents” when typed.</p></li>
+<li><p>File names can have a long file name of 255 characters and a three character file extension.</p></li>
+<li><p>When a file or directory is deleted in the command line, it is not moved into the Recycle Bin.</p></li>
+</ul>
+<p>If you need help with any of command type /? after the command, here is a list of a few commonly used commands:</p>
+<ul class="simple">
+<li><p>Listing the files –  type `dir or dir –p’ (page by page)</p></li>
+<li><p>Moving into a directory – type  <code class="docutils literal notranslate"><span class="pre">cd</span></code> command</p></li>
+<li><p>View the contents of a file – type  <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">filename</span></code></p></li>
+<li><p>Moving back a directory – type <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code> (going up), or <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">\users\wenge</span></code></p></li>
+<li><p>Creating a directory – type <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">dirname</span></code></p></li>
+<li><p>Switching drives–  type the letter of the drive:a colon, e.g. <code class="docutils literal notranslate"><span class="pre">d:</span></code> or <code class="docutils literal notranslate"><span class="pre">c:</span></code> and hit enter</p></li>
+<li><p>Creating a new file – <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">filename</span></code></p></li>
+<li><p>Moving and copying a file  – <code class="docutils literal notranslate"><span class="pre">move</span> <span class="pre">file1</span> <span class="pre">file2</span></code> or <code class="docutils literal notranslate"><span class="pre">copy</span> <span class="pre">file1</span> <span class="pre">file2</span></code></p></li>
+<li><p>Renaming a file – <code class="docutils literal notranslate"><span class="pre">rename</span> <span class="pre">f1</span> <span class="pre">f2</span></code></p></li>
+<li><p>Deleting a file – <code class="docutils literal notranslate"><span class="pre">del</span> <span class="pre">filename</span></code></p></li>
+<li><p>Removing a directory – <code class="docutils literal notranslate"><span class="pre">rmdir</span> <span class="pre">dirname</span></code></p></li>
+<li><p>Running a program – type the name of the executable file</p></li>
+<li><p>How to list available commands – <code class="docutils literal notranslate"><span class="pre">help</span></code></p></li>
+<li><p>Closing or exiting the command line window – type <code class="docutils literal notranslate"><span class="pre">exit</span></code></p></li>
+</ul>
+</section>
+<section id="run-lastools-in-arcgis">
+<h3><a class="reference external" href="https://www.youtube.com/watch?v=PaGK6zeSYzs&amp;amp;ab_channel=RamonArrowsmith">Run Lastools in ArcGIS</a><a class="headerlink" href="#run-lastools-in-arcgis" title="Link to this heading">#</a></h3>
+</section>
+<section id="lastools-in-qgis">
+<h3><a class="reference external" href="https://www.geodose.com/2020/01/tutorial-lidar-data-processing-lastools-qgis.html">Lastools in QGIS</a><a class="headerlink" href="#lastools-in-qgis" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="lab11">
+<h2>Lab11<a class="headerlink" href="#lab11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The goal of this lab is to get started with CloudCompare and Lastool and you can open and view a lidar dataset
+using lasview command and submit your screenshot of the lidar image you open. I put a lidar scene
+in //moon1/scratch/GTECH322-713/Lab_lidar/ or from this link: <a class="reference external" href="https://www.dropbox.com/scl/fi/odiahp90o8ttl2uicvs4h/BEF.zip?rlkey=zwz0n2coa6t2hipnt54f7y8cl&amp;amp;st=nukce327&amp;amp;dl=0">https://www.dropbox.com/scl/fi/odiahp90o8ttl2uicvs4h/BEF.zip?rlkey=zwz0n2coa6t2hipnt54f7y8cl&amp;st=nukce327&amp;dl=0</a> that you can use.  You can use your own lidar data.</p></li>
+</ul>
 </section>
 </section>
 
@@ -451,7 +532,7 @@ and <a class="reference external" href="https://www-sciencedirect-com.proxy.wexl
         },
         kernelOptions: {
             name: "python3",
-            path: "./modules\09"
+            path: "./modules\11"
         },
         predefinedOutput: true
     }
@@ -469,22 +550,13 @@ and <a class="reference external" href="https://www-sciencedirect-com.proxy.wexl
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../08/08_intro.html"
+       href="../10/10_intro.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Land Cover Classification - 2</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../10/10_intro.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Change  Detection 2 and Earth Engine Apps</p>
       </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -502,10 +574,22 @@ and <a class="reference external" href="https://www-sciencedirect-com.proxy.wexl
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#landtrendr">LandTrendr</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ccdc">CCDC</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-9-map-vegetation-loss-for-your-selected-sites-and-selected-period">Lab 9 - Map vegetation loss for your selected sites and selected period.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-references">Additional references</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intro-to-lidar-remote-sensing">Intro to lidar remote sensing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lidar-data-processing-tools">Lidar data processing tools</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cloudcompare">CloudCompare</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lastools">Lastools</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-can-do-with-lastools">What can do with LASTools?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-get-started-with-the-lastools">How to get started with the LASTools?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-lastools-in-command-prompt">Run LASTools in command prompt:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#install-lastools">Install LASTools</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-dos-command-line">Basic Dos command line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-lastools-in-arcgis">Run Lastools in ArcGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lastools-in-qgis">Lastools in QGIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab11">Lab11</a></li>
 </ul>
   </nav></div>
 
