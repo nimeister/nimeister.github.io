@@ -206,6 +206,13 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../12/12_leafmap.html">12 - Leafmap</a></li>
+
+
+
+
+
+
 </ul>
 
     </div>
@@ -548,7 +555,7 @@ Datum: World Geodetic System 1984 ensemble
             &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
             &lt;style&gt;
-                #map_09167689428f2f036c9a5eb3e5553f85 {
+                #map_644e7207e9055d39fb6718ff0e826992 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -601,14 +608,14 @@ Datum: World Geodetic System 1984 ensemble
 &lt;body&gt;
     
     
-            &lt;div class=&quot;folium-map&quot; id=&quot;map_09167689428f2f036c9a5eb3e5553f85&quot; &gt;&lt;/div&gt;
+            &lt;div class=&quot;folium-map&quot; id=&quot;map_644e7207e9055d39fb6718ff0e826992&quot; &gt;&lt;/div&gt;
         
 &lt;/body&gt;
 &lt;script&gt;
     
     
-            var map_09167689428f2f036c9a5eb3e5553f85 = L.map(
-                &quot;map_09167689428f2f036c9a5eb3e5553f85&quot;,
+            var map_644e7207e9055d39fb6718ff0e826992 = L.map(
+                &quot;map_644e7207e9055d39fb6718ff0e826992&quot;,
                 {
                     center: [41.169999999999995, -74.3025],
                     crs: L.CRS.EPSG3857,
@@ -620,13 +627,13 @@ Datum: World Geodetic System 1984 ensemble
 
                 }
             );
-            L.control.scale().addTo(map_09167689428f2f036c9a5eb3e5553f85);
+            L.control.scale().addTo(map_644e7207e9055d39fb6718ff0e826992);
 
             
 
         
     
-            var tile_layer_c2759b47e3e252695558d0ad76456b5d = L.tileLayer(
+            var tile_layer_dd9e76ad43fe121f55373eb71ec648b1 = L.tileLayer(
                 &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
                 {
   &quot;minZoom&quot;: 0,
@@ -643,28 +650,28 @@ Datum: World Geodetic System 1984 ensemble
             );
         
     
-            tile_layer_c2759b47e3e252695558d0ad76456b5d.addTo(map_09167689428f2f036c9a5eb3e5553f85);
+            tile_layer_dd9e76ad43fe121f55373eb71ec648b1.addTo(map_644e7207e9055d39fb6718ff0e826992);
         
     
-            map_09167689428f2f036c9a5eb3e5553f85.fitBounds(
+            map_644e7207e9055d39fb6718ff0e826992.fitBounds(
                 [[41.144999999999996, -74.335], [41.19499999999999, -74.27]],
                 {}
             );
         
     
-        function geo_json_29986e0531aeb6a70e662e3804de6efc_styler(feature) {
+        function geo_json_775ace7efc76d7c0d8504b4d5d1cad7d_styler(feature) {
             switch(feature.id) {
                 default:
                     return {&quot;fillOpacity&quot;: 0.5, &quot;weight&quot;: 2};
             }
         }
-        function geo_json_29986e0531aeb6a70e662e3804de6efc_highlighter(feature) {
+        function geo_json_775ace7efc76d7c0d8504b4d5d1cad7d_highlighter(feature) {
             switch(feature.id) {
                 default:
                     return {&quot;fillOpacity&quot;: 0.75};
             }
         }
-        function geo_json_29986e0531aeb6a70e662e3804de6efc_pointToLayer(feature, latlng) {
+        function geo_json_775ace7efc76d7c0d8504b4d5d1cad7d_pointToLayer(feature, latlng) {
             var opts = {
   &quot;stroke&quot;: true,
   &quot;color&quot;: &quot;#3388ff&quot;,
@@ -682,46 +689,46 @@ Datum: World Geodetic System 1984 ensemble
   &quot;radius&quot;: 2,
 };
             
-            let style = geo_json_29986e0531aeb6a70e662e3804de6efc_styler(feature)
+            let style = geo_json_775ace7efc76d7c0d8504b4d5d1cad7d_styler(feature)
             Object.assign(opts, style)
             
             return new L.CircleMarker(latlng, opts)
         }
 
-        function geo_json_29986e0531aeb6a70e662e3804de6efc_onEachFeature(feature, layer) {
+        function geo_json_775ace7efc76d7c0d8504b4d5d1cad7d_onEachFeature(feature, layer) {
 
             layer.on({
                 mouseout: function(e) {
                     if(typeof e.target.setStyle === &quot;function&quot;){
-                            geo_json_29986e0531aeb6a70e662e3804de6efc.resetStyle(e.target);
+                            geo_json_775ace7efc76d7c0d8504b4d5d1cad7d.resetStyle(e.target);
                     }
                 },
                 mouseover: function(e) {
                     if(typeof e.target.setStyle === &quot;function&quot;){
-                        const highlightStyle = geo_json_29986e0531aeb6a70e662e3804de6efc_highlighter(e.target.feature)
+                        const highlightStyle = geo_json_775ace7efc76d7c0d8504b4d5d1cad7d_highlighter(e.target.feature)
                         e.target.setStyle(highlightStyle);
                     }
                 },
             });
         };
-        var geo_json_29986e0531aeb6a70e662e3804de6efc = L.geoJson(null, {
-                onEachFeature: geo_json_29986e0531aeb6a70e662e3804de6efc_onEachFeature,
+        var geo_json_775ace7efc76d7c0d8504b4d5d1cad7d = L.geoJson(null, {
+                onEachFeature: geo_json_775ace7efc76d7c0d8504b4d5d1cad7d_onEachFeature,
             
-                style: geo_json_29986e0531aeb6a70e662e3804de6efc_styler,
-                pointToLayer: geo_json_29986e0531aeb6a70e662e3804de6efc_pointToLayer,
+                style: geo_json_775ace7efc76d7c0d8504b4d5d1cad7d_styler,
+                pointToLayer: geo_json_775ace7efc76d7c0d8504b4d5d1cad7d_pointToLayer,
             ...{
 }
         });
 
-        function geo_json_29986e0531aeb6a70e662e3804de6efc_add (data) {
-            geo_json_29986e0531aeb6a70e662e3804de6efc
+        function geo_json_775ace7efc76d7c0d8504b4d5d1cad7d_add (data) {
+            geo_json_775ace7efc76d7c0d8504b4d5d1cad7d
                 .addData(data);
         }
-            geo_json_29986e0531aeb6a70e662e3804de6efc_add({&quot;bbox&quot;: [-74.335, 41.144999999999996, -74.27, 41.19499999999999], &quot;features&quot;: [{&quot;bbox&quot;: [-74.335, 41.144999999999996, -74.27, 41.19499999999999], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-74.335, 41.15500000000001], [-74.335, 41.18500000000001], [-74.31, 41.19499999999999], [-74.285, 41.19000000000001], [-74.27, 41.17499999999999], [-74.275, 41.155], [-74.3, 41.144999999999996], [-74.335, 41.15500000000001]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;properties&quot;: {&quot;acres_burned&quot;: 5000, &quot;contained_date&quot;: &quot;2024-11-25&quot;, &quot;counties&quot;: &quot;Passaic County, NJ \u0026 Orange County, NY&quot;, &quot;description&quot;: &quot;Wildfire along NJ-NY border in Sterling Forest State Park area&quot;, &quot;hectares_burned&quot;: 2023, &quot;location&quot;: &quot;West Milford, NJ \u0026 Greenwood Lake / Sterling Forest, NY&quot;, &quot;name&quot;: &quot;Jennings Creek Wildfire&quot;, &quot;start_date&quot;: &quot;2024-11-09&quot;, &quot;state&quot;: &quot;New Jersey / New York&quot;, &quot;status&quot;: &quot;100% contained&quot;}, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
+            geo_json_775ace7efc76d7c0d8504b4d5d1cad7d_add({&quot;bbox&quot;: [-74.335, 41.144999999999996, -74.27, 41.19499999999999], &quot;features&quot;: [{&quot;bbox&quot;: [-74.335, 41.144999999999996, -74.27, 41.19499999999999], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-74.335, 41.15500000000001], [-74.335, 41.18500000000001], [-74.31, 41.19499999999999], [-74.285, 41.19000000000001], [-74.27, 41.17499999999999], [-74.275, 41.155], [-74.3, 41.144999999999996], [-74.335, 41.15500000000001]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;properties&quot;: {&quot;acres_burned&quot;: 5000, &quot;contained_date&quot;: &quot;2024-11-25&quot;, &quot;counties&quot;: &quot;Passaic County, NJ \u0026 Orange County, NY&quot;, &quot;description&quot;: &quot;Wildfire along NJ-NY border in Sterling Forest State Park area&quot;, &quot;hectares_burned&quot;: 2023, &quot;location&quot;: &quot;West Milford, NJ \u0026 Greenwood Lake / Sterling Forest, NY&quot;, &quot;name&quot;: &quot;Jennings Creek Wildfire&quot;, &quot;start_date&quot;: &quot;2024-11-09&quot;, &quot;state&quot;: &quot;New Jersey / New York&quot;, &quot;status&quot;: &quot;100% contained&quot;}, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
 
         
     
-    geo_json_29986e0531aeb6a70e662e3804de6efc.bindTooltip(
+    geo_json_775ace7efc76d7c0d8504b4d5d1cad7d.bindTooltip(
     function(layer){
     let div = L.DomUtil.create(&#x27;div&#x27;);
     
@@ -756,7 +763,7 @@ Datum: World Geodetic System 1984 ensemble
 });
                      
     
-            geo_json_29986e0531aeb6a70e662e3804de6efc.addTo(map_09167689428f2f036c9a5eb3e5553f85);
+            geo_json_775ace7efc76d7c0d8504b4d5d1cad7d.addTo(map_644e7207e9055d39fb6718ff0e826992);
         
 &lt;/script&gt;
 &lt;/html&gt;" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div></div></div>
@@ -798,7 +805,7 @@ EPSG:32618
 EPSG:32618
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x237e0916270&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x25824cc6270&gt;
 </pre></div>
 </div>
 <img alt="../../_images/0979fd95ba378d3f91b9cf737ec84bce1a11a786e64685ea7352b16dc5cd7514.png" src="../../_images/0979fd95ba378d3f91b9cf737ec84bce1a11a786e64685ea7352b16dc5cd7514.png" />
@@ -841,7 +848,7 @@ C:\Users\Wenge\Dropbox (Hunter College)\Teaching\GTECH\data\JCFire\LC08_L2SP_014
 EPSG:32618
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x237803f1f90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x25825181f90&gt;
 </pre></div>
 </div>
 <img alt="../../_images/e0e5106fb4fa4598b920ecd4fe4751fc0144d146224342bf708da94e4d53a10f.png" src="../../_images/e0e5106fb4fa4598b920ecd4fe4751fc0144d146224342bf708da94e4d53a10f.png" />
@@ -889,7 +896,7 @@ EPSG:32618
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x237835aa210&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x25824e5e210&gt;
 </pre></div>
 </div>
 <img alt="../../_images/16eead5ad74ad7745b61a20241d2d9b4377723a25efb97194db2c25d6ce4a00f.png" src="../../_images/16eead5ad74ad7745b61a20241d2d9b4377723a25efb97194db2c25d6ce4a00f.png" />
@@ -902,7 +909,7 @@ EPSG:32618
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x237e0846cf0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x25824bf2cf0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/4175fc17836ae4b8f202ac6eedbb030fbcedb1cd765a1ff085a03b53e72d1294.png" src="../../_images/4175fc17836ae4b8f202ac6eedbb030fbcedb1cd765a1ff085a03b53e72d1294.png" />
